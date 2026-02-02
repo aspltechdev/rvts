@@ -2,17 +2,17 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Edit2, Eye, Trash2, Plus, Package, CheckCircle, FileText } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
 
     const fetchProducts = () => {
         setLoading(true);
-        axios.get('http://localhost:3002/api/products')
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+        axios.get(`${apiUrl}/api/products`)
             .then(res => setProducts(res.data))
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
@@ -25,7 +25,8 @@ export default function Dashboard() {
     const deleteProduct = async (id) => {
         if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
             try {
-                await axios.delete(`http://localhost:3002/api/products/${id}`);
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+                await axios.delete(`${apiUrl}/api/products/${id}`);
                 fetchProducts();
             } catch (e) {
                 alert('Failed to delete product');
@@ -122,7 +123,7 @@ export default function Dashboard() {
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-zinc-800 overflow-hidden flex-shrink-0 border border-gray-200 dark:border-zinc-700/50">
                                                     {p.images[0] ? (
-                                                        <img src={p.images[0]} className="w-full h-full object-cover" alt={p.name} />
+                                                        <Image src={p.images[0]} width={48} height={48} className="w-full h-full object-cover" alt={p.name} />
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-zinc-600">
                                                             <div className="w-4 h-4 bg-gray-300 dark:bg-zinc-700 rounded-full" />
@@ -149,7 +150,7 @@ export default function Dashboard() {
                                         <td className="p-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <a
-                                                    href={`http://localhost:3000/products/${p.slug}`}
+                                                    href={`${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/products/${p.slug}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="p-2 text-gray-400 dark:text-zinc-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-all"
@@ -167,7 +168,7 @@ export default function Dashboard() {
                                                 </Link>
 
                                                 <button
-                                                    onClick={() => deleteProduct(p.slug)} 
+                                                    onClick={() => deleteProduct(p.slug)}
                                                     className="p-2 text-gray-400 dark:text-zinc-500 hover:text-red-600 dark:hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-all"
                                                     title="Delete"
                                                 >

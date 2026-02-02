@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Play } from 'lucide-react';
 
 export default function ProductCard({ image, isActive = false }) {
@@ -6,8 +7,8 @@ export default function ProductCard({ image, isActive = false }) {
             {/* Monitor Image Container */}
             <div className="relative w-full flex-1 flex items-center justify-center p-2">
                 {/* We use specific styling to simulate the monitor look if the image is just a screen content */}
-                <div className="relative w-full aspect-video bg-black border-4 border-zinc-800 rounded-sm shadow-2xl skew-x-0 group-hover:skew-x-1 transition-transform duration-500">
-                    <img src={image} alt="Product Monitor" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+                <div className="relative w-full aspect-video bg-black border-4 border-zinc-800 rounded-sm shadow-2xl skew-x-0 group-hover:skew-x-1 transition-transform duration-500 overflow-hidden">
+                    <Image src={image} alt="Product Monitor" fill className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                     {/* Gloss */}
                     <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
                 </div>

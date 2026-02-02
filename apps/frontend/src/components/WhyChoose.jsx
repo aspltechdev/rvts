@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
+
 import { ShieldCheck, Zap, Globe, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -111,7 +111,7 @@ export default function WhyChoose() {
                             </div>
 
                             {/* Right Image Container - Flexible Height */}
-                            <div className="relative w-full lg:w-1/2 h-[200px] lg:h-full order-1 lg:order-2 flex">
+                            <div className="relative w-full lg:w-1/2 h-[200px] lg:h-auto lg:min-h-[400px] order-1 lg:order-2 flex">
                                 <div className="w-full h-full dark:bg-zinc-900 bg-zinc-200 rounded-[30px] rounded-tr-[80px] overflow-hidden relative dark:border-white/30 border-black/5 border flex-1">
                                     <motion.div
                                         initial={{ scale: 1.1 }}
@@ -119,9 +119,11 @@ export default function WhyChoose() {
                                         transition={{ duration: 1.5, ease: "easeOut" }}
                                         className="relative w-full h-full"
                                     >
-                                        <img
+                                        <Image
                                             src="/images/why-choose.jpg"
                                             alt="Why Choose RVTS"
+                                            fill
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
                                             className="w-full h-full object-cover transition-all duration-700"
                                         />
                                     </motion.div>

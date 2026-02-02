@@ -3,7 +3,7 @@
 import { createAdmin } from "@/app/actions/user";
 import { generateAndSendOtp } from "@/app/actions/otp";
 import { useState } from "react";
-// @ts-ignore
+// @ts-expect-error: useFormState is not yet in stable react-dom types
 import { useFormState } from "react-dom";
 
 const initialState = {

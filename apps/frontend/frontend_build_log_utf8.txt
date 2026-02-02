@@ -1,0 +1,287 @@
+﻿  Γû▓ Next.js 14.2.15
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (:Stri  
+  ng) [], RemoteException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+Failed to compile.
+
+./src/app/(user)/page.jsx
+29:11  Error: 
+'latestProducts' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+
+./src/app/(user)/products/pa
+ge.jsx
+95:21  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/app/(user)/products/[s
+lug]/page.jsx
+19:5  Error: 'Eye' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+20:5  Error: 'ShoppingCart' 
+is defined but never used.  
+@typescript-eslint/no-unused
+-vars
+21:5  Error: 'ArrowLeft' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+22:5  Error: 'ArrowRight' 
+is defined but never used.  
+@typescript-eslint/no-unused
+-vars
+23:5  Error: 'Info' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+24:5  Error: 'Settings' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+25:5  Error: 'Cpu' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/app/(user)/services/pa
+ge.jsx
+98:23  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/About.jsx
+40:12  Error: 'theme' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+
+./src/components/ConceptToCu
+stomer.jsx
+3:16  Error: 'Play' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/components/DownloadFor
+m.jsx
+5:13  Error: 'Send' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+5:29  Error: 'Phone' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+257:68  Error: `'` can be 
+escaped with `&apos;`, 
+`&lsquo;`, `&#39;`, 
+`&rsquo;`.  
+react/no-unescaped-entities
+
+./src/components/GetOurSuppo
+rt.jsx
+5:18  Error: 
+'AnimatePresence' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/components/Hero.jsx
+6:10  Error: 'ArrowLeft' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+6:21  Error: 'ArrowRight' 
+is defined but never used.  
+@typescript-eslint/no-unused
+-vars
+
+./src/components/Industries.
+jsx
+70:17  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+107:37  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/Navbar.jsx
+7:10  Error: 'Menu' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+7:16  Error: 'X' is defined 
+but never used.  @typescript
+-eslint/no-unused-vars
+
+./src/components/PortfolioCa
+rd.jsx
+11:21  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/ProductCard
+.jsx
+10:21  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/ProductDeta
+ilView.jsx
+6:42  Error: 'Check' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/components/ProductShow
+case.jsx
+5:37  Error: 'ArrowRight' 
+is defined but never used.  
+@typescript-eslint/no-unused
+-vars
+200:35  Error: 'isLeft' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+
+./src/components/Services.js
+x
+9:12  Error: 'theme' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+30:11  Error: 'yBg' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+31:11  Error: 'opacityBg' 
+is assigned a value but 
+never used.  @typescript-esl
+int/no-unused-vars
+
+./src/components/WhatsAppBut
+ton.jsx
+44:11  Error: 'pathname' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+132:29  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/WhyChoose.j
+sx
+4:8  Error: 'Image' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+122:41  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.or
+g/docs/basic-features/eslint
+#disabling-rules

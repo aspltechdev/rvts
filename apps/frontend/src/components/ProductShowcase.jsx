@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowRight, FileText } from 'lucide-react';
+import { ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 
@@ -54,7 +54,7 @@ const products = [
         title: "Digital Podium",
         description: "Smart lecterns for modern presentations and lectures.",
         image: "images/category/Digital-Podium.png",
-        slug: "digital-podium"  
+        slug: "digital-podium"
     },
     {
         id: 8,
@@ -197,7 +197,6 @@ export default function ProductShowcase() {
                             if (offset > Math.floor(products.length / 2)) offset -= products.length;
 
                             const isCenter = offset === 0;
-                            const isLeft = offset === -1;
                             const isRight = offset === 1;
 
                             if (Math.abs(offset) > 1 && !isVisible(index)) return null;
@@ -234,7 +233,7 @@ export default function ProductShowcase() {
                                     <div className="relative w-full h-full group">
                                         <div className="absolute inset-0 z-10 border dark:border-white/20 border-transparent rounded-[24px] pointer-events-none" />
                                         <div className="relative w-full h-full">
-                                            <Image 
+                                            <Image
                                                 src={`/${product.image}`}
                                                 alt={product.title}
                                                 fill

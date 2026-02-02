@@ -83,7 +83,8 @@ export async function POST(request: Request) {
     await mkdir(uploadDir, { recursive: true })
     await writeFile(path.join(uploadDir, name), finalBuffer)
 
-    const url = `http://localhost:3002/uploads/${name}`
+    const baseUrl = process.env.APP_URL || 'http://localhost:3002'
+    const url = `${baseUrl}/uploads/${name}`
     return NextResponse.json({ url })
   } catch (e: any) {
     console.error('Upload error:', e)

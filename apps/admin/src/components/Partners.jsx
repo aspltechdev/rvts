@@ -1,13 +1,3 @@
-import Image from 'next/image';
-
-const logos = [
-    '/logos/tesla.png', // Placeholder path
-    '/logos/bmw.png',
-    '/logos/ferrari.png',
-    '/logos/mercedes.png',
-    '/logos/audi.png',
-];
-
 export default function Partners() {
     return (
         <section className="w-full bg-[#050505] py-16 border-y border-zinc-900/50">

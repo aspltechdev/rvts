@@ -62,7 +62,7 @@ export default function Footer() {
 
                     <h2 className={`text-4xl font-bold leading-tight ${isVisible ? 'animate-metallic' : ''}`}>
                         Research Vision <br />
-                        <span className="text-red-600">Innovations</span>
+                        <span className="text-red-600">Tech Services</span>
                     </h2>
 
                     <p className="dark:text-zinc-200 text-zinc-600 text-base leading-relaxed max-w-md">

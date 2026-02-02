@@ -1,11 +1,10 @@
 'use client';
 
-import { Mail, MapPin, Phone, Send, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-import { useState } from 'react';
+import { Send } from 'lucide-react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { submitContactQuery } from '../../actions/contact';
-
 import { z } from 'zod';
+import { submitContactQuery } from '../../actions/contact';
 
 const contactSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
@@ -16,12 +15,12 @@ const contactSchema = z.object({
     message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
-export default function ContactPage() {
+function ContactContent() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
     const [fieldErrors, setFieldErrors] = useState({});
-    
+
     const searchParams = useSearchParams();
     const defaultSubject = searchParams.get('subject') || 'General Inquiry';
 
@@ -68,7 +67,7 @@ export default function ContactPage() {
     }
 
     return (
-        <main className="min-h-screen dark:bg-black bg-white dark:text-white text-zinc-900 pt-18 pb-20 px-6 relative overflow-hidden transition-colors duration-300">
+        <main className="min-h-screen dark:bg-black bg-white dark:text-white text-zinc-900 pt-32 pb-20 px-6 relative overflow-hidden transition-colors duration-300">
             {/* Background Effects */}
             <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="fixed bottom-0 left-0 w-[600px] h-[600px] bg-blue-900/5 rounded-full blur-[120px] pointer-events-none" />
@@ -77,7 +76,7 @@ export default function ContactPage() {
                 <div className="text-center mb-16">
                     <h2 className="text-brand-red font-bold tracking-widest text-lg uppercase mb-2">Get In Touch</h2>
                     <h1 className="text-4xl md:text-6xl font-black dark:text-white text-zinc-900 uppercase">
-                        Let's Talk <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-600">Solutions</span>
+                        Let&apos;s Talk <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-red-600">Solutions</span>
                     </h1>
                 </div>
 
@@ -91,29 +90,27 @@ export default function ContactPage() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">First Name</label>
-                                    <input 
-                                        name="firstName" 
-                                        type="text" 
-                                        className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${
-                                            fieldErrors.firstName 
-                                            ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
+                                    <input
+                                        name="firstName"
+                                        type="text"
+                                        className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${fieldErrors.firstName
+                                            ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                             : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
-                                        }`}
-                                        placeholder="John" 
+                                            }`}
+                                        placeholder="John"
                                     />
                                     {fieldErrors.firstName && <p className="text-red-500 text-xs mt-1">{fieldErrors.firstName}</p>}
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Last Name</label>
-                                    <input 
-                                        name="lastName" 
-                                        type="text" 
-                                        className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${
-                                            fieldErrors.lastName 
-                                            ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
+                                    <input
+                                        name="lastName"
+                                        type="text"
+                                        className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${fieldErrors.lastName
+                                            ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                             : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
-                                        }`}
-                                        placeholder="Doe" 
+                                            }`}
+                                        placeholder="Doe"
                                     />
                                     {fieldErrors.lastName && <p className="text-red-500 text-xs mt-1">{fieldErrors.lastName}</p>}
                                 </div>
@@ -121,38 +118,36 @@ export default function ContactPage() {
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Email Address</label>
-                                    <input 
-                                        name="email" 
-                                        type="email" 
-                                        className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${
-                                            fieldErrors.email 
-                                            ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
-                                            : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
+                                <input
+                                    name="email"
+                                    type="email"
+                                    className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${fieldErrors.email
+                                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
+                                        : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                         }`}
-                                        placeholder="john@company.com" 
-                                    />
-                                    {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
+                                    placeholder="john@company.com"
+                                />
+                                {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Phone Number</label>
-                                <input 
-                                    name="phoneNumber" 
-                                    type="tel" 
-                                    className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${
-                                        fieldErrors.phoneNumber 
-                                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
+                                <input
+                                    name="phoneNumber"
+                                    type="tel"
+                                    className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 focus:outline-none transition-all ${fieldErrors.phoneNumber
+                                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                         : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
-                                    }`}
-                                    placeholder="+1 (555) 000-0000" 
+                                        }`}
+                                    placeholder="+1 (555) 000-0000"
                                 />
                                 {fieldErrors.phoneNumber && <p className="text-red-500 text-xs mt-1">{fieldErrors.phoneNumber}</p>}
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Subject</label>
-                                <select 
-                                    name="subject" 
+                                <select
+                                    name="subject"
                                     defaultValue={defaultSubject}
                                     className="w-full dark:bg-black/50 bg-gray-50 border border-gray-200 dark:border-zinc-700 p-3 rounded-xl dark:text-zinc-300 text-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all appearance-none cursor-pointer"
                                 >
@@ -165,18 +160,17 @@ export default function ContactPage() {
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Message</label>
-                                <textarea 
-                                    name="message" 
-                                    className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 h-24 focus:outline-none transition-all ${
-                                        fieldErrors.message 
-                                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' 
+                                <textarea
+                                    name="message"
+                                    className={`w-full dark:bg-black/50 bg-gray-50 border p-3 rounded-xl dark:text-white text-zinc-900 h-24 focus:outline-none transition-all ${fieldErrors.message
+                                        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                         : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
-                                    }`}
-                                    placeholder="Tell us about your project..." 
+                                        }`}
+                                    placeholder="Tell us about your project..."
                                 />
                                 {fieldErrors.message && <p className="text-red-500 text-xs mt-1">{fieldErrors.message}</p>}
                             </div>
-                            
+
                             {error && (
                                 <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-sm">
                                     {error}
@@ -185,12 +179,12 @@ export default function ContactPage() {
 
                             {success && (
                                 <div className="p-3 bg-green-500/10 border border-green-500/20 text-green-500 rounded-lg text-sm">
-                                    Message sent successfully! We'll get back to you soon.
+                                    Message sent successfully! We&apos;ll get back to you soon.
                                 </div>
                             )}
 
                             <button type="submit" disabled={loading} className="w-full bg-brand-red text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed">
-                                {loading ? 'Sending...' : 'Send Message'} 
+                                {loading ? 'Sending...' : 'Send Message'}
                                 {!loading && <Send size={18} className="group-hover:translate-x-1 transition-transform" />}
                             </button>
                         </form>
@@ -198,5 +192,13 @@ export default function ContactPage() {
                 </div>
             </div>
         </main>
+    );
+}
+
+export default function ContactPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black" />}>
+            <ContactContent />
+        </Suspense>
     );
 }

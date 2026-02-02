@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+
 
 export default function Hero() {
     return (
@@ -74,7 +74,7 @@ export default function Hero() {
 
                     {/* Description Text */}
                     <p className="text-sm font-medium text-white/90 leading-relaxed mb-2 uppercase tracking-wide max-w-xs drop-shadow-sm">
-                        Research Vision Tech Solution: Modular Hardware, Cinematic Displays & Control Automation.
+                        Research Vision Tech Services: Modular Hardware, Cinematic Displays & Control Automation.
                     </p>
                     <div className="w-12 h-[2px] bg-brand-red" />
                 </div>

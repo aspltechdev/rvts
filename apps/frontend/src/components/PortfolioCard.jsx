@@ -6,11 +6,12 @@ export default function PortfolioCard({ title, subtitle, image, buttons }) {
         <div className="group relative w-full dark:bg-[#0a0a0a] bg-white rounded-xl overflow-hidden border dark:border-zinc-900/50 border-zinc-200 hover:border-brand-red/50 transition-all duration-300 shadow-xl hover:shadow-[0_0_20px_rgba(208,0,0,0.15)] flex flex-col h-full">
             {/* Image Section */}
             <div className="relative h-[240px] md:h-[320px] w-full overflow-hidden shrink-0">
-                {/* We use standard img for external URLs if standard, or Image if internal. Assuming strings from parent. */}
-                {image.startsWith('http') ?
-                    <img src={image} alt={title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" /> :
-                    <Image src={image} alt={title} fill className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
-                }
+                <Image
+                    src={image}
+                    alt={title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                />
 
                 {/* Dark Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />

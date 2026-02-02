@@ -9,6 +9,7 @@ import {
     Church,
     Landmark
 } from 'lucide-react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 export default function Industries() {
@@ -67,10 +68,11 @@ export default function Industries() {
         <section className="w-full dark:bg-black bg-white pt-4 md:pt-10 pb-12 md:pb-20 px-6 relative overflow-hidden border-b border-zinc-200 dark:border-zinc-800">
             {/* Background Image with Overlays - Dark Mode Only */}
             <div className="absolute inset-0 z-0">
-                <img
+                <Image
                     src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
                     alt="Background"
-                    className="w-full h-full object-cover dark:opacity-20 opacity-0 hidden dark:block"
+                    fill
+                    className="object-cover dark:opacity-20 opacity-0 hidden dark:block"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t dark:from-black from-white via-black/80 to-black dark:via-black/80 dark:to-black via-white/80 to-white hidden dark:block" />
                 <div className="absolute inset-0 bg-gradient-to-r dark:from-black/60 from-white/60 via-transparent dark:to-black/60 to-white/60 hidden dark:block" />
@@ -79,7 +81,7 @@ export default function Industries() {
             <div className="max-w-7xl mx-auto flex flex-col items-center relative z-10">
                 <div className="text-center mb-12">
                     {/* HEADING with Zoom and Sweep */}
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -93,8 +95,8 @@ export default function Industries() {
                     {industries.map((item, i) => {
                         const Icon = item.icon;
                         return (
-                            <motion.div 
-                                key={i} 
+                            <motion.div
+                                key={i}
                                 initial={{ opacity: 0, scale: 0.9, y: 30 }}
                                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-50px" }}
@@ -104,10 +106,11 @@ export default function Industries() {
                             >
                                 {/* Industry Background Image */}
                                 <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-110">
-                                    <img
+                                    <Image
                                         src={item.image}
                                         alt={item.label}
-                                        className="w-full h-full object-cover opacity-100 transition-opacity duration-500"
+                                        fill
+                                        className="object-cover opacity-100 transition-opacity duration-500"
                                     />
                                     {/* Subtle overlay only for text legibility, much lighter now */}
                                     <div className="absolute inset-0 bg-black/20 dark:bg-black/40 z-10" />
@@ -118,7 +121,7 @@ export default function Industries() {
 
                                 {/* Content */}
                                 <div className="relative z-20 flex flex-col items-center text-center">
-                                    <motion.div 
+                                    <motion.div
                                         initial={{ rotateY: 90, opacity: 0 }}
                                         whileInView={{ rotateY: 0, opacity: 1 }}
                                         transition={{ duration: 0.6, delay: 0.2 + (i * 0.1) }}
@@ -126,12 +129,12 @@ export default function Industries() {
                                     >
                                         <Icon size={56} className="dark:text-zinc-400 text-zinc-600 group-hover:text-brand-red transition-all duration-500 group-hover:scale-110" strokeWidth={1} />
                                     </motion.div>
-                                    
+
                                     <span className="text-white font-[900] uppercase text-sm tracking-widest transition-colors whitespace-pre-line leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                                         {item.label}
                                     </span>
-                                    
-                                    <motion.p 
+
+                                    <motion.p
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, delay: 0.4 + (i * 0.1) }}

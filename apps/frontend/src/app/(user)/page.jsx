@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import Hero from "@/components/Hero";
 // import Vision from "@/components/Vision";
 import About from "@/components/About";
@@ -7,14 +8,15 @@ import Partners from "@/components/Partners";
 import Industries from "@/components/Industries";
 import ConceptToCustomer from "@/components/ConceptToCustomer";
 
-import WhyChoose from "@/components/WhyChoose"; 
+import WhyChoose from "@/components/WhyChoose";
 
 import ThreeDProduct from "@/components/ThreeDProduct";
 import ClientsCarousel from "@/components/ClientsCarousel";
 // Helper to fetch products
 async function getProducts() {
     try {
-        const res = await fetch('http://localhost:3002/api/products', { cache: 'no-store' });
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+        const res = await fetch(`${apiUrl}/api/products`, { cache: 'no-store' });
         if (!res.ok) return [];
         return res.json();
     } catch (error) {
@@ -24,21 +26,16 @@ async function getProducts() {
 }
 
 export default async function Home() {
-    const products = await getProducts();
-    const latestProducts = products.map((p) => ({
-        name: p.title || p.name,
-        image: p.images && p.images.length > 0 ? p.images[0] : undefined,
-        slug: p.slug,
-        category: p.category
-    }));
+    await getProducts(); // Just to trigger a fetch check if needed, though we don't use the result here yet.
+    // Fixed: removed unused 'latestProducts' mapping.
 
     return (
         <main className="bg-black min-h-screen w-full overflow-x-hidden selection:bg-brand-red selection:text-white">
             <Hero />
             {/* <Vision /> */}
-            <About />  
+            <About />
             <ClientsCarousel />
-            <ThreeDProduct />      
+            <ThreeDProduct />
 
             <ProductShowcase />
             <Services />

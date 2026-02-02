@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { Plus, X, Upload, Save, ArrowLeft } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function EditProductPage({ params }) {
@@ -40,7 +41,8 @@ export default function EditProductPage({ params }) {
 
     // Fetch existing data
     useEffect(() => {
-        axios.get(`http://localhost:3002/api/products/${params.slug}`)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+        axios.get(`${apiUrl}/api/products/${params.slug}`)
             .then(res => {
                 const p = res.data;
                 reset({
@@ -76,10 +78,11 @@ export default function EditProductPage({ params }) {
         data.append('file', file);
 
         try {
-            const res = await axios.post('http://localhost:3002/api/upload', data);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+            const res = await axios.post(`${apiUrl}/api/upload`, data);
             setImages(prev => [...prev, res.data.url]);
-        } catch (err) {
-            console.error("Upload failed");
+        } catch (error) {
+            console.error("Upload failed", error);
             alert("Upload failed. Make sure backend is running on 3002.");
         } finally {
             setUploading(false);
@@ -94,10 +97,11 @@ export default function EditProductPage({ params }) {
         data.append('file', file);
 
         try {
-            const res = await axios.post('http://localhost:3002/api/upload', data);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+            const res = await axios.post(`${apiUrl}/api/upload`, data);
             setValue(fieldName, res.data.url);
-        } catch (err) {
-            console.error("Upload failed", err);
+        } catch (error) {
+            console.error("Upload failed", error);
             alert("Upload failed.");
         } finally {
             setLocalLoading(false);
@@ -113,7 +117,8 @@ export default function EditProductPage({ params }) {
         };
 
         try {
-            await axios.put(`http://localhost:3002/api/products/${params.slug}`, payload);
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+            await axios.put(`${apiUrl}/api/products/${params.slug}`, payload);
             router.push('/dashboard');
         } catch (err) {
             console.error("Submission error", err);
@@ -147,14 +152,14 @@ export default function EditProductPage({ params }) {
             </header>
 
             <form id="edit-product-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-4xl mx-auto">
-                
+
                 {/* Section 1: Product Identification */}
                 <section className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-6 lg:p-8 shadow-sm space-y-6">
                     <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-3 border-b border-gray-100 dark:border-zinc-800 pb-4">
                         <span className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/10 text-brand-red flex items-center justify-center font-bold text-sm">01</span>
                         Product Details
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-gray-700 dark:text-zinc-300">Product Name <span className="text-red-500">*</span></label>
@@ -196,11 +201,11 @@ export default function EditProductPage({ params }) {
 
                     <div className="space-y-2">
                         <label className="text-sm font-semibold text-gray-700 dark:text-zinc-300">Description <span className="text-red-500">*</span></label>
-                        <textarea 
-                            {...register("description")} 
+                        <textarea
+                            {...register("description")}
                             className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 p-3 rounded-xl h-32 focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red outline-none transition-all resize-none"
-                            placeholder="Detailed product description..." 
-                            required 
+                            placeholder="Detailed product description..."
+                            required
                         />
                     </div>
                 </section>
@@ -211,7 +216,7 @@ export default function EditProductPage({ params }) {
                         <span className="w-8 h-8 rounded-lg bg-red-50 dark:bg-red-900/10 text-brand-red flex items-center justify-center font-bold text-sm">02</span>
                         Specifications
                     </h3>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <label className="text-sm font-semibold text-gray-700 dark:text-zinc-300">Material</label>
@@ -264,7 +269,7 @@ export default function EditProductPage({ params }) {
                         <div className="flex flex-wrap gap-4">
                             {images.map((url, i) => (
                                 <div key={i} className="relative w-24 h-24 border border-gray-200 dark:border-zinc-700 rounded-xl overflow-hidden group shadow-sm">
-                                    <img src={url} alt="Uploaded" className="object-cover w-full h-full" />
+                                    <Image src={url} alt="Uploaded" width={96} height={96} className="object-cover w-full h-full" />
                                     <button type="button" onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <X size={20} className="text-white" />
                                     </button>
@@ -308,10 +313,10 @@ export default function EditProductPage({ params }) {
                             <span className="text-xs font-normal text-gray-400 bg-gray-100 dark:bg-zinc-800 px-2 py-0.5 rounded-full">Optional</span>
                         </label>
                         <div className="relative">
-                            <input 
-                                {...register("fusionUrl")} 
+                            <input
+                                {...register("fusionUrl")}
                                 className="w-full bg-gray-50 dark:bg-zinc-800 border border-gray-300 dark:border-zinc-700 p-3 pl-10 rounded-xl focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red outline-none text-sm font-mono text-blue-600 dark:text-blue-400"
-                                placeholder="https://a360.co/..." 
+                                placeholder="https://a360.co/..."
                             />
                             <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                                 <span className="text-xs font-bold">URL</span>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
+import { Sun, Moon, ChevronDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -25,7 +25,8 @@ export default function Navbar() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const res = await fetch('http://localhost:3002/api/categories');
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+                const res = await fetch(`${apiUrl}/api/categories`);
                 const data = await res.json();
                 if (data.categories) {
                     setCategories(data.categories);
@@ -181,7 +182,7 @@ export default function Navbar() {
                     {/* Mega Menu Dropdown */}
                     <AnimatePresence>
                         {isProductsHovered && (
-                            <div 
+                            <div
                                 className="fixed inset-0 top-[80px] flex justify-center z-[7000] pointer-events-none"
                                 onMouseEnter={() => setIsProductsHovered(true)}
                                 onMouseLeave={() => setIsProductsHovered(false)}
@@ -197,7 +198,7 @@ export default function Navbar() {
                                         <div className="grid grid-cols-3 gap-8">
                                             {categories.map((catObj, index) => (
                                                 <div key={index} className="flex flex-col gap-4">
-                                                    <Link 
+                                                    <Link
                                                         href={`/products?category=${encodeURIComponent(catObj.category)}`}
                                                         className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider"
                                                     >
@@ -205,7 +206,7 @@ export default function Navbar() {
                                                     </Link>
                                                     <div className="flex flex-col gap-2.5">
                                                         {catObj.products.map((product, pIndex) => (
-                                                            <Link 
+                                                            <Link
                                                                 key={pIndex}
                                                                 href={`/products/${product.slug}`}
                                                                 className="group flex items-center gap-3 text-sm text-zinc-500 hover:text-[#ff3333] transition-colors"
@@ -222,8 +223,8 @@ export default function Navbar() {
                                             <p className="text-xs text-zinc-400 font-medium uppercase tracking-widest">
                                                 Explore our full range of professional solutions
                                             </p>
-                                            <Link 
-                                                href="/products" 
+                                            <Link
+                                                href="/products"
                                                 className="group flex items-center gap-2 text-xs font-bold text-zinc-900 hover:text-[#ff3333] transition-all uppercase tracking-widest"
                                             >
                                                 View All Collection
@@ -355,8 +356,8 @@ export default function Navbar() {
                     "hidden lg:flex items-center gap-2",
                     isProductPage && "z-[6001]"
                 )}>
-                    {isProductPage 
-                        ? rightNavLinks.map(renderNavLink) 
+                    {isProductPage
+                        ? rightNavLinks.map(renderNavLink)
                         : navLinks.map(renderNavLink)
                     }
                 </div>

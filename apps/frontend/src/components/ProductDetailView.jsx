@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ChevronRight, Download, Share2, Check } from 'lucide-react';
+import { ChevronRight, Download, Share2 } from 'lucide-react';
 
 export default function ProductDetailView({ product }) {
     const [activeImage, setActiveImage] = useState(0);
@@ -24,7 +24,7 @@ export default function ProductDetailView({ product }) {
     return (
         <div className="min-h-screen dark:bg-[#050505] bg-white dark:text-white text-black pt-32 pb-20">
             <div className="container mx-auto px-6">
-                
+
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-sm text-zinc-500 mb-10 uppercase tracking-wider font-semibold">
                     <span className="hover:text-white cursor-pointer transition-colors">Products</span>
@@ -35,20 +35,20 @@ export default function ProductDetailView({ product }) {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    
+
                     {/* LEFT COLUMN - IMAGES */}
                     <div className="space-y-6">
                         {/* Main Image */}
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             className="relative aspect-video rounded-3xl overflow-hidden dark:bg-zinc-900 bg-zinc-100 dark:border-zinc-800 border-zinc-200 shadow-2xl group"
                         >
-                            <Image 
-                                src={images[activeImage]} 
-                                alt={product.name} 
-                                fill 
-                                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                            <Image
+                                src={images[activeImage]}
+                                alt={product.name}
+                                fill
+                                className="object-cover group-hover:scale-105 transition-transform duration-700"
                             />
                             {/* Overlay Gradient */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
@@ -72,7 +72,7 @@ export default function ProductDetailView({ product }) {
 
                     {/* RIGHT COLUMN - DETAILS */}
                     <div className="flex flex-col justify-center">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.5 }}

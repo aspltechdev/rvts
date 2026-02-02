@@ -57,7 +57,7 @@ export default function TermsConditions() {
 
                     <h3 className="text-xl font-bold mt-6 mb-2 text-black dark:text-white">7. Warranty & After-Sales Services</h3>
                     <ul className="list-disc pl-5 space-y-1 mb-4">
-                        <li>Product warranties are provided as per the manufacturer’s terms and conditions.</li>
+                        <li>Product warranties are provided as per the manufacturer&apos;s terms and conditions.</li>
                         <li>RVTS will support warranty coordination but is not responsible for manufacturer-level warranty decisions.</li>
                         <li>After-sales support is provided as per the agreed service scope or contract.</li>
                     </ul>
@@ -97,8 +97,8 @@ export default function TermsConditions() {
                     </p>
 
                     <h3 className="text-xl font-bold mt-6 mb-2 text-black dark:text-white">14. Contact Information</h3>
-                     <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                         <p className="font-bold">Research Vision Tech Services</p>
+                    <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800">
+                        <p className="font-bold">Research Vision Tech Services</p>
                         <p>📍 Bengaluru, Karnataka, India</p>
                         <p>📧 Email: sales@researchvisions.com</p>
                         <p>📞 Phone: +91 95911 33004</p>

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Monitor, Cpu, Zap, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Monitor, Cpu, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ProductsListPage = ({ searchParams }) => {
     const [products, setProducts] = useState([]);
@@ -12,7 +12,7 @@ const ProductsListPage = ({ searchParams }) => {
     const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Categories');
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    
+
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
@@ -31,8 +31,9 @@ const ProductsListPage = ({ searchParams }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
                 // Try fetching from local API if available
-                const res = await fetch('http://localhost:3002/api/products');
+                const res = await fetch(`${apiUrl}/api/products`);
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
                 setProducts(data);
@@ -54,7 +55,7 @@ const ProductsListPage = ({ searchParams }) => {
     // Filter Logic
     const filteredProducts = products.filter(p => {
         const nameMatch = (p.name || p.title || "").toLowerCase().includes(searchQuery.toLowerCase());
-        
+
         let matchesCategory = false;
         if (selectedCategory === 'All Categories') {
             matchesCategory = true;
@@ -63,9 +64,9 @@ const ProductsListPage = ({ searchParams }) => {
             const pCat = (p.category || "").toLowerCase().trim();
             const selCat = selectedCategory.toLowerCase().trim();
             // Check exact match or partial match (e.g. "Displays" matching "Displays & Video Walls")
-            matchesCategory = pCat === selCat || 
-                            pCat.includes(selCat.split('&')[0].trim()) || 
-                            selCat.includes(pCat.split('&')[0].trim());
+            matchesCategory = pCat === selCat ||
+                pCat.includes(selCat.split('&')[0].trim()) ||
+                selCat.includes(pCat.split('&')[0].trim());
         }
 
         return nameMatch && matchesCategory;
@@ -85,21 +86,18 @@ const ProductsListPage = ({ searchParams }) => {
 
     return (
         <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 font-sans pb-20 transition-colors duration-300">
-            
+
             {/* HERO BANNER SECTION */}
             <div className="relative w-full h-[300px] md:h-[400px] bg-zinc-100 dark:bg-zinc-900 overflow-hidden transition-colors duration-300">
                 {/* Background */}
                 <div className="absolute inset-0">
                     <div className="absolute inset-0 bg-gradient-to-r from-zinc-100 via-zinc-100/80 to-transparent dark:from-zinc-900 dark:via-zinc-900/80 z-10" />
-                    <img 
-                        src="/assets/products-hero-bg.jpg" 
-                        alt="Background" 
-                        className="w-full h-full object-cover opacity-10 dark:opacity-40 scale-105"
-                        onError={(e) => {
-                            e.target.onerror = null; 
-                            e.target.style.display = 'none';
-                            e.target.parentElement.style.backgroundColor = '#f4f4f5'; // Fallback
-                        }} 
+                    <Image
+                        src="/assets/products-hero-bg.jpg"
+                        alt="Background"
+                        fill
+                        className="object-cover opacity-10 dark:opacity-40 scale-105"
+                        priority
                     />
                 </div>
 
@@ -113,28 +111,28 @@ const ProductsListPage = ({ searchParams }) => {
 
                     {/* Decorative Icons row */}
                     <div className="flex gap-6 md:gap-8 opacity-20 dark:opacity-40 hidden sm:flex text-black dark:text-white">
-                         {categories.slice(0, 5).map((cat, i) => (
-                             <div key={i} className="transform hover:scale-110 transition-transform duration-300">
-                                 {React.cloneElement(cat.icon, { size: 28, strokeWidth: 1.5 })}
-                             </div>
-                         ))}
+                        {categories.slice(0, 5).map((cat, i) => (
+                            <div key={i} className="transform hover:scale-110 transition-transform duration-300">
+                                {React.cloneElement(cat.icon, { size: 28, strokeWidth: 1.5 })}
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
 
             {/* MAIN CONTENT AREA */}
             <div className="w-full max-w-[1700px] mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col lg:flex-row gap-8 xl:gap-16">
-                
+
                 {/* MOBILE CATEGORY SELECTOR (Visible only on lg and below) */}
                 <div className="lg:hidden w-full mb-4">
-                    <button 
+                    <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="w-full flex items-center justify-between px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-sm font-bold text-zinc-900 dark:text-zinc-100 transition-colors"
                     >
                         <span>{selectedCategory}</span>
                         <ChevronDown size={18} className={`transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} />
                     </button>
-                    
+
                     {isMobileMenuOpen && (
                         <div className="mt-2 w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xl overflow-hidden z-30 relative transition-colors">
                             <button
@@ -161,15 +159,14 @@ const ProductsListPage = ({ searchParams }) => {
                     <h2 className="text-xl md:text-2xl font-bold text-[#ff3333] mb-6 md:mb-8 px-1">
                         All Categories
                     </h2>
-                    
+
                     <div className="flex flex-col space-y-1">
                         <button
-                             onClick={() => setSelectedCategory('All Categories')}
-                             className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${
-                                 selectedCategory === 'All Categories'
-                                 ? 'text-[#ff3333] dark:text-[#ff4444] border-[#ff3333] bg-red-50 dark:bg-red-900/10'
-                                 : 'text-zinc-500 dark:text-zinc-400 border-transparent hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
-                             }`}
+                            onClick={() => setSelectedCategory('All Categories')}
+                            className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${selectedCategory === 'All Categories'
+                                ? 'text-[#ff3333] dark:text-[#ff4444] border-[#ff3333] bg-red-50 dark:bg-red-900/10'
+                                : 'text-zinc-500 dark:text-zinc-400 border-transparent hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                                }`}
                         >
                             View All Collection
                         </button>
@@ -177,11 +174,10 @@ const ProductsListPage = ({ searchParams }) => {
                             <button
                                 key={cat.name}
                                 onClick={() => setSelectedCategory(cat.name)}
-                                className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${
-                                    selectedCategory === cat.name
+                                className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${selectedCategory === cat.name
                                     ? 'text-[#ff3333] dark:text-[#ff4444] border-[#ff3333] bg-red-50 dark:bg-red-900/10'
                                     : 'text-zinc-500 dark:text-zinc-400 border-transparent hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
-                                }`}
+                                    }`}
                             >
                                 {cat.name}
                             </button>
@@ -193,21 +189,21 @@ const ProductsListPage = ({ searchParams }) => {
                 <div className="flex-1 w-full">
                     {/* SEARCH HEADER */}
                     <div className="w-full mb-8 md:mb-12">
-                         <div className="flex items-center w-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-[#111] h-10 md:h-12 shadow-sm focus-within:shadow-md focus-within:border-zinc-400 dark:focus-within:border-zinc-500 transition-all duration-300 rounded-lg overflow-hidden">
-                             <div className="pl-4 text-zinc-400 dark:text-zinc-500">
-                                 <Search size={20} />
-                             </div>
-                             <input 
-                                 type="text" 
-                                 placeholder="Search products..." 
-                                 className="flex-1 h-full px-4 text-zinc-700 dark:text-zinc-200 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm md:text-base bg-transparent"
-                                 value={searchQuery}
-                                 onChange={(e) => setSearchQuery(e.target.value)}
-                             />
-                             <button className="h-full px-6 md:px-10 bg-[#222] dark:bg-zinc-800 hover:bg-[#ff3333] dark:hover:bg-[#ff3333] text-white font-bold uppercase tracking-wider text-xs md:text-sm transition-colors duration-300">
-                                 Search
-                             </button>
-                         </div>
+                        <div className="flex items-center w-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-[#111] h-10 md:h-12 shadow-sm focus-within:shadow-md focus-within:border-zinc-400 dark:focus-within:border-zinc-500 transition-all duration-300 rounded-lg overflow-hidden">
+                            <div className="pl-4 text-zinc-400 dark:text-zinc-500">
+                                <Search size={20} />
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                className="flex-1 h-full px-4 text-zinc-700 dark:text-zinc-200 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm md:text-base bg-transparent"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
+                            <button className="h-full px-6 md:px-10 bg-[#222] dark:bg-zinc-800 hover:bg-[#ff3333] dark:hover:bg-[#ff3333] text-white font-bold uppercase tracking-wider text-xs md:text-sm transition-colors duration-300">
+                                Search
+                            </button>
+                        </div>
                     </div>
 
                     {/* RESULTS GRID */}
@@ -220,22 +216,22 @@ const ProductsListPage = ({ searchParams }) => {
                         <>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8 mb-16">
                                 {currentProducts.map((p) => (
-                                    <Link 
-                                        href={`/products/${p.slug}`} 
+                                    <Link
+                                        href={`/products/${p.slug}`}
                                         key={p.id}
                                         className="group flex flex-col h-full bg-white dark:bg-[#111] border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xl dark:hover:shadow-black/60 transition-all duration-300 rounded-xl overflow-hidden"
                                     >
                                         {/* CARD IMAGE */}
                                         <div className="aspect-square bg-zinc-50 dark:bg-zinc-800/80 relative flex items-center justify-center p-2 overflow-hidden">
                                             {/* Subtle pattern overlay */}
-                                            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 1px, transparent 0, transparent 10px)'}} />
-                                            
+                                            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{ backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 1px, transparent 0, transparent 10px)' }} />
+
                                             <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105">
                                                 {p.images?.[0] ? (
-                                                    <Image 
-                                                        src={p.images[0]} 
-                                                        alt={p.name} 
-                                                        fill 
+                                                    <Image
+                                                        src={p.images[0]}
+                                                        alt={p.name}
+                                                        fill
                                                         className="object-contain mix-blend-multiply dark:mix-blend-normal drop-shadow-sm group-hover:drop-shadow-xl transition-all duration-300"
                                                     />
                                                 ) : (
@@ -269,16 +265,15 @@ const ProductsListPage = ({ searchParams }) => {
                                     >
                                         <ChevronLeft size={20} />
                                     </button>
-                                    
+
                                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
                                         <button
                                             key={number}
                                             onClick={() => handlePageChange(number)}
-                                            className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${
-                                                currentPage === number
+                                            className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentPage === number
                                                 ? 'bg-[#ff3333] text-white shadow-lg shadow-red-500/30'
                                                 : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
-                                            }`}
+                                                }`}
                                         >
                                             {number}
                                         </button>
@@ -294,7 +289,7 @@ const ProductsListPage = ({ searchParams }) => {
                                 </div>
                             )}
 
-                             {filteredProducts.length > 0 && (
+                            {filteredProducts.length > 0 && (
                                 <div className="text-center mt-4 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
                                     Showing {indexOfFirstProduct + 1} - {Math.min(indexOfLastProduct, filteredProducts.length)} of {filteredProducts.length} Products
                                 </div>

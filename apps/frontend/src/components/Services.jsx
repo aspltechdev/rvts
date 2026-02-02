@@ -3,32 +3,11 @@
 import React, { useRef } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function Services() {
-    const [theme, setTheme] = React.useState('dark');
     const containerRef = useRef(null);
 
-    React.useEffect(() => {
-        const checkTheme = () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            setTheme(isDark ? 'dark' : 'light');
-        };
-        checkTheme();
-        
-        // Observe html class changes
-        const observer = new MutationObserver(checkTheme);
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        return () => observer.disconnect();
-    }, []);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start end", "end start"]
-    });
-
-    // Parallax effects for background elements
-    const yBg = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
-    const opacityBg = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.6, 0.3]);
 
     return (
 
@@ -41,7 +20,7 @@ export default function Services() {
 
                 {/* --- STANDARD HEADING --- */}
                 <div className="text-center mb-12">
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -49,7 +28,7 @@ export default function Services() {
                     >
                         Our Services
                     </motion.h2>
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         whileInView={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
@@ -62,34 +41,34 @@ export default function Services() {
                 </div>
 
                 {/* --- CAROUSEL / CARD SECTION --- */}
-                 <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="flex items-center justify-center w-full"
                 >
                     <div className="w-full max-w-[1100px] relative dark:bg-white/[0.03] bg-white/50 backdrop-blur-md rounded-[32px] dark:border-white/40 border-black/20 p-4 md:p-8 group hover:border-[#ff3333]/30 transition-all duration-500 shadow-2xl border">
-                        
+
                         <div className="flex flex-col md:flex-row items-center gap-12">
-                            
+
                             {/* Image Container with Custom Shape (Notch) */}
                             <div className="relative w-full md:w-[45%] aspect-[16/10] md:aspect-[4/3]">
                                 <div className="w-full h-full dark:bg-zinc-900 bg-zinc-200 rounded-[30px] rounded-tr-[80px] overflow-hidden relative dark:border-white/30 border-black/5 border">
-                                    <motion.img 
+                                    <motion.img
                                         initial={{ scale: 1.1 }}
                                         whileInView={{ scale: 1 }}
                                         transition={{ duration: 1.5, ease: "easeOut" }}
-                                        src="/images/video-wall.png" 
-                                        alt="Service Preview" 
+                                        src="/images/services/implementation.png"
+                                        alt="Service Preview"
                                         className="w-full h-full object-cover transition-all duration-700"
                                     />
                                     <div className="absolute inset-0 bg-[#ff3333] mix-blend-multiply dark:opacity-60 opacity-0 group-hover:opacity-0 transition-opacity duration-700 pointer-events-none" />
                                 </div>
 
                                 {/* Floating Action Button */}
-                                <div className="absolute -top-3 -right-3 z-20"> 
+                                <div className="absolute -top-3 -right-3 z-20">
                                     <Link href="/services">
-                                        <motion.div 
+                                        <motion.div
                                             whileHover={{ scale: 1.1, rotate: 45 }}
                                             className="w-16 h-16 bg-[#ff3333] rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(255,51,51,0.4)] cursor-pointer border-4 dark:border-[#050505] border-white"
                                         >
@@ -101,13 +80,13 @@ export default function Services() {
 
                             {/* Text Content */}
                             <div className="w-full md:w-1/2 text-center md:text-left">
-                                <motion.h3 
+                                <motion.h3
                                     initial={{ x: -20, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
                                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
                                     className="text-2xl font-bold dark:text-white text-black mb-3 uppercase tracking-wider"
                                 >
-                                    INSTALLATION & <span className="text-[#ff3333]">SYSTEM DEPLOYMENT</span>
+                                    PROJECT <span className="text-[#ff3333]">IMPLEMENTATION</span>
                                 </motion.h3>
 
                                 <div className="mb-4">
@@ -128,9 +107,9 @@ export default function Services() {
                                 </div>
 
                                 <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                                    {['SYSTEM DESIGN & CONSULTATION', 'MAINTENANCE & SUPPORT SERVICES', 'TURNKEY AV SOLUTIONS', 'Testing & Validation'].map((tag, i) => (
-                                        <motion.span 
-                                            key={tag} 
+                                    {['PRODUCT CONSULTATION', 'TECHNICAL SUPPORT', 'WARRANTY & MAINTENANCE', 'ON-TIME DELIVERY'].map((tag, i) => (
+                                        <motion.span
+                                            key={tag}
                                             initial={{ opacity: 0, scale: 0.8, y: 10 }}
                                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                                             whileHover={{ scale: 1.05 }}
@@ -147,7 +126,7 @@ export default function Services() {
 
                     </div>
                 </motion.div>
-                
+
             </div>
         </section>
     );

@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState, useEffect } from 'react';
-import { Plus, Play } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 
@@ -140,25 +140,25 @@ export default function ConceptToCustomer() {
                     <div className="flex flex-col items-center lg:items-end w-full">
                         <div className="relative w-full w-full md:max-w-lg lg:max-w-md aspect-video lg:aspect-square dark:bg-zinc-900 bg-zinc-100 overflow-hidden rounded-xl shadow-2xl group border dark:border-white/5 border-black/5">
 
-                        {/* Single Video */}
-                        {/* Lazy Loaded Video */}
-                        <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-zinc-200 dark:bg-zinc-800">
-                            {shouldLoadVideo ? (
-                                <video
-                                    src={videos[0]}
-                                    autoPlay
-                                    muted
-                                    loop
-                                    playsInline
-                                    className="w-full h-full object-cover fade-in"
-                                />
-                            ) : (
-                                <div className="absolute inset-0 w-full h-full flex items-center justify-center">
-                                    <div className="w-10 h-10 border-4 border-[#ff3333] border-t-transparent rounded-full animate-spin"></div>
-                                </div>
-                            )}
+                            {/* Single Video */}
+                            {/* Lazy Loaded Video */}
+                            <div ref={videoContainerRef} className="absolute inset-0 w-full h-full bg-zinc-200 dark:bg-zinc-800">
+                                {shouldLoadVideo ? (
+                                    <video
+                                        src={videos[0]}
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        className="w-full h-full object-cover fade-in"
+                                    />
+                                ) : (
+                                    <div className="absolute inset-0 w-full h-full flex items-center justify-center">
+                                        <div className="w-10 h-10 border-4 border-[#ff3333] border-t-transparent rounded-full animate-spin"></div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </motion.div>
 

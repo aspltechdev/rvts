@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ChevronRight, Send } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export default function GetOurSupport() {
     const [activeFaq, setActiveFaq] = useState(1);
@@ -37,15 +37,15 @@ export default function GetOurSupport() {
 
     return (
         <section id="support" className="relative w-full dark:bg-[#050505] bg-white py-12 md:py-20 px-4 overflow-hidden flex flex-col justify-center items-center">
-            
+
             {/* Background Base */}
             <div className="absolute inset-0 z-0 pointer-events-none dark:bg-[#050505] bg-white" />
 
             <div className="max-w-[1400px] w-full mx-auto relative z-10 flex flex-col items-center">
-                
+
                 {/* --- STANDARD HEADING (Matching Services) --- */}
                 <div className="text-center mb-12 text-center items-center flex flex-col">
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -53,7 +53,7 @@ export default function GetOurSupport() {
                     >
                         GET OUR SUPPORT
                     </motion.h2>
-                    <motion.p 
+                    <motion.p
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         whileInView={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.4 }}
@@ -64,19 +64,19 @@ export default function GetOurSupport() {
                 </div>
 
                 {/* --- MAIN CARD --- */}
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="flex items-center justify-center w-full"
                 >
                     <div className="w-full max-w-[1100px] relative dark:bg-white/[0.03] bg-white/50 backdrop-blur-md rounded-[40px] dark:border-white/40 border-black/20 p-6 md:p-12 group hover:border-[#ff3333]/30 transition-all duration-500 shadow-2xl border">
-                        
+
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
 
                             {/* Left Column - Support Query */}
                             <div>
-                                <motion.h3 
+                                <motion.h3
                                     initial={{ x: -20, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
                                     transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
@@ -84,7 +84,7 @@ export default function GetOurSupport() {
                                 >
                                     HOW CAN WE <span className="text-[#ff3333]">HELP YOU?</span>
                                 </motion.h3>
-                                
+
                                 <p className="dark:text-zinc-400 text-zinc-600 text-sm md:text-base mb-10 leading-relaxed">
                                     Our dedicated professionals are available around the clock to handle technical concerns, system checks, upgrades, and performance issues.
                                 </p>
@@ -101,13 +101,13 @@ export default function GetOurSupport() {
                                     </div>
 
                                     <div className="relative inline-block w-full group/btn">
-                                        <a 
+                                        <a
                                             href="/contact?subject=Technical+Support"
                                             className="w-full py-4 bg-[#ff3333] text-white font-black uppercase tracking-widest rounded-xl shadow-[0_10px_30px_rgba(255,51,51,0.3)] hover:shadow-[0_15px_40px_rgba(255,51,51,0.5)] transition-all flex items-center justify-center gap-3 relative z-10 hover:scale-[1.01] active:scale-[0.99]"
                                         >
                                             Open Support Ticket
                                         </a>
-                                        
+
                                         {/* Improved Diamond Accent for Button */}
                                         <div className="absolute -top-4 right-6 w-8 h-8 dark:bg-white bg-white transform rotate-45 rounded-sm shadow-xl z-20 flex items-center justify-center dark:border-white/20 border-black/10 group-hover/btn:rotate-90 transition-transform duration-500 pointer-events-none border-2">
                                             <div className="w-2 h-2 dark:bg-[#ff3333] bg-[#ff3333] rounded-full animate-pulse" />
@@ -119,7 +119,7 @@ export default function GetOurSupport() {
                             {/* Right Column - FAQ */}
                             <div className="space-y-4">
                                 <h4 className="text-xl font-black dark:text-white text-black uppercase tracking-wider mb-6">Frequently Asked Questions</h4>
-                                
+
                                 <div className="space-y-3">
                                     {faqs.map((faq, index) => (
                                         <motion.div
@@ -127,8 +127,8 @@ export default function GetOurSupport() {
                                             initial={{ opacity: 0, y: 10 }}
                                             whileInView={{ opacity: 1, y: 0 }}
                                             transition={{ duration: 0.4, delay: 0.1 * index }}
-                                            className={`rounded-2xl border transition-all duration-300 ${activeFaq === faq.id 
-                                                ? 'dark:bg-white/10 bg-black/5 dark:border-[#ff3333]/50 border-[#ff3333]/30 p-5' 
+                                            className={`rounded-2xl border transition-all duration-300 ${activeFaq === faq.id
+                                                ? 'dark:bg-white/10 bg-black/5 dark:border-[#ff3333]/50 border-[#ff3333]/30 p-5'
                                                 : 'dark:bg-white/5 bg-black/5 border-transparent p-4'}`}
                                             onClick={() => setActiveFaq(faq.id === activeFaq ? null : faq.id)}
                                         >
@@ -141,7 +141,7 @@ export default function GetOurSupport() {
                                                 </div>
                                             </div>
 
-                                            <motion.div 
+                                            <motion.div
                                                 initial={false}
                                                 animate={{ height: activeFaq === faq.id ? 'auto' : 0, opacity: activeFaq === faq.id ? 1 : 0 }}
                                                 transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -159,7 +159,7 @@ export default function GetOurSupport() {
                         </div>
                     </div>
                 </motion.div>
-                
+
             </div>
         </section>
     );

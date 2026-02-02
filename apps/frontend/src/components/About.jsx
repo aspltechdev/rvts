@@ -4,7 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import { motion, useInView, animate } from 'framer-motion';
 import Image from 'next/image';
 
-const AnimatedCounter = ({ value, label, theme }) => {
+const AnimatedCounter = ({ value, label }) => {
     const ref = useRef(null);
     const inView = useInView(ref, { once: true, margin: "-50px" });
 
@@ -37,19 +37,7 @@ const AnimatedCounter = ({ value, label, theme }) => {
 };
 
 export default function About() {
-    const [theme, setTheme] = React.useState('dark');
 
-    React.useEffect(() => {
-        const checkTheme = () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            setTheme(isDark ? 'dark' : 'light');
-        };
-        checkTheme();
-
-        const observer = new MutationObserver(checkTheme);
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-        return () => observer.disconnect();
-    }, []);
 
     return (
         <section id="about" className="relative w-full dark:bg-[#050505] bg-white py-12 md:py-20 px-4 overflow-hidden flex flex-col justify-center items-center">
@@ -130,7 +118,7 @@ export default function About() {
                                         transition={{ duration: 0.5, delay: 0.4 }}
                                         className="dark:text-zinc-200 text-zinc-600 text-base md:text-lg leading-relaxed"
                                     >
-                                        Research Vision Tech Services (RVTS) is a technology-focused organization delivering advanced visual and AV solutions tailored for today’s dynamic environments. We bridge the gap between innovation and execution by transforming complex ideas into reliable, high-performance systems.
+                                        Research Vision Tech Services (RVTS) is a technology-focused organization delivering advanced visual and AV solutions tailored for today&apos;s dynamic environments. We bridge the gap between innovation and execution by transforming complex ideas into reliable, high-performance systems.
                                     </motion.p>
                                     <motion.p
                                         initial={{ opacity: 0, y: 10 }}
@@ -150,7 +138,7 @@ export default function About() {
                                         { label: "Trusted Enterprise Clients", value: "150+" },
                                         { label: "Technology & Solution Partners", value: "25+" }
                                     ].map((stat, i) => (
-                                        <AnimatedCounter key={i} value={stat.value} label={stat.label} theme={theme} />
+                                        <AnimatedCounter key={i} value={stat.value} label={stat.label} />
                                     ))}
                                 </div>
                             </div>

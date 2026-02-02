@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Download, Phone, ChevronDown } from 'lucide-react';
+import { X, Download, ChevronDown } from 'lucide-react';
 import { submitContactQuery } from '../app/actions/contact';
 import { z } from 'zod';
 
@@ -44,7 +44,7 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
         setFieldErrors({});
 
         const formData = new FormData(e.target);
-        
+
         // Construct full phone number with country code
         const rawPhone = formData.get('phoneNumber');
         const fullPhoneNumber = `${selectedCountry.code} ${rawPhone}`;
@@ -85,9 +85,9 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
         if (result.success) {
             setSuccess(true);
             setTimeout(() => {
-                onDownload(); 
-                onClose();    
-                setSuccess(false); 
+                onDownload();
+                onClose();
+                setSuccess(false);
             }, 1000);
         } else {
             setError(result.error || 'Something went wrong. Please try again.');
@@ -100,7 +100,7 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
             {isOpen && (
                 <div className="fixed inset-0 z-[7000] flex items-center justify-center p-4">
                     {/* Backdrop */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -109,7 +109,7 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                     />
 
                     {/* Modal */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -125,7 +125,7 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                                     Please complete the form below to access the {productName} documentation.
                                 </p>
                             </div>
-                            <button 
+                            <button
                                 onClick={onClose}
                                 className="p-2 bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-white rounded-full transition-colors"
                             >
@@ -133,51 +133,51 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                             </button>
                         </div>
 
-                         {/* Form */}
-                         <div className="p-5 md:p-6 relative z-10">
-                             {/* Background Glow */}
-                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-red-500/5 rounded-full blur-[80px] -z-10 pointer-events-none" />
+                        {/* Form */}
+                        <div className="p-5 md:p-6 relative z-10">
+                            {/* Background Glow */}
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-red-500/5 rounded-full blur-[80px] -z-10 pointer-events-none" />
 
-                             <form onSubmit={handleSubmit} className="space-y-4">
-                                 <div className="grid grid-cols-2 gap-4">
-                                     <div className="space-y-1.5">
-                                         <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">First Name</label>
-                                         <input 
-                                             name="firstName" 
-                                             className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.firstName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
-                                             placeholder="John"
-                                         />
-                                         {fieldErrors.firstName && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.firstName}</p>}
-                                     </div>
-                                     <div className="space-y-1.5">
-                                         <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Last Name</label>
-                                         <input 
-                                             name="lastName" 
-                                             className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.lastName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
-                                             placeholder="Doe"
-                                         />
-                                          {fieldErrors.lastName && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.lastName}</p>}
-                                     </div>
-                                 </div>
+                            <form onSubmit={handleSubmit} className="space-y-4">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">First Name</label>
+                                        <input
+                                            name="firstName"
+                                            className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.firstName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
+                                            placeholder="John"
+                                        />
+                                        {fieldErrors.firstName && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.firstName}</p>}
+                                    </div>
+                                    <div className="space-y-1.5">
+                                        <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Last Name</label>
+                                        <input
+                                            name="lastName"
+                                            className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.lastName ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
+                                            placeholder="Doe"
+                                        />
+                                        {fieldErrors.lastName && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.lastName}</p>}
+                                    </div>
+                                </div>
 
-                                 <div className="space-y-1.5">
-                                     <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
-                                     <input 
-                                         name="email" 
-                                         type="email"
-                                         className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.email ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
-                                         placeholder="john@company.com"
-                                     />
-                                      {fieldErrors.email && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.email}</p>}
-                                 </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
+                                    <input
+                                        name="email"
+                                        type="email"
+                                        className={`w-full bg-zinc-50 dark:bg-black/50 border ${fieldErrors.email ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
+                                        placeholder="john@company.com"
+                                    />
+                                    {fieldErrors.email && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.email}</p>}
+                                </div>
 
-                                 {/* Phone Input with Country Dropdown */}
-                                 <div className="space-y-1.5 relative">
-                                     <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
-                                     <div className="flex gap-2">
-                                        
+                                {/* Phone Input with Country Dropdown */}
+                                <div className="space-y-1.5 relative">
+                                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
+                                    <div className="flex gap-2">
+
                                         <div className="relative">
-                                            <button 
+                                            <button
                                                 type="button"
                                                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                                                 className={`h-full min-w-[90px] px-3 bg-zinc-50 dark:bg-black/50 border ${fieldErrors.phoneNumber ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl flex items-center justify-between text-sm text-zinc-900 dark:text-white transition-all hover:bg-zinc-100 dark:hover:bg-zinc-800/80`}
@@ -185,10 +185,10 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                                                 <span>{selectedCountry.code}</span>
                                                 <ChevronDown size={14} className={`ml-2 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
                                             </button>
-                                            
+
                                             <AnimatePresence>
                                                 {isDropdownOpen && (
-                                                    <motion.div 
+                                                    <motion.div
                                                         initial={{ opacity: 0, y: -10 }}
                                                         animate={{ opacity: 1, y: 0 }}
                                                         exit={{ opacity: 0, y: -10 }}
@@ -213,51 +213,51 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                                             </AnimatePresence>
                                         </div>
 
-                                        <input 
-                                             name="phoneNumber" 
-                                             type="tel"
-                                             className={`flex-1 bg-zinc-50 dark:bg-black/50 border ${fieldErrors.phoneNumber ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
-                                             placeholder="9876543210"
-                                         />
-                                     </div>
-                                     {fieldErrors.phoneNumber && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.phoneNumber}</p>}
-                                 </div>
+                                        <input
+                                            name="phoneNumber"
+                                            type="tel"
+                                            className={`flex-1 bg-zinc-50 dark:bg-black/50 border ${fieldErrors.phoneNumber ? 'border-red-500' : 'border-zinc-200 dark:border-zinc-800 focus:border-brand-red'} rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600`}
+                                            placeholder="9876543210"
+                                        />
+                                    </div>
+                                    {fieldErrors.phoneNumber && <p className="text-red-500 text-[10px] pl-1">{fieldErrors.phoneNumber}</p>}
+                                </div>
 
-                                 <div className="space-y-1.5">
-                                     <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Company (Optional)</label>
-                                     <input 
-                                         name="company" 
-                                         className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 focus:border-brand-red rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
-                                         placeholder="Company Ltd"
-                                     />
-                                 </div>
+                                <div className="space-y-1.5">
+                                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Company (Optional)</label>
+                                    <input
+                                        name="company"
+                                        className="w-full bg-zinc-50 dark:bg-black/50 border border-zinc-200 dark:border-zinc-800 focus:border-brand-red rounded-xl p-3 text-sm text-zinc-900 dark:text-white focus:outline-none transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+                                        placeholder="Company Ltd"
+                                    />
+                                </div>
 
-                                 {error && (
-                                     <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-xs text-center">
-                                         {error}
-                                     </div>
-                                 )}
+                                {error && (
+                                    <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-xs text-center">
+                                        {error}
+                                    </div>
+                                )}
 
-                                 {success ? (
-                                      <div className="w-full bg-green-500/20 text-green-500 py-3 rounded-xl font-bold uppercase tracking-widest flex items-center justify-center gap-2">
-                                          Download Starting...
-                                      </div>
-                                 ) : (
-                                     <button 
-                                         type="submit" 
-                                         disabled={loading}
-                                         className="w-full bg-brand-red text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
-                                     >
-                                         {loading ? 'Processing...' : 'Download Now'}
-                                         {!loading && <Download size={18} />}
-                                     </button>
-                                 )}
+                                {success ? (
+                                    <div className="w-full bg-green-500/20 text-green-500 py-3 rounded-xl font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                                        Download Starting...
+                                    </div>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
+                                        className="w-full bg-brand-red text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:bg-red-700 transition-all shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_40px_rgba(220,38,38,0.5)] flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                                    >
+                                        {loading ? 'Processing...' : 'Download Now'}
+                                        {!loading && <Download size={18} />}
+                                    </button>
+                                )}
 
-                                 <p className="text-[10px] text-zinc-500 dark:text-zinc-500 text-center mt-2">
-                                     Your information is secure. We'll send a copy of the documentation to your email.
-                                 </p>
-                             </form>
-                         </div>
+                                <p className="text-[10px] text-zinc-500 dark:text-zinc-500 text-center mt-2">
+                                    Your information is secure. We&apos;ll send a copy of the documentation to your email.
+                                </p>
+                            </form>
+                        </div>
                     </motion.div>
                 </div>
             )}

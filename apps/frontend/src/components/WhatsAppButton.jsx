@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const socials = [
@@ -41,7 +41,6 @@ const socials = [
 ];
 
 export default function WhatsAppButton() {
-    const pathname = usePathname();
     const [isVisible, setIsVisible] = useState(false); // Start hidden since we are at top
 
     // Check if we should hide on this path
@@ -129,7 +128,13 @@ export default function WhatsAppButton() {
                             whileTap={{ scale: 0.95 }}
                             className="relative w-9 h-9 md:w-11 md:h-11 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-900/30 border border-white/20 transition-all duration-300 overflow-hidden p-1"
                         >
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" className="w-full h-full object-contain filter drop-shadow-md" />
+                            <Image
+                                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                                alt="WhatsApp"
+                                width={36}
+                                height={36}
+                                className="w-full h-full object-contain filter drop-shadow-md"
+                            />
                         </motion.div>
 
                         {/* Tooltip */}

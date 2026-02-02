@@ -4,22 +4,21 @@ import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { 
-    LayoutDashboard, 
-    PlusCircle, 
-    UserPlus, 
-    Settings, 
-    LogOut, 
-    Package, 
-    MessageSquare, 
-    Moon, 
+import {
+    LayoutDashboard,
+    PlusCircle,
+    UserPlus,
+    Settings,
+    LogOut,
+    MessageSquare,
+    Moon,
     Sun,
     Search,
     Bell,
     ChevronDown,
-    Menu,
-    X
-} from 'lucide-react'; 
+    Menu
+} from 'lucide-react';
+
 import { useTheme } from '@/components/ThemeContext';
 
 export default function AdminLayout({ children }) {
@@ -39,7 +38,7 @@ export default function AdminLayout({ children }) {
     if (status === 'loading') return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-950 text-brand-red">
             <div className="animate-pulse flex flex-col items-center gap-4">
-                <div className="w-12 h-12 border-4 border-current border-t-transparent rounded-full animate-spin"/>
+                <div className="w-12 h-12 border-4 border-current border-t-transparent rounded-full animate-spin" />
                 <span className="text-gray-900 dark:text-white font-medium">Loading Panel...</span>
             </div>
         </div>
@@ -56,10 +55,10 @@ export default function AdminLayout({ children }) {
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 flex font-sans transition-colors duration-300 overflow-x-hidden">
-            
+
             {/* Mobile Sidebar Overlay */}
             {isMobileMenuOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black/50 z-40 md:hidden"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />
@@ -72,9 +71,9 @@ export default function AdminLayout({ children }) {
                     {/* Logo */}
                     <div className="flex items-center justify-start mb-10 px-2">
                         <div className="relative w-[140px] h-[50px]">
-                            <Image 
-                                src="/rvts-logo.png" 
-                                alt="RVTS Logo" 
+                            <Image
+                                src="/rvts-logo.png"
+                                alt="RVTS Logo"
                                 fill
                                 className="object-contain"
                                 priority
@@ -113,13 +112,13 @@ export default function AdminLayout({ children }) {
 
             {/* Main Content Area */}
             <div className="flex-1 flex flex-col min-w-0 md:ml-60 transition-all duration-300">
-                
+
                 {/* Top Navbar */}
                 <header className="sticky top-0 z-30 h-16 md:h-20 px-4 md:px-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between gap-4">
-                    
+
                     {/* Left: Mobile Toggle & Search */}
                     <div className="flex items-center gap-4 flex-1">
-                        <button 
+                        <button
                             onClick={() => setIsMobileMenuOpen(true)}
                             className="md:hidden p-2 rounded-lg text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800"
                         >
@@ -128,7 +127,7 @@ export default function AdminLayout({ children }) {
 
                         <div className="relative w-full max-w-md hidden md:block group">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-red transition-colors" size={20} />
-                            <input 
+                            <input
                                 type="text"
                                 placeholder="Search products, orders, or customers..."
                                 className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
@@ -138,12 +137,12 @@ export default function AdminLayout({ children }) {
 
                     {/* Right: Actions */}
                     <div className="flex items-center gap-3 sm:gap-6">
-                        
+
                         {/* Theme Toggle */}
-                        <button 
+                        <button
                             onClick={toggleTheme}
-                             className="p-2.5 rounded-full text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-brand-red dark:hover:text-brand-red transition-all duration-200 focus:outline-none"
-                             title="Toggle Theme"
+                            className="p-2.5 rounded-full text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-brand-red dark:hover:text-brand-red transition-all duration-200 focus:outline-none"
+                            title="Toggle Theme"
                         >
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
@@ -156,7 +155,7 @@ export default function AdminLayout({ children }) {
 
                         {/* User Profile */}
                         <div className="relative">
-                            <button 
+                            <button
                                 onClick={() => setIsProfileOpen(!isProfileOpen)}
                                 className="flex items-center gap-3 pl-2 pr-1 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-all cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-zinc-700"
                             >
@@ -184,7 +183,7 @@ export default function AdminLayout({ children }) {
                                                 <Settings size={16} />
                                                 Account Settings
                                             </Link>
-                                            <button 
+                                            <button
                                                 onClick={() => signOut({ callbackUrl: `${window.location.origin}/login` })}
                                                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
                                             >

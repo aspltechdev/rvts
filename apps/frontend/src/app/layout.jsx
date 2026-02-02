@@ -2,7 +2,7 @@ import { Outfit, Inter } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/components/AuthProvider';
 
-const outfit = Outfit({ 
+const outfit = Outfit({
     subsets: ['latin'],
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
     variable: '--font-outfit',
@@ -15,7 +15,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-    title: 'Product Showcase',
+    title: 'RVTS | Research Vision Tech Services',
     description: 'Next Gen Digital Solutions',
 };
 

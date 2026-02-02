@@ -1,0 +1,187 @@
+﻿  Γû▓ Next.js 14.2.15
+
+   Creating an optimized production build ...
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
+    + CategoryInfo          
+    : NotSpecified: (:Stri  
+  ng) [], RemoteException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+Failed to compile.
+
+./src/app/(dashboard)/admins
+/new/page.jsx
+6:1  Error: Use 
+"@ts-expect-error" instead 
+of "@ts-ignore", as 
+"@ts-ignore" will do 
+nothing if the following 
+line is error-free.  @typesc
+ript-eslint/ban-ts-comment
+
+./src/app/(dashboard)/dashbo
+ard/page.jsx
+11:11  Error: 'router' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+127:57  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/app/(dashboard)/layout
+.jsx
+13:5  Error: 'Package' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+21:5  Error: 'X' is defined 
+but never used.  @typescript
+-eslint/no-unused-vars
+
+./src/app/(dashboard)/produc
+ts/new/page.jsx
+53:18  Error: 'err' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+228:37  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/app/(dashboard)/produc
+ts/[slug]/edit/page.jsx
+83:18  Error: 'err' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+271:37  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/About.jsx
+3:10  Error: 'motion' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/components/Hero.jsx
+2:28  Error: 'CheckCircle' 
+is defined but never used.  
+@typescript-eslint/no-unused
+-vars
+
+./src/components/Partners.js
+x
+1:8  Error: 'Image' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+3:7  Error: 'logos' is 
+assigned a value but never 
+used.  @typescript-eslint/no
+-unused-vars
+
+./src/components/PortfolioCa
+rd.jsx
+11:21  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/ProductCard
+.jsx
+10:21  Warning: Using 
+`<img>` could result in 
+slower LCP and higher 
+bandwidth. Consider using 
+`<Image />` from 
+`next/image` to 
+automatically optimize 
+images. This may incur 
+additional usage or cost 
+from your provider. See: htt
+ps://nextjs.org/docs/message
+s/no-img-element  
+@next/next/no-img-element
+
+./src/components/QueriesTabl
+e.jsx
+4:16  Error: 'Calendar' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+4:26  Error: 'Phone' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+4:61  Error: 'Filter' is 
+defined but never used.  @ty
+pescript-eslint/no-unused-va
+rs
+
+./src/components/SettingsFor
+m.jsx
+5:1  Error: Use 
+"@ts-expect-error" instead 
+of "@ts-ignore", as 
+"@ts-ignore" will do 
+nothing if the following 
+line is error-free.  @typesc
+ript-eslint/ban-ts-comment
+
+info  - Need to disable 
+some ESLint rules? Learn 
+more here: https://nextjs.or
+g/docs/basic-features/eslint
+#disabling-rules
