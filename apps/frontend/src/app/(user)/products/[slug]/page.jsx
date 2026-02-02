@@ -21,72 +21,51 @@ import {
 } from 'lucide-react';
 
 
-const ProductDetailPage = ({ params }) => {
-    const { slug } = params;
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('description');
-    const [activeImageIndex, setActiveImageIndex] = useState(0);
-    const [viewMode, setViewMode] = useState('image'); // 'image' or '3d'
+    import { staticProducts } from '@/lib/static-products';
 
-    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const ProductDetailPage = ({ params }) => {
+        const { slug } = params;
+        const [product, setProduct] = useState(null);
+        const [loading, setLoading] = useState(true);
+        const [activeTab, setActiveTab] = useState('description');
+        const [activeImageIndex, setActiveImageIndex] = useState(0);
     
-    const initiateDownload = (type, url) => {
-        if (url) {
-            window.open(url, '_blank');
-        }
-    };
+        const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
-
-
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                // Fetch basic data from API
-                const res = await fetch(`http://localhost:3002/api/products/${slug}`);
-                let data = null;
+        
+        const initiateDownload = (type, url) => {
+            if (url) {
+                window.open(url, '_blank');
+            }
+        };
+    
+        useEffect(() => {
+            const fetchProduct = () => {
+                // Find product from static data
+                const data = staticProducts.find(p => p.slug === slug);
                 
-                if (res.ok) {
-                    data = await res.json();
-                }
-
-                // If API fails or returns minimal data, fallback/merge
-                // For demo purposes, if data is null, we create a dummy one based on slug
-                if (!data) {
-                    data = {
+                if (data) {
+                    setProduct(data);
+                } else {
+                    // Fallback/merge if not found
+                    setProduct({
                         name: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-                        category: "Professional Mounts",
+                        category: "Professional Solutions",
                         title: "Professional Series detailed product",
                         images: ["/assets/product_placeholder.png"],
                         features: [],
                         material: "N/A",
                         finish: "N/A"
-                    };
+                    });
                 }
-
-                setProduct(data);
-            } catch (err) {
-                console.error(err);
-                // Fallback for demo
-                setProduct({
-                    name: "Mobile Trolley 2 Stage Motorized",
-                    category: "Motorized Mount Solutions",
-                    title: "Premium Motorized Trolley",
-                    description: "A state-of-the-art motorized trolley designed for large format displays. Ideal for boardrooms, educational institutions, and command centers where flexibility and height adjustment are critical.",
-                    images: [],
-                    features: [],
-                    material: "Aluminum",
-                    finish: "Black / Silver"
-                });
-            } finally {
                 setLoading(false);
+            };
+    
+            if (slug) {
+                fetchProduct();
             }
-        };
+        }, [slug]);
 
-        if (slug) {
-            fetchProduct();
-        }
-    }, [slug]);
 
     if (loading) {
         return (
@@ -133,27 +112,11 @@ const ProductDetailPage = ({ params }) => {
                     {/* LEFT COLUMN: IMAGES */}
                     <div className="product-gallery flex flex-col gap-4">
                         
-
-
                         {/* Main Media Area - Clean/No Background */}
                         <div className="relative aspect-video w-full flex items-center justify-center p-0 group z-0">
                             
-                            {/* 3D View - Preloaded in Background (Always Rendered if URL exists) */}
-                            {product.fusionUrl && (
-                                <iframe 
-                                    src={product.fusionUrl}
-                                    className={`absolute inset-0 w-full h-full border-0 bg-white dark:bg-[#050505] transition-opacity duration-500 ${
-                                        viewMode === '3d' ? 'opacity-100 z-20 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'
-                                    }`}
-                                    allowFullScreen
-                                    title="3D View"
-                                />
-                            )}
-
                             {/* Image View */}
-                            <div className={`relative w-full h-full transition-opacity duration-300 ${
-                                viewMode === '3d' ? 'opacity-0 pointer-events-none' : 'opacity-100 z-10'
-                            }`}>
+                            <div className={`relative w-full h-full transition-opacity duration-300 z-10`}>
                                 <>
                                     {/* Subtle Grid Background */}
                                     <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" 
@@ -161,7 +124,7 @@ const ProductDetailPage = ({ params }) => {
                                     
                                     <div 
                                         className="relative w-full h-full p-8 md:p-12 flex items-center justify-center cursor-zoom-in"
-                                        onClick={() => setViewMode('image') & setIsImageModalOpen(true)}
+                                        onClick={() => setIsImageModalOpen(true)}
                                     >
                                         {displayImages[activeImageIndex] ? (
                                             <Image 
@@ -191,9 +154,9 @@ const ProductDetailPage = ({ params }) => {
                             {displayImages.map((img, idx) => (
                                 <button 
                                     key={idx}
-                                    onClick={() => { setActiveImageIndex(idx); setViewMode('image'); }}
+                                    onClick={() => setActiveImageIndex(idx)}
                                     className={`relative aspect-square bg-zinc-50 dark:bg-[#111] border rounded-lg overflow-hidden transition-all ${
-                                        activeImageIndex === idx && viewMode === 'image'
+                                        activeImageIndex === idx
                                         ? 'border-red-600 ring-1 ring-red-600/20' 
                                         : 'border-zinc-100 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
                                     }`}
@@ -207,19 +170,9 @@ const ProductDetailPage = ({ params }) => {
                                     )}
                                 </button>
                             ))}
-                            {product.fusionUrl && (
-                                <button 
-                                    onClick={() => setViewMode('3d')}
-                                    className={`relative aspect-square bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden transition-all hover:bg-zinc-200 dark:hover:bg-zinc-800 flex flex-col items-center justify-center gap-2 group ${
-                                        viewMode === '3d' ? 'border-red-600 ring-1 ring-red-600/20 bg-red-50 dark:bg-red-900/10' : ''
-                                    }`}
-                                >
-                                    <Box size={20} className={`transition-colors ${viewMode === '3d' ? 'text-red-600' : 'text-zinc-500 dark:text-zinc-400 group-hover:text-red-600'}`} />
-                                    <span className={`text-[10px] font-bold uppercase transition-colors ${viewMode === '3d' ? 'text-red-600' : 'text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white'}`}>3D View</span>
-                                </button>
-                            )}
                         </div>
                     </div>
+
 
                     {/* RIGHT COLUMN: INFO */}
                     <div className="product-info flex flex-col sticky top-24">

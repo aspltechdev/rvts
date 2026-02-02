@@ -8,36 +8,26 @@ import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const [theme, setTheme] = useState('dark');
-    const [isProductsHovered, setIsProductsHovered] = useState(false);
-    const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
-    const [isAboutHovered, setIsAboutHovered] = useState(false);
-    const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const pathname = usePathname();
+    import { staticCategories } from '@/lib/static-products';
 
-    const router = useRouter();
+    export default function Navbar() {
+        const [scrolled, setScrolled] = useState(false);
+        const [isOpen, setIsOpen] = useState(false);
+        const [theme, setTheme] = useState('dark');
+        const [isProductsHovered, setIsProductsHovered] = useState(false);
+        const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+        const [isAboutHovered, setIsAboutHovered] = useState(false);
+        const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
+        const [categories, setCategories] = useState(staticCategories);
+        const pathname = usePathname();
+    
+        const router = useRouter();
+    
+        // Fetch categories with products from backend - REMOVED for static usage
+        useEffect(() => {
+            setCategories(staticCategories);
+        }, []);
 
-    // Fetch categories with products from backend
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const res = await fetch('http://localhost:3002/api/categories');
-                const data = await res.json();
-                if (data.categories) {
-                    setCategories(data.categories);
-                }
-            } catch (error) {
-                console.error('Failed to fetch categories:', error);
-                // Fallback empty array if API fails
-                setCategories([]);
-            }
-        };
-        fetchCategories();
-    }, []);
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') || 'dark';

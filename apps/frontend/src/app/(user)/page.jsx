@@ -11,17 +11,13 @@ import WhyChoose from "@/components/WhyChoose";
 
 import ThreeDProduct from "@/components/ThreeDProduct";
 import ClientsCarousel from "@/components/ClientsCarousel";
-// Helper to fetch products
-async function getProducts() {
-    try {
-        const res = await fetch('http://localhost:3002/api/products', { cache: 'no-store' });
-        if (!res.ok) return [];
-        return res.json();
-    } catch (error) {
-        console.error("Failed to fetch products:", error);
-        return [];
-    }
+import { staticProducts } from '@/lib/static-products';
+
+// Helper to return static products
+function getProducts() {
+    return staticProducts;
 }
+
 
 export default async function Home() {
     const products = await getProducts();
@@ -38,9 +34,9 @@ export default async function Home() {
             {/* <Vision /> */}
             <About />  
             <ClientsCarousel />
-            <ThreeDProduct />      
-
+            {/* <ThreeDProduct /> */}      
             <ProductShowcase />
+
             <Services />
             <ConceptToCustomer />
             <WhyChoose />

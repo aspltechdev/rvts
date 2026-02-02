@@ -5,46 +5,37 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Monitor, Cpu, Zap, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const ProductsListPage = ({ searchParams }) => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const categoryQuery = searchParams?.category;
-    const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Categories');
-    const [searchQuery, setSearchQuery] = useState('');
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    import { staticProducts } from '@/lib/static-products';
+
+    const ProductsListPage = ({ searchParams }) => {
+        const [products, setProducts] = useState(staticProducts);
+        const [loading, setLoading] = useState(false);
+        const categoryQuery = searchParams?.category;
+        const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Categories');
+        const [searchQuery, setSearchQuery] = useState('');
+        const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+        
+        // Pagination State
+        const [currentPage, setCurrentPage] = useState(1);
+        const productsPerPage = 10;
     
-    // Pagination State
-    const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 10;
+        // Updated categories to match the sidebar design
+        const categories = [
+            { name: "Displays & Video walls", icon: <Monitor size={20} /> },
+            { name: "Touch Screen Kiosks", icon: <LayoutGrid size={20} /> },
+            { name: "PTZ / Soundbars / Trolleys", icon: <Speaker size={20} /> },
+            { name: "Video Systems", icon: <Cpu size={20} /> },
+            { name: "Control Systems", icon: <Sliders size={20} /> },
+            { name: "Mounting Solutions", icon: <Settings size={20} /> },
+            { name: "Cables & Accessories", icon: <Wifi size={20} /> }
+        ];
+    
+        useEffect(() => {
+            // We use static products now as per requirements
+            setProducts(staticProducts);
+            setLoading(false);
+        }, []);
 
-    // Updated categories to match the sidebar design
-    const categories = [
-        { name: "Displays & Video Walls", icon: <Monitor size={20} /> },
-        { name: "Touch Screen Kiosks", icon: <LayoutGrid size={20} /> },
-        { name: "PTZ / Soundbars / Trolleys", icon: <Speaker size={20} /> },
-        { name: "Video Systems", icon: <Cpu size={20} /> },
-        { name: "Control Systems", icon: <Sliders size={20} /> },
-        { name: "Mounting Solutions", icon: <Settings size={20} /> },
-        { name: "Cables & Accessories", icon: <Wifi size={20} /> }
-    ];
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                // Try fetching from local API if available
-                const res = await fetch('http://localhost:3002/api/products');
-                if (!res.ok) throw new Error('Failed to fetch');
-                const data = await res.json();
-                setProducts(data);
-            } catch (err) {
-                console.warn("Fetch error:", err);
-                setProducts([]); // No sample products
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts();
-    }, []);
 
     // Reset pagination when filters change
     useEffect(() => {
