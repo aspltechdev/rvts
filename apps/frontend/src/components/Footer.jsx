@@ -153,18 +153,18 @@ export default function Footer() {
                                 <MapPin className="shrink-0 mt-0.5 group-hover:text-red-600 transition-colors" size={18} />
                                 <span className="group-hover:text-red-600 transition-colors">
                                     Sri Chakra Building, # 402, 1st Floor,<br />
-                                    4th Cross, Ramamurthi Nagar Main Rd,<br />
+                                    4th Cross, Ramamurthi Nagar Main Rd,
                                     East of NGEF Layout, Bengaluru,<br />
                                     Karnataka 560016
                                 </span>
                             </li>
                             <li className="flex items-start gap-3 group cursor-pointer">
                                 <Mail className="shrink-0 mt-0.5 group-hover:text-red-600 transition-colors" size={18} />
-                                <a href="mailto:Ourstudio@hello.com" className="hover:text-red-600 transition-colors">rvts2025@gmail.com</a>
+                                <a href="mailto:Ourstudio@hello.com" className="hover:text-red-600 transition-colors">sales@researchvisions.com</a>
                             </li>
                             <li className="flex items-start gap-3 group cursor-pointer">
                                 <Phone className="shrink-0 mt-0.5 group-hover:text-red-600 transition-colors" size={18} />
-                                <a href="tel:+13866883295" className="hover:text-red-600 transition-colors">+1 386-688-3295</a>
+                                <a href="tel:+13866883295" className="hover:text-red-600 transition-colors">+91 95911 33004</a>
                             </li>
                         </ul>
                     </div>

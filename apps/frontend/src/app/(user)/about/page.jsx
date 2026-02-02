@@ -6,9 +6,15 @@ import Partners from '@/components/Partners';
 export default function AboutPage() {
     return (
         <main className="flex flex-col w-full min-h-screen">
-            <About />
-            <WhyChoose />
-            <Partners />
+            <section id="about-overview">
+                <About />
+            </section>
+            <section id="about-why-choose">
+                <WhyChoose />
+            </section>
+            <section id="about-partners">
+                <Partners />
+            </section>
         </main>
     );
 }

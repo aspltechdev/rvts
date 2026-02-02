@@ -1,49 +1,44 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, Cpu, Zap, LayoutGrid, ChevronRight, Search, Activity, Database } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Monitor, Cpu, Zap, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const ProductsListPage = ({ searchParams }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const categoryQuery = searchParams?.category;
-    const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Hardware');
+    const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Categories');
     const [searchQuery, setSearchQuery] = useState('');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    
+    // Pagination State
+    const [currentPage, setCurrentPage] = useState(1);
+    const productsPerPage = 10;
 
+    // Updated categories to match the sidebar design
     const categories = [
-        { name: "All Hardware", icon: <LayoutGrid size={14} /> },
-        { name: "Displays & Video walls", icon: <Monitor size={14} /> },
-        { name: "Mounting Solutions", icon: <Zap size={14} /> },
-        { name: "Ptz/soundbar/mobile trolley", icon: <Cpu size={14} /> },
-        { name: "Video Systems", icon: <Zap size={14} /> },
-        { name: "Control Systems", icon: <Monitor size={14} /> },
-        { name: "Touch screen Kiosk", icon: <LayoutGrid size={14} /> },
-        { name: "Cables & Accessories", icon: <Zap size={14} /> }
+        { name: "Displays & Video Walls", icon: <Monitor size={20} /> },
+        { name: "Touch Screen Kiosks", icon: <LayoutGrid size={20} /> },
+        { name: "PTZ / Soundbars / Trolleys", icon: <Speaker size={20} /> },
+        { name: "Video Systems", icon: <Cpu size={20} /> },
+        { name: "Control Systems", icon: <Sliders size={20} /> },
+        { name: "Mounting Solutions", icon: <Settings size={20} /> },
+        { name: "Cables & Accessories", icon: <Wifi size={20} /> }
     ];
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const sampleProduct = {
-                id: 'sample-1',
-                name: 'P1.2 COB LED Display',
-                slug: 'p1-2-cob-led-display',
-                category: 'Displays & Video walls',
-                images: ['/images/video-wall.png'],
-                description: 'High resolution LED wall for indoor usage.'
-            };
-
             try {
+                // Try fetching from local API if available
                 const res = await fetch('http://localhost:3002/api/products');
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
-                setProducts(data.length > 0 ? [...data, sampleProduct] : [sampleProduct]);
+                setProducts(data);
             } catch (err) {
-                console.error("Fetch error:", err);
-                // Fallback to sample data for demo
-                setProducts([sampleProduct]);
+                console.warn("Fetch error:", err);
+                setProducts([]); // No sample products
             } finally {
                 setLoading(false);
             }
@@ -51,188 +46,266 @@ const ProductsListPage = ({ searchParams }) => {
         fetchProducts();
     }, []);
 
+    // Reset pagination when filters change
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedCategory, searchQuery]);
+
+    // Filter Logic
     const filteredProducts = products.filter(p => {
         const nameMatch = (p.name || p.title || "").toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesCategory = selectedCategory === 'All Hardware' ||
-            (p.category && p.category.toLowerCase().trim() === selectedCategory.toLowerCase().trim()) ||
-            (p.category && p.category.toLowerCase().includes(selectedCategory.toLowerCase().split('&')[0].trim()));
+        
+        let matchesCategory = false;
+        if (selectedCategory === 'All Categories') {
+            matchesCategory = true;
+        } else {
+            // Flexible matching for categories
+            const pCat = (p.category || "").toLowerCase().trim();
+            const selCat = selectedCategory.toLowerCase().trim();
+            // Check exact match or partial match (e.g. "Displays" matching "Displays & Video Walls")
+            matchesCategory = pCat === selCat || 
+                            pCat.includes(selCat.split('&')[0].trim()) || 
+                            selCat.includes(pCat.split('&')[0].trim());
+        }
+
         return nameMatch && matchesCategory;
     });
 
+    // Pagination Logic
+    const indexOfLastProduct = currentPage * productsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        // Optional: Scroll to top of grid
+        window.scrollTo({ top: 400, behavior: 'smooth' });
+    };
+
     return (
-        <main className="min-h-screen dark:bg-[#050505] bg-white dark:text-white text-black selection:bg-brand-red selection:text-white relative overflow-hidden">
-            {/* CINEMATIC BACKGROUND */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
-                <div className="absolute inset-0 dark:bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] dark:from-zinc-900/50 dark:via-[#050505] dark:to-[#050505] bg-zinc-50" />
-                <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-brand-red/10 rounded-full blur-[120px] mix-blend-screen" />
-                <div className="absolute bottom-0 w-full h-px bg-gradient-to-r from-transparent via-brand-red/20 to-transparent" />
-                {/* NOISE TEXTURE */}
-                <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+        <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 font-sans pb-20 transition-colors duration-300">
+            
+            {/* HERO BANNER SECTION */}
+            <div className="relative w-full h-[300px] md:h-[400px] bg-zinc-100 dark:bg-zinc-900 overflow-hidden transition-colors duration-300">
+                {/* Background */}
+                <div className="absolute inset-0">
+                    <div className="absolute inset-0 bg-gradient-to-r from-zinc-100 via-zinc-100/80 to-transparent dark:from-zinc-900 dark:via-zinc-900/80 z-10" />
+                    <img 
+                        src="/assets/products-hero-bg.jpg" 
+                        alt="Background" 
+                        className="w-full h-full object-cover opacity-10 dark:opacity-40 scale-105"
+                        onError={(e) => {
+                            e.target.onerror = null; 
+                            e.target.style.display = 'none';
+                            e.target.parentElement.style.backgroundColor = '#f4f4f5'; // Fallback
+                        }} 
+                    />
+                </div>
+
+                <div className="relative z-20 w-full max-w-[1700px] mx-auto px-4 md:px-8 h-full flex flex-col justify-center">
+                    <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-zinc-900 dark:text-white mb-4 tracking-tight">
+                        Product Categories
+                    </h1>
+                    <p className="text-zinc-600 dark:text-gray-300 max-w-2xl text-sm md:text-lg leading-relaxed mb-8">
+                        Explore our comprehensive range of Pro AV solutions designed for performance and reliability.
+                    </p>
+
+                    {/* Decorative Icons row */}
+                    <div className="flex gap-6 md:gap-8 opacity-20 dark:opacity-40 hidden sm:flex text-black dark:text-white">
+                         {categories.slice(0, 5).map((cat, i) => (
+                             <div key={i} className="transform hover:scale-110 transition-transform duration-300">
+                                 {React.cloneElement(cat.icon, { size: 28, strokeWidth: 1.5 })}
+                             </div>
+                         ))}
+                    </div>
+                </div>
             </div>
 
-            <div className="relative z-10 pt-12 pb-12 container mx-auto px-6">
-
-                {/* HEAD & FILTERS - RESTORED REGISTRY LAYOUT */}
-                <section className="flex flex-col items-center text-center mb-24">
-                    {/* OVERHEAD LABELS */}
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="flex items-center gap-6 mb-8"
+            {/* MAIN CONTENT AREA */}
+            <div className="w-full max-w-[1700px] mx-auto px-4 md:px-8 py-8 md:py-12 flex flex-col lg:flex-row gap-8 xl:gap-16">
+                
+                {/* MOBILE CATEGORY SELECTOR (Visible only on lg and below) */}
+                <div className="lg:hidden w-full mb-4">
+                    <button 
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="w-full flex items-center justify-between px-4 py-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-sm font-bold text-zinc-900 dark:text-zinc-100 transition-colors"
                     >
-                        <div className="h-[1px] w-24 bg-gradient-to-l from-brand-red/50 to-transparent" />
-                        <span className="text-[10px] font-black text-brand-red uppercase tracking-[0.6em] drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-                            Hardware Registry
-                        </span>
-                        <div className="h-[1px] w-24 bg-gradient-to-r from-brand-red/50 to-transparent" />
-                    </motion.div>
-
-                    {/* MAIN TITLE */}
-                    <motion.h1
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter dark:text-gray-300 text-gray-900 mb-12 relative z-10"
-                    >
-                        THE COLLECTION
-                    </motion.h1>
-
-                    {/* FILTER CONSOLE - GRID LAYOUT */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
-                        className="w-full max-w-5xl"
-                    >
-                        <div className="flex flex-wrap justify-center gap-3 md:gap-4 p-6 rounded-3xl dark:bg-white/[0.02] bg-black/[0.02] dark:border-white/[0.05] border-black/[0.05] backdrop-blur-sm shadow-2xl">
+                        <span>{selectedCategory}</span>
+                        <ChevronDown size={18} className={`transition-transform duration-300 ${isMobileMenuOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    {isMobileMenuOpen && (
+                        <div className="mt-2 w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg shadow-xl overflow-hidden z-30 relative transition-colors">
+                            <button
+                                onClick={() => { setSelectedCategory('All Categories'); setIsMobileMenuOpen(false); }}
+                                className={`w-full text-left px-4 py-3 text-sm font-medium border-b border-zinc-100 dark:border-zinc-800 transition-colors ${selectedCategory === 'All Categories' ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/20' : 'text-zinc-600 dark:text-zinc-300'}`}
+                            >
+                                All Categories
+                            </button>
                             {categories.map((cat) => (
                                 <button
                                     key={cat.name}
-                                    onClick={() => setSelectedCategory(cat.name)}
-                                    className={`
-                                        group relative flex items-center gap-3 px-6 py-4 rounded-xl text-[10px] md:text-xs font-bold uppercase tracking-[0.15em] transition-all duration-300 overflow-hidden
-                                        ${selectedCategory === cat.name
-                                            ? 'text-red-500 shadow-[0_0_25px_rgba(239,68,68,0.4)] border border-brand-red'
-                                            : 'dark:bg-black/40 bg-white/40 dark:text-white-500 text-zinc-600 border dark:border-white/5 border-black/5 hover:bg-red-500/5 hover:text-red-500'
-                                        }
-                                    `}
+                                    onClick={() => { setSelectedCategory(cat.name); setIsMobileMenuOpen(false); }}
+                                    className={`w-full text-left px-4 py-3 text-sm font-medium border-b border-zinc-100 dark:border-zinc-800 last:border-none transition-colors ${selectedCategory === cat.name ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/20' : 'text-zinc-600 dark:text-zinc-300'}`}
                                 >
-                                    <span className={`relative z-10 transition-transform duration-300 group-hover:scale-110 ${selectedCategory === cat.name ? 'text-white' : 'text-brand-red opacity-70'}`}>
-                                        {cat.icon}
-                                    </span>
-                                    <span className="relative z-10">{cat.name}</span>
-
-                                    {/* GLOW EFFECT */}
-                                    {selectedCategory === cat.name && (
-                                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent w-full h-full -skew-x-12 animate-shimmer" />
-                                    )}
+                                    {cat.name}
                                 </button>
                             ))}
                         </div>
+                    )}
+                </div>
 
-                        {/* STATUS BAR */}
-                        <div className="mt-8 flex items-center justify-between px-6 py-3 border-t dark:border-white/[0.05] border-black/[0.1]">
-                            <div className="flex items-center gap-3">
-                                <div className="relative">
-                                    <div className="w-2 h-2 rounded-full bg-brand-red animate-pulse" />
-                                    <div className="absolute inset-0 w-2 h-2 rounded-full bg-brand-red animate-ping opacity-50" />
-                                </div>
-                                <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-[0.3em]">Active Database Connection</span>
-                            </div>
-
-                            {/* SEARCH INPUT INTEGRATED */}
-                            <div className="hidden md:flex items-center gap-3 dark:bg-white/[0.03] bg-black/[0.05] border dark:border-white/5 border-black/10 rounded-full px-4 py-1.5 focus-within:border-brand-red/30 transition-colors">
-                                <Search size={12} className="dark:text-zinc-600 text-zinc-500" />
-                                <input
-                                    type="text"
-                                    placeholder="SEARCH ID..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="bg-transparent border-none outline-none text-[10px] dark:text-white text-black uppercase w-32 dark:placeholder-zinc-700 placeholder-zinc-500"
-                                />
-                            </div>
-
-                            <span className="text-[9px] text-zinc-600 font-bold uppercase tracking-[0.3em]">{filteredProducts.length} MODULES DISCOVERED</span>
-                        </div>
-                    </motion.div>
-                </section>
-
-                {/* PRODUCTS GRID */}
-                <section className="min-h-[400px]">
-                    {loading ? (
-                        <div className="flex flex-col items-center justify-center py-20 gap-6">
-                            <Activity className="text-brand-red animate-pulse" size={48} />
-                            <span className="text-[10px] font-black tracking-[0.5em] text-zinc-700 uppercase animate-flash">System initializing...</span>
-                        </div>
-                    ) : (
-                        <motion.div
-                            layout
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+                {/* SIDEBAR SELECTION (Desktop Only) */}
+                <aside className="hidden lg:block w-[240px] xl:w-[260px] flex-shrink-0">
+                    <h2 className="text-xl md:text-2xl font-bold text-[#ff3333] mb-6 md:mb-8 px-1">
+                        All Categories
+                    </h2>
+                    
+                    <div className="flex flex-col space-y-1">
+                        <button
+                             onClick={() => setSelectedCategory('All Categories')}
+                             className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${
+                                 selectedCategory === 'All Categories'
+                                 ? 'text-[#ff3333] dark:text-[#ff4444] border-[#ff3333] bg-red-50 dark:bg-red-900/10'
+                                 : 'text-zinc-500 dark:text-zinc-400 border-transparent hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                             }`}
                         >
-                            <AnimatePresence mode='popLayout'>
-                                {filteredProducts.map((p, i) => (
-                                    <motion.div
-                                        layout
+                            View All Collection
+                        </button>
+                        {categories.map(cat => (
+                            <button
+                                key={cat.name}
+                                onClick={() => setSelectedCategory(cat.name)}
+                                className={`text-left px-4 py-3 text-sm font-bold transition-all rounded-r-lg border-l-[3px] ${
+                                    selectedCategory === cat.name
+                                    ? 'text-[#ff3333] dark:text-[#ff4444] border-[#ff3333] bg-red-50 dark:bg-red-900/10'
+                                    : 'text-zinc-500 dark:text-zinc-400 border-transparent hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-900'
+                                }`}
+                            >
+                                {cat.name}
+                            </button>
+                        ))}
+                    </div>
+                </aside>
+
+                {/* PRODUCT LISTING */}
+                <div className="flex-1 w-full">
+                    {/* SEARCH HEADER */}
+                    <div className="w-full mb-8 md:mb-12">
+                         <div className="flex items-center w-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-[#111] h-10 md:h-12 shadow-sm focus-within:shadow-md focus-within:border-zinc-400 dark:focus-within:border-zinc-500 transition-all duration-300 rounded-lg overflow-hidden">
+                             <div className="pl-4 text-zinc-400 dark:text-zinc-500">
+                                 <Search size={20} />
+                             </div>
+                             <input 
+                                 type="text" 
+                                 placeholder="Search products..." 
+                                 className="flex-1 h-full px-4 text-zinc-700 dark:text-zinc-200 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 text-sm md:text-base bg-transparent"
+                                 value={searchQuery}
+                                 onChange={(e) => setSearchQuery(e.target.value)}
+                             />
+                             <button className="h-full px-6 md:px-10 bg-[#222] dark:bg-zinc-800 hover:bg-[#ff3333] dark:hover:bg-[#ff3333] text-white font-bold uppercase tracking-wider text-xs md:text-sm transition-colors duration-300">
+                                 Search
+                             </button>
+                         </div>
+                    </div>
+
+                    {/* RESULTS GRID */}
+                    {loading ? (
+                        <div className="w-full py-20 flex flex-col items-center justify-center gap-4">
+                            <div className="w-12 h-12 border-4 border-zinc-100 dark:border-zinc-800 border-t-[#ff3333] dark:border-t-[#ff3333] rounded-full animate-spin" />
+                            <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Loading Repository...</span>
+                        </div>
+                    ) : filteredProducts.length > 0 ? (
+                        <>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 xl:gap-8 mb-16">
+                                {currentProducts.map((p) => (
+                                    <Link 
+                                        href={`/products/${p.slug}`} 
                                         key={p.id}
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.9 }}
-                                        transition={{ duration: 0.5, delay: i * 0.05 }}
-                                        className="group"
+                                        className="group flex flex-col h-full bg-white dark:bg-[#111] border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-xl dark:hover:shadow-black/60 transition-all duration-300 rounded-xl overflow-hidden"
                                     >
-                                        <Link href={`/products/${p.slug}`} className="block h-full">
-                                            <div className="relative h-[320px] dark:bg-[#0A0A0A] bg-white border dark:border-zinc-800/80 border-zinc-200 rounded-sm overflow-hidden group-hover:border-brand-red/50 transition-colors duration-500">
-
-                                                {/* CORNER ACCENTS */}
-                                                <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-brand-red/0 group-hover:border-brand-red/50 transition-all duration-500 z-20" />
-                                                <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-brand-red/0 group-hover:border-brand-red/50 transition-all duration-500 z-20" />
-
-                                                {/* IMAGE AREA */}
-                                                <div className="h-[65%] w-full flex items-center justify-center p-8 relative overflow-hidden dark:bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] dark:from-zinc-900/40 dark:to-transparent from-zinc-100/40 to-transparent">
-                                                    {p.images?.[0] ? (
-                                                        <Image
-                                                            src={p.images[0]}
-                                                            alt={p.name}
-                                                            fill
-                                                            className="object-contain p-4 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 grayscale group-hover:grayscale-0"
-                                                        />
-                                                    ) : (
-                                                        <Monitor size={40} className="text-zinc-800" />
-                                                    )}
-                                                </div>
-
-                                                {/* INFO PANEL */}
-                                                <div className="absolute bottom-0 left-0 w-full p-6 dark:bg-black/90 bg-white/90 backdrop-blur-md border-t dark:border-zinc-800 border-zinc-200 dark:group-hover:bg-zinc-900/90 group-hover:bg-zinc-50/90 transition-colors">
-                                                    <div className="flex items-start justify-between">
-                                                        <div>
-                                                            <div className="text-[8px] font-black text-brand-red tracking-[0.2em] uppercase mb-2 bg-brand-red/10 inline-block px-1.5 py-0.5 rounded">
-                                                                {p.category || 'N/A'}
-                                                            </div>
-                                                            <h3 className="text-sm font-bold dark:text-white text-black uppercase tracking-wider leading-tight line-clamp-2">
-                                                                {p.name}
-                                                            </h3>
-                                                        </div>
-                                                        <div className="w-6 h-6 rounded-full border dark:border-zinc-700 border-zinc-300 flex items-center justify-center dark:group-hover:bg-brand-red dark:group-hover:border-brand-red dark:group-hover:text-black group-hover:bg-brand-red group-hover:border-brand-red group-hover:text-white transition-all">
-                                                            <ChevronRight size={12} className="dark:text-zinc-500 text-zinc-400 group-hover:text-inherit" />
-                                                        </div>
+                                        {/* CARD IMAGE */}
+                                        <div className="aspect-square bg-zinc-50 dark:bg-zinc-800/80 relative flex items-center justify-center p-2 overflow-hidden">
+                                            {/* Subtle pattern overlay */}
+                                            <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{backgroundImage: 'repeating-linear-gradient(-45deg, #000 0, #000 1px, transparent 0, transparent 10px)'}} />
+                                            
+                                            <div className="relative w-full h-full transition-transform duration-500 ease-out group-hover:scale-105">
+                                                {p.images?.[0] ? (
+                                                    <Image 
+                                                        src={p.images[0]} 
+                                                        alt={p.name} 
+                                                        fill 
+                                                        className="object-contain mix-blend-multiply dark:mix-blend-normal drop-shadow-sm group-hover:drop-shadow-xl transition-all duration-300"
+                                                    />
+                                                ) : (
+                                                    <div className="flex flex-col items-center justify-center h-full text-zinc-300 dark:text-zinc-600">
+                                                        <Monitor size={48} strokeWidth={1} />
                                                     </div>
-                                                </div>
+                                                )}
                                             </div>
-                                        </Link>
-                                    </motion.div>
-                                ))}
-                            </AnimatePresence>
-                        </motion.div>
-                    )}
+                                        </div>
 
-                    {!loading && filteredProducts.length === 0 && (
-                        <div className="py-32 flex flex-col items-center justify-center opacity-40">
-                            <Database size={64} className="text-zinc-800 mb-6" />
-                            <h3 className="text-2xl font-black text-zinc-700 uppercase tracking-widest">Registry Empty</h3>
+                                        {/* CARD TITLE & INFO */}
+                                        <div className="p-5 flex flex-col flex-grow">
+                                            <div className="text-[10px] font-bold text-[#ff3333] dark:text-[#ff5555] uppercase tracking-wider mb-2">
+                                                {p.category}
+                                            </div>
+                                            <h3 className="text-base font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-[#ff3333] dark:group-hover:text-[#ff4444] transition-colors leading-snug">
+                                                {p.name}
+                                            </h3>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {/* PAGINATION */}
+                            {totalPages > 1 && (
+                                <div className="flex items-center justify-center gap-2">
+                                    <button
+                                        onClick={() => handlePageChange(currentPage - 1)}
+                                        disabled={currentPage === 1}
+                                        className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-lg disabled:opacity-30 hover:border-[#ff3333] dark:hover:border-[#ff3333] hover:text-[#ff3333] dark:hover:text-[#ff3333] text-zinc-500 dark:text-zinc-400 transition-colors"
+                                    >
+                                        <ChevronLeft size={20} />
+                                    </button>
+                                    
+                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                                        <button
+                                            key={number}
+                                            onClick={() => handlePageChange(number)}
+                                            className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${
+                                                currentPage === number
+                                                ? 'bg-[#ff3333] text-white shadow-lg shadow-red-500/30'
+                                                : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                                            }`}
+                                        >
+                                            {number}
+                                        </button>
+                                    ))}
+
+                                    <button
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                        disabled={currentPage === totalPages}
+                                        className="p-2 border border-zinc-200 dark:border-zinc-800 rounded-lg disabled:opacity-30 hover:border-[#ff3333] dark:hover:border-[#ff3333] hover:text-[#ff3333] dark:hover:text-[#ff3333] text-zinc-500 dark:text-zinc-400 transition-colors"
+                                    >
+                                        <ChevronRight size={20} />
+                                    </button>
+                                </div>
+                            )}
+
+                             {filteredProducts.length > 0 && (
+                                <div className="text-center mt-4 text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">
+                                    Showing {indexOfFirstProduct + 1} - {Math.min(indexOfLastProduct, filteredProducts.length)} of {filteredProducts.length} Products
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="py-20 text-center opacity-50">
+                            <p className="text-xl font-medium text-zinc-400 dark:text-zinc-500">No products found for your search.</p>
                         </div>
                     )}
-                </section>
+                </div>
             </div>
         </main>
     );

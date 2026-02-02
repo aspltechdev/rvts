@@ -3,6 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { 
     LayoutDashboard, 
     PlusCircle, 
@@ -54,7 +55,7 @@ export default function AdminLayout({ children }) {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 flex font-sans transition-colors duration-300">
+        <div className="min-h-screen bg-gray-50 dark:bg-zinc-950 flex font-sans transition-colors duration-300 overflow-x-hidden">
             
             {/* Mobile Sidebar Overlay */}
             {isMobileMenuOpen && (
@@ -65,18 +66,19 @@ export default function AdminLayout({ children }) {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 z-50 w-72 bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <aside className={`fixed inset-y-0 left-0 z-50 w-60 bg-white dark:bg-zinc-900 border-r border-gray-200 dark:border-zinc-800 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="h-full flex flex-col p-6">
+
                     {/* Logo */}
-                    <div className="flex items-center gap-3 mb-10 px-2">
-                        <div className="w-10 h-10 bg-brand-red rounded-xl shadow-lg shadow-brand-red/20 flex items-center justify-center text-white">
-                            <Package size={24} />
-                        </div>
-                        <div>
-                            <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white leading-none">
-                                RVTS
-                            </h1>
-                            <span className="text-gray-500 dark:text-zinc-500 text-xs font-medium tracking-wider uppercase mt-1 block">Admin Console</span>
+                    <div className="flex items-center justify-start mb-10 px-2">
+                        <div className="relative w-[140px] h-[50px]">
+                            <Image 
+                                src="/rvts-logo.png" 
+                                alt="RVTS Logo" 
+                                fill
+                                className="object-contain"
+                                priority
+                            />
                         </div>
                     </div>
 
@@ -110,10 +112,10 @@ export default function AdminLayout({ children }) {
             </aside>
 
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col min-w-0 md:ml-72 transition-all duration-300">
+            <div className="flex-1 flex flex-col min-w-0 md:ml-60 transition-all duration-300">
                 
                 {/* Top Navbar */}
-                <header className="sticky top-0 z-30 h-20 px-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between gap-4">
+                <header className="sticky top-0 z-30 h-16 md:h-20 px-4 md:px-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl border-b border-gray-200 dark:border-zinc-800 flex items-center justify-between gap-4">
                     
                     {/* Left: Mobile Toggle & Search */}
                     <div className="flex items-center gap-4 flex-1">
@@ -198,7 +200,7 @@ export default function AdminLayout({ children }) {
                     </div>
                 </header>
 
-                <main className="flex-1 p-8 overflow-y-auto">
+                <main className="flex-1 p-4 md:p-8 overflow-y-auto w-screen md:w-auto">
                     <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
                         {children}
                     </div>

@@ -7,19 +7,19 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function Hero() {
     return (
-        <section className="relative w-full h-[85vh] min-h-[600px] dark:bg-[#050505] bg-white overflow-hidden flex flex-col items-center justify-center">
+        <section className="relative w-full h-screen min-h-[600px] bg-[#050505] overflow-hidden flex flex-col items-center justify-center">
             {/* Background Image - Vibrant Red Network */}
             <div className="absolute inset-0 z-0">
                 <Image
                     src="/images/hero.jpeg"
                     alt="RVTS Research Vision"
                     fill
-                    className="object-cover"
+                    className="object-cover opacity-90"
                     priority
                 />
-                {/* Overlays - Dark Mode Only */}
-                <div className="absolute inset-0 bg-gradient-to-b dark:from-black/30 from-transparent via-transparent dark:to-black/40 to-transparent hidden dark:block" />
-                <div className="absolute inset-0 dark:bg-transparent bg-transparent" />
+                {/* Overlays - Always Dark for Cinematic Look */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+                <div className="absolute inset-0 bg-black/20" />
             </div>
 
             {/* Large Center Headline */}
@@ -31,7 +31,7 @@ export default function Hero() {
                     className="text-[10vw] md:text-[5vw] font-[1000] text-white leading-[0.9] tracking-[-0.05em] uppercase pointer-events-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                 >
                     Research Vision <br />
-                    <span className="text-brand-red">Tech Solution</span>
+                    <span className="text-brand-red">Tech Services </span>
                 </motion.h1>
             </div>
 

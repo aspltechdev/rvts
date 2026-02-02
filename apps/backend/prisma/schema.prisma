@@ -43,6 +43,10 @@ model Product {
   certifications     String[]
   videoUrl           String?
   fusionUrl          String?
+  application        String?
+  compatibility      String?
+  finish             String?
+  brochure           String?
   relatedProducts    Product[] @relation("RelatedProducts")
   relatedTo          Product[] @relation("RelatedProducts")
 }

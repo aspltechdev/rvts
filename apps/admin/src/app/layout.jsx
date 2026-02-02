@@ -1,12 +1,18 @@
-import { Poppins } from 'next/font/google';
+import { Outfit, Inter } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/components/AuthProvider';
 import { ThemeProvider } from '@/components/ThemeContext';
 
-const poppins = Poppins({ 
+const outfit = Outfit({ 
     subsets: ['latin'],
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-    variable: '--font-poppins',
+    variable: '--font-outfit',
+});
+
+const inter = Inter({
+    subsets: ['latin'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+    variable: '--font-inter',
 });
 
 export const metadata = {
@@ -17,7 +23,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={`${poppins.className} font-sans`}>
+            <body className={`${outfit.variable} ${inter.variable} font-inter antialiased`}>
                 <AuthProvider>
                     <ThemeProvider>
                         {children}

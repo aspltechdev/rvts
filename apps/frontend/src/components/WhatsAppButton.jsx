@@ -45,7 +45,8 @@ export default function WhatsAppButton() {
     const [isVisible, setIsVisible] = useState(false); // Start hidden since we are at top
 
     // Check if we should hide on this path
-    const isHiddenPath = pathname && pathname.startsWith('/products');
+    // Check if we should hide on this path
+    const isHiddenPath = false;
 
     useEffect(() => {
         const handleScroll = () => {

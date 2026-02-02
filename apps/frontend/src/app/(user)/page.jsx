@@ -6,10 +6,11 @@ import Services from "@/components/Services";
 import Partners from "@/components/Partners";
 import Industries from "@/components/Industries";
 import ConceptToCustomer from "@/components/ConceptToCustomer";
-import GetOurSupport from "@/components/GetOurSupport";
-import WhyChoose from "@/components/WhyChoose";
-import ThreeDProduct from "@/components/ThreeDProduct";
 
+import WhyChoose from "@/components/WhyChoose"; 
+
+import ThreeDProduct from "@/components/ThreeDProduct";
+import ClientsCarousel from "@/components/ClientsCarousel";
 // Helper to fetch products
 async function getProducts() {
     try {
@@ -35,15 +36,17 @@ export default async function Home() {
         <main className="bg-black min-h-screen w-full overflow-x-hidden selection:bg-brand-red selection:text-white">
             <Hero />
             {/* <Vision /> */}
-            <About />
-            <ThreeDProduct />
+            <About />  
+            <ClientsCarousel />
+            <ThreeDProduct />      
+
             <ProductShowcase />
             <Services />
             <ConceptToCustomer />
             <WhyChoose />
             <Industries />
             <Partners />
-            <GetOurSupport />
+
         </main>
     );
 }

@@ -18,22 +18,38 @@ model User {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  name        String
-  title       String
-  description String
-  images      String[]
-  
-  // Rich Content
-  whyThisProduct String?  @db.Text
-  whatDoesItDo   String?  @db.Text
-  features       String[]
-  useCases       String[]
-  
-  published   Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  title              String
+  description        String
+  images             String[]
+  whyThisProduct     String?
+  whatDoesItDo       String?
+  features           String[]
+  useCases           String[]
+  published          Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  adjustments        String?
+  category           String?
+  installationManual String?
+  maxWeight          String?
+  screenSize         String?
+  sku                String?
+  technicalDataSheet String?
+  technicalDrawing   String?
+  vesa               String?
+  material           String?
+  certifications     String[]
+  videoUrl           String?
+  fusionUrl          String?
+  application        String?
+  compatibility      String?
+  finish             String?
+  brochure           String?
+  relatedProducts    Product[] @relation("RelatedProducts")
+  relatedTo          Product[] @relation("RelatedProducts")
 }
 
 model Otp {
@@ -42,4 +58,17 @@ model Otp {
   code      String
   expiresAt DateTime
   createdAt DateTime @default(now())
+}
+
+model ContactQuery {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  phoneNumber String?
+  subject   String
+  message   String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

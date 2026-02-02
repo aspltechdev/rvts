@@ -48,13 +48,13 @@ export async function POST(request: Request) {
                 published: published || false,
                 sku, vesa, maxWeight, screenSize, adjustments,
                 technicalDrawing, installationManual, technicalDataSheet,
-                material, certifications, videoUrl, fusionUrl
+                material, certifications: certifications || [], videoUrl, fusionUrl
             }
         });
 
         return NextResponse.json(product, { status: 201 });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Create product error:", error);
-        return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to create product', details: error.message }, { status: 500 });
     }
 }

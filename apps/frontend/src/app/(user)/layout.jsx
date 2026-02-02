@@ -10,7 +10,7 @@ export default function UserLayout({ children }) {
                 <div className="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] bg-brand-red/10 rounded-full blur-[120px]" />
             </div>
             <Navbar />
-            <div className="pt-20">
+            <div>
                 {children}
             </div>
             <Footer />

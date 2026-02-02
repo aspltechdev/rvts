@@ -101,8 +101,20 @@ export default function ProductShowcase() {
         return diff === 0 || diff === 1 || diff === products.length - 1;
     };
 
-    const handleCardClick = () => {
-        window.open('/Products List.pdf', '_blank');
+    const handleCardClick = (title) => {
+        // Map showcase titles to actual categories in the Products Listing page
+        const categoryMap = {
+            "Display Mounts": "Mounting Solutions",
+            "Sound Bar Mounts": "PTZ / Soundbars / Trolleys",
+            "PTZ Camera Mounts": "PTZ / Soundbars / Trolleys",
+            "Motorized Mount Solutions": "Mounting Solutions",
+            "Mobile Trolley Solutions": "PTZ / Soundbars / Trolleys",
+            "Digital Kiosk": "Touch Screen Kiosks",
+            "Digital Podium": "Touch Screen Kiosks",
+            "Audio Visual Accessories": "Cables & Accessories"
+        };
+        const category = categoryMap[title] || title;
+        router.push(`/products?category=${encodeURIComponent(category)}`);
     };
 
     return (
@@ -193,7 +205,7 @@ export default function ProductShowcase() {
                             return (
                                 <motion.div
                                     key={product.id}
-                                    onClick={() => handleCardClick()}
+                                    onClick={() => handleCardClick(product.title)}
                                     className={`absolute rounded-[24px] overflow-hidden dark:bg-zinc-900 bg-white cursor-pointer
                                         ${isCenter ? 'w-[280px] h-[380px] md:w-[320px] md:h-[400px]' : 'w-[220px] h-[280px] md:w-[260px] md:h-[320px]'} // Scaled down
                                     `}
@@ -245,10 +257,13 @@ export default function ProductShowcase() {
                                             {isCenter && (
                                                 <div className="flex flex-col items-center gap-3 mt-4 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                                                     <a
-                                                        href="/Products List.pdf"
-                                                        target="_blank"
+                                                        href={`/products?category=${encodeURIComponent(product.title)}`}
+                                                        target="_self"
                                                         rel="noopener noreferrer"
-                                                        onClick={(e) => e.stopPropagation()}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleCardClick(product.title);
+                                                        }}
                                                         className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff3333] hover:bg-[#ff3333]/90 text-white text-xs font-bold uppercase tracking-wider rounded-full transition-colors"
                                                     >
                                                         <FileText size={14} />

@@ -2,6 +2,7 @@
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { CheckCircle2, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 const features = [
     "Advanced High-Resolution Display Technology",
@@ -59,15 +60,13 @@ export default function ThreeDProduct() {
                         </ul>
 
                         <div className="pt-4 hidden lg:block">
-                            <a
-                                href="/Products List.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/products"
                                 className="px-6 py-2.5 bg-[#ff3333] text-white font-bold rounded-full transition-all flex items-center gap-2 group inline-flex hover:bg-white hover:text-[#ff3333] border-2 border-transparent hover:border-[#ff3333] shadow-lg hover:shadow-xl"
                             >
                                 View All Products
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
 
@@ -118,15 +117,13 @@ export default function ThreeDProduct() {
                         
                         {/* Mobile Button: View All Products */}
                         <div className="pt-8 flex justify-center lg:hidden">
-                            <a
-                                href="/Products List.pdf"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/products"
                                 className="px-6 py-2.5 bg-[#ff3333] text-white font-bold rounded-full transition-all flex items-center gap-2 group inline-flex hover:bg-white hover:text-[#ff3333] border-2 border-transparent hover:border-[#ff3333] shadow-lg hover:shadow-xl"
                             >
                                 View All Products
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
                 </div>
