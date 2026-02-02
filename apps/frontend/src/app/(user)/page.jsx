@@ -1,13 +1,13 @@
 import Hero from "@/components/Hero";
 // import Vision from "@/components/Vision";
-import About from "@/components/About";     
+import About from "@/components/About";
 import ProductShowcase from "@/components/ProductShowcase";
 import Services from "@/components/Services";
 import Partners from "@/components/Partners";
 import Industries from "@/components/Industries";
 import ConceptToCustomer from "@/components/ConceptToCustomer";
 import GetOurSupport from "@/components/GetOurSupport";
-import WhyChoose from "@/components/WhyChoose"; 
+import WhyChoose from "@/components/WhyChoose";
 import ThreeDProduct from "@/components/ThreeDProduct";
 
 // Helper to fetch products
@@ -35,12 +35,12 @@ export default async function Home() {
         <main className="bg-black min-h-screen w-full overflow-x-hidden selection:bg-brand-red selection:text-white">
             <Hero />
             {/* <Vision /> */}
-            <About />  
-            <ThreeDProduct />      
+            <About />
+            <ThreeDProduct />
             <ProductShowcase />
             <Services />
             <ConceptToCustomer />
-             <WhyChoose />
+            <WhyChoose />
             <Industries />
             <Partners />
             <GetOurSupport />

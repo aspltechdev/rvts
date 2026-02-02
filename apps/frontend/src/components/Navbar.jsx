@@ -32,13 +32,13 @@ export default function Navbar() {
     const handleScrollToSection = (e, selector) => {
         e.preventDefault();
         setIsOpen(false);
-        
+
         const scrollToElement = () => {
             let element = document.getElementById(selector);
             if (!element) {
                 try {
                     element = document.querySelector(selector);
-                } catch(err) {
+                } catch (err) {
                     console.warn(err);
                 }
             }
@@ -46,7 +46,7 @@ export default function Navbar() {
                 const headerOffset = 80;
                 const elementPosition = element.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                
+
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: "smooth"
@@ -99,18 +99,18 @@ export default function Navbar() {
         <nav className={cn(
             "fixed top-0 left-0 w-full z-[5000] transition-all duration-700 px-6 md:px-16 border-b",
             scrolled
-                ? "py-3 bg-[#ff3333] shadow-2xl border-white/10"
-                : "py-6 bg-[#ff3333] border-transparent"
+                ? "py-3 bg-white shadow-2xl border-zinc-100"
+                : "py-6 bg-white border-transparent"
         )}>
             <div className="max-w-[1400px] mx-auto flex items-center justify-between">
                 {/* Logo with Glow Effect */}
                 <Link href="/" className="group relative z-[6000] flex items-center gap-2">
-                    <div className="relative w-[100px] h-[34px] md:w-[120px] md:h-[40px]">
+                    <div className="relative w-[110px] h-[40px] md:w-[130px] md:h-[46px]">
                         <Image
                             src="/assets/rvts-logo.png"
                             alt="RVTS Logo"
                             fill
-                            className="object-contain"
+                            className="object-contain p-1"
                             priority
                         />
                     </div>
@@ -131,14 +131,14 @@ export default function Navbar() {
                                     if (link.name === 'Services') handleScrollToSection(e, '[data-scroll="services"]');
                                 }}
                                 className={cn(
-                                    "px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 relative group text-white hover:text-zinc-900",
-                                    isActive && "text-zinc-900"
+                                    "px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 relative group text-zinc-900 hover:text-[#ff3333]",
+                                    isActive && "text-[#ff3333]"
                                 )}
                             >
                                 {link.name}
                                 <span className={cn(
-                                    "absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] transition-all duration-300 group-hover:w-4 group-hover:bg-zinc-900",
-                                    isActive ? "w-6 bg-zinc-900" : "w-0 bg-white"
+                                    "absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] transition-all duration-300 group-hover:w-4 group-hover:bg-[#ff3333]",
+                                    isActive ? "w-6 bg-[#ff3333]" : "w-0 bg-zinc-900"
                                 )} />
                             </Link>
                         );
@@ -151,10 +151,8 @@ export default function Navbar() {
                         <button
                             onClick={toggleTheme}
                             className={cn(
-                                "p-2 rounded-xl transition-all duration-300 border relative z-[6000]",
-                                scrolled
-                                    ? "bg-zinc-100 dark:bg-white/5 border-zinc-200 dark:border-white/10 hover:border-zinc-900 text-zinc-900 dark:text-white"
-                                    : "bg-white/10 border-white/20 hover:border-zinc-900 text-white hover:text-zinc-900"
+                                "p-2 rounded-xl transition-all duration-300 border relative z-[6000] bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]",
+                                scrolled ? "shadow-sm" : ""
                             )}
                         >
                             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -169,21 +167,21 @@ export default function Navbar() {
                             animate={isOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
                             className={cn(
                                 "w-6 h-[2px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-zinc-900 dark:bg-white" : "bg-white"
+                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
                         <motion.span
                             animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
                             className={cn(
                                 "w-6 h-[2px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-zinc-900 dark:bg-white" : "bg-white"
+                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
                         <motion.span
                             animate={isOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
                             className={cn(
                                 "w-6 h-[2px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-zinc-900 dark:bg-white" : "bg-white"
+                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
                     </button>
