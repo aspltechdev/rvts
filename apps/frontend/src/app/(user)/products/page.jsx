@@ -48,6 +48,13 @@ const ProductsListPage = ({ searchParams }) => {
         fetchProducts();
     }, []);
 
+    // Sync state with URL params
+    useEffect(() => {
+        if (searchParams?.category) {
+            setSelectedCategory(searchParams.category);
+        }
+    }, [searchParams]);
+
     // Reset pagination when filters change
     useEffect(() => {
         setCurrentPage(1);
