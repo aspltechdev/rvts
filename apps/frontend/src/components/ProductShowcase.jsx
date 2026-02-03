@@ -111,7 +111,10 @@ export default function ProductShowcase() {
             "Mobile Trolley Solutions": "PTZ / Soundbars / Trolleys",
             "Digital Kiosk": "Touch Screen Kiosks",
             "Digital Podium": "Touch Screen Kiosks",
-            "Audio Visual Accessories": "Cables & Accessories"
+            "Audio Visual Accessories": "Cables & Accessories",
+            // Add mapping for new items if they appear in the showcase
+            "Mosaic LED Wall": "Displays & Video Walls",
+            "Nexus Control Panel": "Control Systems"
         };
         const category = categoryMap[title] || title;
         router.push(`/products?category=${encodeURIComponent(category)}`);
