@@ -12,6 +12,7 @@ import WhyChoose from "@/components/WhyChoose";
 
 import ThreeDProduct from "@/components/ThreeDProduct";
 import ClientsCarousel from "@/components/ClientsCarousel";
+<<<<<<< HEAD
 // Helper to fetch products
 async function getProducts() {
     try {
@@ -23,7 +24,15 @@ async function getProducts() {
         console.error("Failed to fetch products:", error);
         return [];
     }
+=======
+import { staticProducts } from '@/lib/static-products';
+
+// Helper to return static products
+function getProducts() {
+    return staticProducts;
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
 }
+
 
 export default async function Home() {
     await getProducts(); // Just to trigger a fetch check if needed, though we don't use the result here yet.
@@ -35,9 +44,14 @@ export default async function Home() {
             {/* <Vision /> */}
             <About />
             <ClientsCarousel />
+<<<<<<< HEAD
             <ThreeDProduct />
 
+=======
+            {/* <ThreeDProduct /> */}      
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
             <ProductShowcase />
+
             <Services />
             <ConceptToCustomer />
             <WhyChoose />

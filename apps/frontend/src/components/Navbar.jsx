@@ -8,19 +8,27 @@ import { Sun, Moon, ChevronDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-    const [theme, setTheme] = useState('dark');
-    const [isProductsHovered, setIsProductsHovered] = useState(false);
-    const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
-    const [isAboutHovered, setIsAboutHovered] = useState(false);
-    const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const pathname = usePathname();
+    import { staticCategories } from '@/lib/static-products';
 
-    const router = useRouter();
+    export default function Navbar() {
+        const [scrolled, setScrolled] = useState(false);
+        const [isOpen, setIsOpen] = useState(false);
+        const [theme, setTheme] = useState('dark');
+        const [isProductsHovered, setIsProductsHovered] = useState(false);
+        const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
+        const [isAboutHovered, setIsAboutHovered] = useState(false);
+        const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
+        const [categories, setCategories] = useState(staticCategories);
+        const pathname = usePathname();
+    
+        const router = useRouter();
+    
+        // Fetch categories with products from backend - REMOVED for static usage
+        useEffect(() => {
+            setCategories(staticCategories);
+        }, []);
 
+<<<<<<< HEAD
     // Fetch categories with products from backend
     useEffect(() => {
         const fetchCategories = async () => {
@@ -48,6 +56,8 @@ export default function Navbar() {
         };
         fetchCategories();
     }, []);
+=======
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
 
     useEffect(() => {
         const savedTheme = localStorage.getItem('theme') || 'dark';

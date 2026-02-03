@@ -32,28 +32,12 @@ export async function submitContactQuery(formData) {
             return { success: false, error: firstError };
         }
 
-        const { firstName, lastName, email, phoneNumber, subject, message } = validatedData.data;
-
-        // Check if the model exists on the prisma client instance
-        if (!prisma.contactQuery) {
-            console.error('Prisma Client does not have ContactQuery model. Client needs regeneration and server restart.');
-            throw new Error('Server misconfiguration: Database client out of sync. Please restart the server.');
-        }
-
-        await prisma.contactQuery.create({
-            data: {
-                firstName,
-                lastName,
-                email,
-                phoneNumber,
-                subject,
-                message
-            }
-        })
-
+        // Dummy success for static hosting
+        console.log('Contact form submitted (Static Mode):', validatedData.data);
         return { success: true }
     } catch (error) {
         console.error('Failed to submit contact query:', error)
-        return { success: false, error: error.message || 'Failed to submit query. Please try again.' }
+        return { success: false, error: 'Failed to submit query. Please try again.' }
     }
 }
+

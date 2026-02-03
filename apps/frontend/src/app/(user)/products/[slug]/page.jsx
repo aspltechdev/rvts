@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 
 
+<<<<<<< HEAD
 
 const ProductDetailPage = ({ params }) => {
     const { slug } = params;
@@ -54,15 +55,46 @@ const ProductDetailPage = ({ params }) => {
                 // For demo purposes, if data is null, we create a dummy one based on slug
                 if (!data) {
                     data = {
+=======
+    import { staticProducts } from '@/lib/static-products';
+
+    const ProductDetailPage = ({ params }) => {
+        const { slug } = params;
+        const [product, setProduct] = useState(null);
+        const [loading, setLoading] = useState(true);
+        const [activeTab, setActiveTab] = useState('description');
+        const [activeImageIndex, setActiveImageIndex] = useState(0);
+    
+        const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+
+        
+        const initiateDownload = (type, url) => {
+            if (url) {
+                window.open(url, '_blank');
+            }
+        };
+    
+        useEffect(() => {
+            const fetchProduct = () => {
+                // Find product from static data
+                const data = staticProducts.find(p => p.slug === slug);
+                
+                if (data) {
+                    setProduct(data);
+                } else {
+                    // Fallback/merge if not found
+                    setProduct({
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
                         name: slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-                        category: "Professional Mounts",
+                        category: "Professional Solutions",
                         title: "Professional Series detailed product",
                         images: ["/assets/product_placeholder.png"],
                         features: [],
                         material: "N/A",
                         finish: "N/A"
-                    };
+                    });
                 }
+<<<<<<< HEAD
 
                 setProduct(data);
             } catch (err) {
@@ -86,14 +118,16 @@ const ProductDetailPage = ({ params }) => {
                     });
                 }
             } finally {
+=======
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
                 setLoading(false);
+            };
+    
+            if (slug) {
+                fetchProduct();
             }
-        };
+        }, [slug]);
 
-        if (slug) {
-            fetchProduct();
-        }
-    }, [slug]);
 
     if (loading) {
         return (
@@ -139,6 +173,7 @@ const ProductDetailPage = ({ params }) => {
 
                     {/* LEFT COLUMN: IMAGES */}
                     <div className="product-gallery flex flex-col gap-4">
+<<<<<<< HEAD
 
 
 
@@ -159,6 +194,14 @@ const ProductDetailPage = ({ params }) => {
                             {/* Image View */}
                             <div className={`relative w-full h-full transition-opacity duration-300 ${viewMode === '3d' ? 'opacity-0 pointer-events-none' : 'opacity-100 z-10'
                                 }`}>
+=======
+                        
+                        {/* Main Media Area - Clean/No Background */}
+                        <div className="relative aspect-video w-full flex items-center justify-center p-0 group z-0">
+                            
+                            {/* Image View */}
+                            <div className={`relative w-full h-full transition-opacity duration-300 z-10`}>
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
                                 <>
                                     {/* Subtle Grid Background */}
                                     <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
@@ -166,7 +209,7 @@ const ProductDetailPage = ({ params }) => {
 
                                     <div
                                         className="relative w-full h-full p-8 md:p-12 flex items-center justify-center cursor-zoom-in"
-                                        onClick={() => setViewMode('image') & setIsImageModalOpen(true)}
+                                        onClick={() => setIsImageModalOpen(true)}
                                     >
                                         {displayImages[activeImageIndex] ? (
                                             <Image
@@ -196,9 +239,16 @@ const ProductDetailPage = ({ params }) => {
                             {displayImages.map((img, idx) => (
                                 <button
                                     key={idx}
+<<<<<<< HEAD
                                     onClick={() => { setActiveImageIndex(idx); setViewMode('image'); }}
                                     className={`relative aspect-square bg-zinc-50 dark:bg-[#111] border rounded-lg overflow-hidden transition-all ${activeImageIndex === idx && viewMode === 'image'
                                         ? 'border-red-600 ring-1 ring-red-600/20'
+=======
+                                    onClick={() => setActiveImageIndex(idx)}
+                                    className={`relative aspect-square bg-zinc-50 dark:bg-[#111] border rounded-lg overflow-hidden transition-all ${
+                                        activeImageIndex === idx
+                                        ? 'border-red-600 ring-1 ring-red-600/20' 
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
                                         : 'border-zinc-100 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700'
                                         }`}
                                 >
@@ -211,6 +261,7 @@ const ProductDetailPage = ({ params }) => {
                                     )}
                                 </button>
                             ))}
+<<<<<<< HEAD
                             {product.fusionUrl && (
                                 <button
                                     onClick={() => setViewMode('3d')}
@@ -221,8 +272,11 @@ const ProductDetailPage = ({ params }) => {
                                     <span className={`text-[10px] font-bold uppercase transition-colors ${viewMode === '3d' ? 'text-red-600' : 'text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-white'}`}>3D View</span>
                                 </button>
                             )}
+=======
+>>>>>>> a19b4622f43da3cfdf4830d566d8276b4c339439
                         </div>
                     </div>
+
 
                     {/* RIGHT COLUMN: INFO */}
                     <div className="product-info flex flex-col sticky top-24">
