@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Monitor, Cpu, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Monitor, Cpu, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/config';
 
 const ProductsListContent = () => {
