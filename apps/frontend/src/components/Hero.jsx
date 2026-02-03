@@ -28,7 +28,7 @@ export default function Hero() {
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-[10vw] md:text-[5vw] font-[1000] text-white leading-[0.9] tracking-[-0.05em] uppercase pointer-events-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                    className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-white leading-tight tracking-tighter uppercase pointer-events-none drop-shadow-2xl"
                 >
                     Research Vision <br />
                     <span className="text-brand-red">Tech Services </span>
