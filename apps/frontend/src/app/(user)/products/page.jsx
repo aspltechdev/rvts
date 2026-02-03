@@ -6,10 +6,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Monitor, Cpu, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const ProductsListPage = ({ searchParams }) => {
+import { useSearchParams } from 'next/navigation';
+
+const ProductsListPage = () => {
+    const searchParams = useSearchParams();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const categoryQuery = searchParams?.category;
+    const categoryQuery = searchParams.get('category');
     const [selectedCategory, setSelectedCategory] = useState(categoryQuery || 'All Categories');
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -51,8 +54,9 @@ const ProductsListPage = ({ searchParams }) => {
 
     // Sync state with URL params
     useEffect(() => {
-        if (searchParams?.category) {
-            setSelectedCategory(searchParams.category);
+        const cat = searchParams.get('category');
+        if (cat) {
+            setSelectedCategory(cat);
         }
     }, [searchParams]);
 
