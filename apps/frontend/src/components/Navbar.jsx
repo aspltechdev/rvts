@@ -25,16 +25,25 @@ export default function Navbar() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-                const res = await fetch(`${apiUrl}/api/categories`);
+                const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'
+                const res = await fetch(`${apiUrl}/api/categories`, {
+                    cache: 'no-store',
+                    next: { revalidate: 0 }
+                });
+                if (!res.ok) throw new Error('API request failed');
+
                 const data = await res.json();
-                if (data.categories) {
+                if (data.categories && data.categories.length > 0) {
                     setCategories(data.categories);
+                } else {
+                    // If API returns empty, try static
+                    throw new Error('No categories found via API');
                 }
             } catch (error) {
-                console.error('Failed to fetch categories:', error);
-                // Fallback empty array if API fails
-                setCategories([]);
+                console.error('Failed to fetch categories, using static data:', error);
+                const { getStaticCategories } = await import('@/lib/static-data');
+                const staticData = getStaticCategories();
+                setCategories(staticData.categories);
             }
         };
         fetchCategories();

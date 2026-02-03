@@ -1,6 +1,6 @@
 export async function getProductBySlug(slug) {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'
         const res = await fetch(`${apiUrl}/api/products/${slug}`, {
             cache: 'no-store', // or ISR
         });

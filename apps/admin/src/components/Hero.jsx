@@ -60,7 +60,7 @@ export default function Hero() {
                             className="w-full h-full relative"
                         >
                             <Image
-                                src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'}/uploads/hero-hud.png`}
+                                src={`${process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'}/uploads/hero-hud.png`}
                                 alt="Digital HUD Interface"
                                 fill
                                 className="object-cover opacity-80"

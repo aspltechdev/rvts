@@ -15,7 +15,7 @@ import ClientsCarousel from "@/components/ClientsCarousel";
 // Helper to fetch products
 async function getProducts() {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+        const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'
         const res = await fetch(`${apiUrl}/api/products`, { cache: 'no-store' });
         if (!res.ok) return [];
         return res.json();

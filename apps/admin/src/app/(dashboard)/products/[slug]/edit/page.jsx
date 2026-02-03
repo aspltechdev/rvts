@@ -1,7 +1,7 @@
 'use client';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { Plus, X, Upload, Save, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
@@ -41,8 +41,7 @@ export default function EditProductPage({ params }) {
 
     // Fetch existing data
     useEffect(() => {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-        axios.get(`${apiUrl}/api/products/${params.slug}`)
+        api.get(`/api/products/${params.slug}`)
             .then(res => {
                 const p = res.data;
                 reset({
@@ -78,8 +77,7 @@ export default function EditProductPage({ params }) {
         data.append('file', file);
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            const res = await axios.post(`${apiUrl}/api/upload`, data);
+            const res = await api.post(`/api/upload`, data);
             setImages(prev => [...prev, res.data.url]);
         } catch (error) {
             console.error("Upload failed", error);
@@ -97,8 +95,7 @@ export default function EditProductPage({ params }) {
         data.append('file', file);
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            const res = await axios.post(`${apiUrl}/api/upload`, data);
+            const res = await api.post(`/api/upload`, data);
             setValue(fieldName, res.data.url);
         } catch (error) {
             console.error("Upload failed", error);
@@ -117,8 +114,7 @@ export default function EditProductPage({ params }) {
         };
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            await axios.put(`${apiUrl}/api/products/${params.slug}`, payload);
+            await api.put(`/api/products/${params.slug}`, payload);
             router.push('/dashboard');
         } catch (err) {
             console.error("Submission error", err);

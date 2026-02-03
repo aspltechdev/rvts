@@ -15,8 +15,9 @@ async function main() {
             whatDoesItDo: 'Displays high-resolution video content across a scalable, modular surface without visible bezels.',
             features: ['4K/8K Support', 'Bezel-free design', 'High Brightness (1200 nits)', 'Energy Efficient'],
             useCases: ['Exhibitions', 'Concerts', 'Corporate Lobbies', 'Retail'],
-            images: ['http://localhost:4000/uploads/led-video-wall.png'],
+            images: ['http://localhost:3002/uploads/led-video-wall.png'],
             published: true,
+            category: 'Displays & Video Walls',
         },
         {
             name: 'Nexus Control Panel',
@@ -27,8 +28,9 @@ async function main() {
             whatDoesItDo: 'Connects to all IoT devices in a facility to provide centralized management.',
             features: ['Haptic Feedback', 'OLED Display', 'Wireless Integration', 'Customizable Layouts'],
             useCases: ['Smart Homes', 'Conference Rooms', 'Hotels'],
-            images: ['http://localhost:4000/uploads/smart-control-panel.png'],
+            images: ['http://localhost:3002/uploads/smart-control-panel.png'],
             published: true,
+            category: 'Control Systems',
         },
     ]
 
@@ -40,6 +42,22 @@ async function main() {
         })
         console.log(`Created product with id: ${product.id}`)
     }
+
+    // Seed Admin User
+    const bcrypt = require('bcryptjs');
+    const hashedPassword = await bcrypt.hash('admin123', 10);
+
+    const adminUser = await prisma.user.upsert({
+        where: { email: 'admin@researchvisions.com' },
+        update: {},
+        create: {
+            email: 'admin@researchvisions.com',
+            name: 'Admin User',
+            password: hashedPassword,
+        },
+    });
+
+    console.log(`Created admin user with id: ${adminUser.id}`);
 
     console.log('Seeding finished.')
 }

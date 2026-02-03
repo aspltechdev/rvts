@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Edit2, Eye, Trash2, Plus, Package, CheckCircle, FileText } from 'lucide-react';
@@ -11,8 +11,7 @@ export default function Dashboard() {
 
     const fetchProducts = () => {
         setLoading(true);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-        axios.get(`${apiUrl}/api/products`)
+        api.get(`/api/products`)
             .then(res => setProducts(res.data))
             .catch(err => console.error(err))
             .finally(() => setLoading(false));
@@ -25,8 +24,7 @@ export default function Dashboard() {
     const deleteProduct = async (id) => {
         if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-                await axios.delete(`${apiUrl}/api/products/${id}`);
+                await api.delete(`/api/products/${id}`);
                 fetchProducts();
             } catch (e) {
                 alert('Failed to delete product');

@@ -41,7 +41,7 @@ const ProductDetailPage = ({ params }) => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+                const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'
                 // Fetch basic data from API
                 const res = await fetch(`${apiUrl}/api/products/${slug}`);
                 let data = null;
@@ -66,18 +66,25 @@ const ProductDetailPage = ({ params }) => {
 
                 setProduct(data);
             } catch (err) {
-                console.error(err);
-                // Fallback for demo
-                setProduct({
-                    name: "Mobile Trolley 2 Stage Motorized",
-                    category: "Motorized Mount Solutions",
-                    title: "Premium Motorized Trolley",
-                    description: "A state-of-the-art motorized trolley designed for large format displays. Ideal for boardrooms, educational institutions, and command centers where flexibility and height adjustment are critical.",
-                    images: [],
-                    features: [],
-                    material: "Aluminum",
-                    finish: "Black / Silver"
-                });
+                console.error("API Error, using static fallback:", err);
+                const { STATIC_PRODUCTS } = await import('@/lib/static-data');
+                const staticProduct = STATIC_PRODUCTS.find(p => p.slug === slug);
+
+                if (staticProduct) {
+                    setProduct(staticProduct);
+                } else {
+                    // Generic fallback if not found in static list
+                    setProduct({
+                        name: slug.replace(/-/g, ' '),
+                        category: "Uncategorized",
+                        title: "Product Not Found (Offline Mode)",
+                        description: "This product details could not be loaded because the backend is unreachable and it is not in our static cache.",
+                        images: ["/assets/rvts-logo.png"],
+                        features: [],
+                        material: "N/A",
+                        finish: "N/A"
+                    });
+                }
             } finally {
                 setLoading(false);
             }

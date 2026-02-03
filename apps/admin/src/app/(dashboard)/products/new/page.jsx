@@ -2,7 +2,7 @@
 'use client';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useState } from 'react';
-import axios from 'axios';
+import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Plus, X, Upload } from 'lucide-react';
@@ -48,8 +48,7 @@ export default function AddProductPage() {
 
         try {
             // Updated port to 3002
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            const res = await axios.post(`${apiUrl}/api/upload`, data);
+            const res = await api.post(`/api/upload`, data);
             setImages(prev => [...prev, res.data.url]);
         } catch (error) {
             console.error("Upload failed", error);
@@ -67,8 +66,7 @@ export default function AddProductPage() {
         data.append('file', file);
 
         try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            const res = await axios.post(`${apiUrl}/api/upload`, data);
+            const res = await api.post(`/api/upload`, data);
             setValue(fieldName, res.data.url);
         } catch (error) {
             console.error("Upload failed", error);
@@ -89,8 +87,7 @@ export default function AddProductPage() {
 
         try {
             // Updated port to 3002
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
-            await axios.post(`${apiUrl}/api/products`, payload);
+            await api.post(`/api/products`, payload);
             router.push('/dashboard');
         } catch (err) {
             console.error("Submission error", err);

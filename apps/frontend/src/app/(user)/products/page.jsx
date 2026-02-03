@@ -31,15 +31,16 @@ const ProductsListPage = ({ searchParams }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3002'
+                const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002'
                 // Try fetching from local API if available
                 const res = await fetch(`${apiUrl}/api/products`);
                 if (!res.ok) throw new Error('Failed to fetch');
                 const data = await res.json();
                 setProducts(data);
             } catch (err) {
-                console.warn("Fetch error:", err);
-                setProducts([]); // No sample products
+                console.warn("Fetch error, using static data:", err);
+                const { STATIC_PRODUCTS } = await import('@/lib/static-data');
+                setProducts(STATIC_PRODUCTS);
             } finally {
                 setLoading(false);
             }
