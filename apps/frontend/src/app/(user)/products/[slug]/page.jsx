@@ -9,12 +9,10 @@ import {
     Check,
     ChevronRight,
     Home,
-    Share2,
     FileText,
     Box,
     Monitor,
     Move,
-    Layers,
     X,
     Maximize,
     Loader2
@@ -72,7 +70,7 @@ const ProductDetailContent = ({ params }) => {
                             finish: "N/A"
                         });
                     }
-                } catch (e) {
+                } catch {
                     setError("Could not load product data.");
                 }
             } finally {
