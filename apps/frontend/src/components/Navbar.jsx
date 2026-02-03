@@ -551,4 +551,3 @@ return (
         </AnimatePresence>
     </nav>
 );
-}
