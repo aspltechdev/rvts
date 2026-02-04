@@ -147,15 +147,6 @@ export default function Dashboard() {
                                         </td>
                                         <td className="p-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
-                                                <a
-                                                    href={`${process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000'}/products/${p.slug}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="p-2 text-gray-400 dark:text-zinc-500 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition-all"
-                                                    title="View Live"
-                                                >
-                                                    <Eye size={18} />
-                                                </a>
 
                                                 <Link
                                                     href={`/products/${p.slug}/edit`}
