@@ -38,12 +38,16 @@ export async function POST(request: Request) {
             whyThisProduct, whatDoesItDo, features, useCases, published,
             sku, vesa, maxWeight, screenSize, adjustments,
             technicalDrawing, installationManual, technicalDataSheet,
-            material, certifications, videoUrl, fusionUrl
+            material, certifications, videoUrl, fusionUrl,
+            application, compatibility, finish, brochure
         } = body;
 
         const existing = await prisma.product.findUnique({ where: { slug } });
         if (existing) {
-            return NextResponse.json({ error: "Slug already exists" }, { status: 400 });
+            return NextResponse.json({ error: "Slug already exists" }, {
+                status: 400,
+                headers: { 'Access-Control-Allow-Origin': '*' }
+            });
         }
 
         const product = await prisma.product.create({
@@ -56,13 +60,20 @@ export async function POST(request: Request) {
                 published: published || false,
                 sku, vesa, maxWeight, screenSize, adjustments,
                 technicalDrawing, installationManual, technicalDataSheet,
-                material, certifications: certifications || [], videoUrl, fusionUrl
+                material, certifications: certifications || [], videoUrl, fusionUrl,
+                application, compatibility, finish, brochure
             }
         });
 
-        return NextResponse.json(product, { status: 201 });
+        return NextResponse.json(product, {
+            status: 201,
+            headers: { 'Access-Control-Allow-Origin': '*' }
+        });
     } catch (error: any) {
         console.error("Create product error:", error);
-        return NextResponse.json({ error: 'Failed to create product', details: error.message }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to create product', details: error.message }, {
+            status: 500,
+            headers: { 'Access-Control-Allow-Origin': '*' }
+        });
     }
 }
