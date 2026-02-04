@@ -11,5 +11,8 @@
     "dependencies": {
         "bcryptjs": "^2.4.3",
         "sharp": "^0.34.5"
+    },
+    "prisma": {
+        "seed": "node prisma/seed.js"
     }
 }
