@@ -72,16 +72,18 @@ export default function EditProductPage({ params }) {
     const handleImageUpload = async (e) => {
         if (!e.target.files?.length) return;
         setUploading(true);
-        const file = e.target.files[0];
-        const data = new FormData();
-        data.append('file', file);
+        const files = Array.from(e.target.files);
 
         try {
-            const res = await api.post(`/api/upload`, data);
-            setImages(prev => [...prev, res.data.url]);
+            for (const file of files) {
+                const data = new FormData();
+                data.append('file', file);
+                const res = await api.post(`/api/upload`, data);
+                setImages(prev => [...prev, res.data.url]);
+            }
         } catch (error) {
             console.error("Upload failed", error);
-            alert("Upload failed. Make sure backend is running on 3002.");
+            alert("Upload failed: " + (error.response?.data?.error || "Unknown error"));
         } finally {
             setUploading(false);
         }
@@ -99,7 +101,7 @@ export default function EditProductPage({ params }) {
             setValue(fieldName, res.data.url);
         } catch (error) {
             console.error("Upload failed", error);
-            alert("Upload failed.");
+            alert("Upload failed: " + (error.response?.data?.error || "Unknown error"));
         } finally {
             setLocalLoading(false);
         }
@@ -117,8 +119,9 @@ export default function EditProductPage({ params }) {
             await api.put(`/api/products/${params.slug}`, payload);
             router.push('/dashboard');
         } catch (err) {
-            console.error("Submission error", err);
-            alert("Failed to update product");
+            console.error(err);
+            const msg = err.response?.data?.error || err.response?.data?.details || "Failed to update product";
+            alert(msg);
         }
     };
 
@@ -274,7 +277,7 @@ export default function EditProductPage({ params }) {
                             <label className="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-brand-red hover:bg-red-50 dark:hover:bg-brand-red/5 transition-all text-gray-400 hover:text-brand-red">
                                 <Upload size={20} className="mb-1" />
                                 <span className="text-[10px] font-bold uppercase">{uploading ? '...' : 'Add'}</span>
-                                <input type="file" onChange={handleImageUpload} className="hidden" accept="image/*" />
+                                <input type="file" onChange={handleImageUpload} className="hidden" accept="image/*" multiple />
                             </label>
                         </div>
                     </div>
