@@ -31,6 +31,7 @@ export default function AddProductPage() {
 
     const [images, setImages] = useState([]);
     const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState({}); // Tracking progress per file
 
     // Upload states for new files
     const [uploadingBlueprint, setUploadingBlueprint] = useState(false);
@@ -60,8 +61,24 @@ export default function AddProductPage() {
             for (const file of validFiles) {
                 const data = new FormData();
                 data.append('file', file);
-                const res = await api.post(`/api/upload`, data);
+
+                // Set initial progress
+                setUploadProgress(prev => ({ ...prev, [file.name]: 0 }));
+
+                const res = await api.post(`/api/upload`, data, {
+                    onUploadProgress: (progressEvent) => {
+                        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                        setUploadProgress(prev => ({ ...prev, [file.name]: percentCompleted }));
+                    }
+                });
+
                 setImages(prev => [...prev, res.data.url]);
+                // Remove progress after success
+                setUploadProgress(prev => {
+                    const next = { ...prev };
+                    delete next[file.name];
+                    return next;
+                });
             }
         } catch (error) {
             console.error("Upload failed", error);
@@ -231,7 +248,7 @@ export default function AddProductPage() {
                         Visuals & Downloads
                     </h3>
 
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                         <label className="text-sm font-semibold text-gray-700 dark:text-zinc-300">Product Images</label>
                         <div className="flex flex-wrap gap-4">
                             {images.map((url, i) => (
@@ -242,6 +259,18 @@ export default function AddProductPage() {
                                     </button>
                                 </div>
                             ))}
+
+                            {/* Show Progress for each uploading file */}
+                            {Object.entries(uploadProgress).map(([fileName, progress]) => (
+                                <div key={fileName} className="relative w-24 h-24 border border-gray-200 dark:border-zinc-700 rounded-xl overflow-hidden flex flex-col items-center justify-center bg-gray-50 dark:bg-zinc-800 p-2 text-center">
+                                    <div className="w-full bg-gray-200 dark:bg-zinc-700 rounded-full h-1.5 mb-2">
+                                        <div className="bg-brand-red h-1.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                                    </div>
+                                    <span className="text-[10px] font-bold text-gray-500 truncate w-full px-1">{fileName}</span>
+                                    <span className="text-[10px] font-bold text-brand-red">{progress}%</span>
+                                </div>
+                            ))}
+
                             <label className="w-24 h-24 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-brand-red hover:bg-red-50 dark:hover:bg-brand-red/5 transition-all text-gray-400 hover:text-brand-red">
                                 <Upload size={20} className="mb-1" />
                                 <span className="text-[10px] font-bold uppercase">{uploading ? '...' : 'Add'}</span>
