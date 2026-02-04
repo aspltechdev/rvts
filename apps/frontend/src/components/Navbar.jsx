@@ -34,14 +34,34 @@ export default function Navbar() {
                 if (!res.ok) throw new Error('API request failed');
 
                 const data = await res.json();
-                if (data.categories && data.categories.length > 0) {
-                    setCategories(data.categories);
-                } else {
-                    // If API returns empty, try static
-                    throw new Error('No categories found via API');
+                let finalCategories = data.categories || [];
+
+                // Always merge with static data to ensure these 5 products are present
+                try {
+                    const { getStaticCategories } = await import('@/lib/static-data');
+                    const staticData = getStaticCategories();
+
+                    // Merge logic: Add static categories if they don't exist, or append products if they do
+                    staticData.categories.forEach(staticCat => {
+                        const existingCat = finalCategories.find(c => c.category === staticCat.category);
+                        if (existingCat) {
+                            // Append products that aren't already there (by slug)
+                            staticCat.products.forEach(p => {
+                                if (!existingCat.products.find(ep => ep.slug === p.slug)) {
+                                    existingCat.products.push(p);
+                                }
+                            });
+                        } else {
+                            finalCategories.push(staticCat);
+                        }
+                    });
+                } catch (e) {
+                    console.warn("Could not merge static categories:", e);
                 }
+
+                setCategories(finalCategories);
             } catch (error) {
-                console.error('Failed to fetch categories, using static data:', error);
+                console.error('Failed to fetch categories, using static data fallback:', error);
                 const { getStaticCategories } = await import('@/lib/static-data');
                 const staticData = getStaticCategories();
                 setCategories(staticData.categories);

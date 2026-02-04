@@ -28,7 +28,9 @@ const ProductsListContent = () => {
         { name: "Video Systems", icon: <Cpu size={20} /> },
         { name: "Control Systems", icon: <Sliders size={20} /> },
         { name: "Mounting Solutions", icon: <Settings size={20} /> },
-        { name: "Cables & Accessories", icon: <Wifi size={20} /> }
+        { name: "Cables & Accessories", icon: <Wifi size={20} /> },
+        { name: "Interactive Installation / Digital Experience Zone", icon: <LayoutGrid size={20} /> },
+        { name: "Interactive Display Stand / Digital Kiosk", icon: <Monitor size={20} /> }
     ];
 
     // Sync state with URL params
@@ -45,11 +47,25 @@ const ProductsListContent = () => {
             try {
                 const apiUrl = API_BASE_URL;
                 const res = await fetch(`${apiUrl}/api/products`);
-                if (!res.ok) throw new Error('Failed to fetch');
-                const data = await res.json();
-                setProducts(data);
+                let apiProducts = [];
+                if (res.ok) {
+                    apiProducts = await res.json();
+                }
+
+                // Always include static products
+                const { STATIC_PRODUCTS } = await import('@/lib/static-data');
+
+                // Merge logic: Add static products that aren't already in the API list (matching by slug)
+                const mergedProducts = [...apiProducts];
+                STATIC_PRODUCTS.forEach(sp => {
+                    if (!mergedProducts.find(ap => ap.slug === sp.slug)) {
+                        mergedProducts.push(sp);
+                    }
+                });
+
+                setProducts(mergedProducts);
             } catch (err) {
-                console.warn("Fetch error, using static data:", err);
+                console.warn("Fetch error, using static data only:", err);
                 const { STATIC_PRODUCTS } = await import('@/lib/static-data');
                 setProducts(STATIC_PRODUCTS);
             } finally {
@@ -209,7 +225,7 @@ const ProductsListContent = () => {
                                             <div className="relative w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
                                                 {p.images && p.images[0] ? (
                                                     <Image
-                                                        src={p.images[0].startsWith('http') ? p.images[0] : (API_BASE_URL + p.images[0])}
+                                                        src={(p.images[0].startsWith('http') || p.images[0].startsWith('/products')) ? p.images[0] : (API_BASE_URL + p.images[0])}
                                                         alt={p.name}
                                                         fill
                                                         className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"

@@ -2,78 +2,138 @@
 export const STATIC_PRODUCTS = [
     {
         id: 'static-1',
-        name: 'Mosaic LED Wall',
-        slug: 'mosaic-led-wall',
-        title: 'High-Fidelity Mosaic LED Video Wall',
-        description: 'A massive modular LED video wall designed for exhibitions and high-impact visual displays. Features seamless integration and vibrant color reproduction.',
-        category: 'Displays & Video Walls',
-        images: ['/assets/rvts-logo.png'], // Placeholder
-        features: ['4K/8K Support', 'Bezel-free design', 'High Brightness (1200 nits)', 'Energy Efficient'],
+        name: 'Immersive Interactive Experience Pod',
+        slug: 'immersive-interactive-experience-pod',
+        title: 'Immersive Interactive Experience Pod',
+        description: 'An immersive interactive experience pod designed to create engaging, multi-sensory digital environments. The installation features a circular LED-lit arch, a high-resolution vertical display backdrop, and an interactive touch kiosk positioned at the center. The integrated glass floor panel enhances visual depth and user immersion.',
+        category: 'Interactive Installation / Digital Experience Zone',
+        images: [
+            '/products/immersive-interactive-experience-pod/70dca54d-0bbd-4dd4-9340-d5ea52946e8a.JPG',
+            '/products/immersive-interactive-experience-pod/8ecd88b7-2409-4f61-91c6-bcc76e1268e1.JPG',
+            '/products/immersive-interactive-experience-pod/b6b29abc-3442-404c-bcb3-1f997e1af9a1.JPG'
+        ],
+        features: [
+            'Circular arch structure with integrated LED lighting',
+            'High-resolution vertical digital display backdrop',
+            'Central interactive touch kiosk for user engagement',
+            'Glass floor panel for enhanced immersive effect',
+            'Modular platform design for easy installation',
+            'Premium finish suitable for high-end interiors',
+            'Custom content, lighting color, and branding options available'
+        ],
         published: true,
-        material: 'Polymer / LED',
-        finish: 'Matte Black',
-        application: 'Indoor',
-        compatibility: 'Universal'
+        material: 'Metal Structure with Glass & Acrylic Panels',
+        finish: 'Matte Black with LED Accent Lighting',
+        application: 'Experience Centers / Exhibitions / Corporate Spaces / Public Installations',
+        compatibility: 'Interactive Touch Kiosk, LED Display Panels, Sensor-Based Systems'
     },
     {
         id: 'static-2',
-        name: 'Nexus Control Panel',
-        slug: 'nexus-control-panel',
-        title: 'Nexus Smart Control Interface',
-        description: 'A centralized control unit for smart environments. Manage lighting, temperature, and audio with a sleek, glass-touch interface.',
-        category: 'Control Systems',
-        images: ['/assets/rvts-logo.png'], // Placeholder
-        features: ['Haptic Feedback', 'OLED Display', 'Wireless Integration', 'Customizable Layouts'],
+        name: 'Smart Interactive Kiosk Enclosure',
+        slug: 'smart-interactive-kiosk-enclosure',
+        title: 'Smart Interactive Kiosk Enclosure',
+        description: 'A modern, industrial-grade interactive kiosk enclosure designed for high-traffic commercial environments. The unit features a robust metal body with a curved arch structure that supports overhead components and enhances visual appeal. Its open-front design allows easy integration of touch displays, internal hardware, and cable management systems.',
+        category: 'Interactive Display Stand / Digital Kiosk',
+        images: [
+            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162256_Original.JPG',
+            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162318_Original.JPG',
+            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162339_Original.JPG'
+        ],
+        features: [
+            'Heavy-duty metal construction for long-term durability',
+            'Curved arch frame for structural support and modern design',
+            'Powder-coated finish for corrosion resistance',
+            'Spacious internal cavity for electronics and wiring',
+            'Front-access display mounting for easy maintenance',
+            'Stable base suitable for floor-mounted installations',
+            'Custom branding and color options available'
+        ],
         published: true,
-        material: 'Glass / Aluminum',
-        finish: 'Glossy White',
-        application: 'Wall Mount',
-        compatibility: 'Smart Home Standards'
+        material: 'Mild Steel / Metal Fabricated Body',
+        finish: 'Powder Coated (Matte Grey & Black)',
+        application: 'Commercial / Retail / Corporate / Public Spaces',
+        compatibility: 'Touch Displays & Embedded Systems (Custom Mount Support)'
     },
     {
         id: 'static-3',
-        name: 'Omni-Directional Soundbar',
-        slug: 'omni-soundbar',
-        title: '360 Audio Conferencing Soundbar',
-        description: 'Crystal clear audio for large conference rooms. Features intelligent noise cancellation and beamforming microphones.',
-        category: 'PTZ / Soundbars / Trolleys',
-        images: ['/assets/rvts-logo.png'],
-        features: ['360° Audio', 'Noise Cancellation', 'USB-C Plug & Play', 'Bluetooth 5.0'],
+        name: 'Flip-Down Ceiling TV Mount',
+        slug: 'flip-down-ceiling-tv-mount',
+        title: 'Flip-Down Ceiling TV Mount',
+        description: 'A space-saving flip-down ceiling TV mount designed for both flat and pitched ceilings. The mount features a strong scissor-arm mechanism that allows the display to flip down for viewing and fold up when not in use. Its robust steel construction ensures secure mounting while maintaining smooth movement.',
+        category: 'Ceiling Mount / Display Mount',
+        images: [
+            '/products/flip-down-ceiling-tv-mount/41RuSwUlyzL.jpg',
+            '/products/flip-down-ceiling-tv-mount/41jpYlfmfAL-400x400.jpg',
+            '/products/flip-down-ceiling-tv-mount/41N1lVvl3fL-100x100.jpg'
+        ],
+        features: [
+            'Fits both flat and pitched ceilings',
+            'Flip-down and fold-up mechanism saves space',
+            'Strong scissor arm for stable support',
+            'Keyhole pattern for quick and easy installation',
+            'Secure locking system for safe operation',
+            'Ideal for areas with limited wall space',
+            'Adjustable tilt angle for better viewing comfort'
+        ],
         published: true,
-        material: 'Mesh Fabric / Plastic',
-        finish: 'Graphite Grey',
-        application: 'Conference Room',
-        compatibility: 'Zoom / Teams'
+        material: 'Heavy-Duty Steel',
+        finish: 'Powder Coated (Black)',
+        application: 'Residential / Commercial / Education / Corporate',
+        compatibility: 'VESA Compatible Flat Panel Displays'
     },
     {
         id: 'static-4',
-        name: 'Touch Kiosk Pro',
-        slug: 'touch-kiosk-pro',
-        title: 'Interactive 55" Touch Kiosk',
-        description: 'Engage visitors with this responsive, multi-touch kiosk. Ideal for wayfinding, self-service, and digital signage.',
-        category: 'Touch Screen Kiosks',
-        images: ['/assets/rvts-logo.png'],
-        features: ['10-point Multi-touch', '4K Resolution', 'Anti-glare Glass', 'Built-in PC'],
+        name: 'Full Motion Adjustable Monitor Arm',
+        slug: 'full-motion-adjustable-monitor-arm',
+        title: 'Full Motion Adjustable Monitor Arm',
+        description: 'A fully adjustable monitor arm designed to provide maximum flexibility and ergonomic comfort for workstation setups. The arm supports smooth swivel, tilt, and rotation movements, allowing users to customize screen position and viewing angle with ease. Its sturdy clamp-mounted base ensures stable desk installation while freeing up valuable workspace.',
+        category: 'Monitor Mount / Desk Mount',
+        images: [
+            '/products/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-2.webp',
+            '/products/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-3.webp',
+            '/products/full-motion-adjustable-monitor-arm/product-jpeg-500x500-1-1.webp'
+        ],
+        features: [
+            '180° swivel for easy screen sharing',
+            '360° rotation for landscape or portrait mode',
+            'Tilt adjustment from -35° to +50°',
+            'Smooth multi-joint articulation for precise positioning',
+            'Desk clamp base for secure installation',
+            'Improves ergonomics and desk space management',
+            'Integrated cable management for a clean workspace'
+        ],
         published: true,
-        material: 'Steel Enclosure',
-        finish: 'Black Powder Coat',
-        application: 'Retail / Public Spaces',
-        compatibility: 'Windows / Android'
+        material: 'High-Strength Aluminum Alloy & Steel',
+        finish: 'Matte Black Powder Coated',
+        application: 'Office / Home Workspace / Corporate / Studio',
+        compatibility: 'VESA Compatible Monitors (75x75 / 100x100)'
     },
     {
         id: 'static-5',
-        name: 'Heavy-Duty Motorized Trolley',
-        slug: 'motorized-trolley',
-        title: 'Mobile Display Stand with Electric Lift',
-        description: 'Easily move and adjust the height of heavy displays. Perfect for flexible classroom and office layouts.',
-        category: 'Mounting Solutions',
-        images: ['/assets/rvts-logo.png'],
-        features: ['Silent Motor', 'Remote Control Height Adjust', 'Locking Casters', 'Cable Management'],
+        name: 'Heavy-Duty Mobile LED Display Stand',
+        slug: 'heavy-duty-mobile-led-display-stand',
+        title: 'Heavy-Duty Mobile LED Display Stand',
+        description: 'A heavy-duty mobile display stand engineered to support large-format LED and flat-panel displays. The stand features a strong steel frame with a wide base for enhanced stability and smooth caster wheels for effortless mobility. Designed for professional environments, it ensures secure mounting, easy repositioning, and reliable performance.',
+        category: 'Mobile Display Stand / Video Wall Stand',
+        images: [
+            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-1.webp',
+            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-4.webp',
+            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-5.webp'
+        ],
+        features: [
+            'Heavy-duty construction for large and heavy displays',
+            'Wide base design for superior stability',
+            'Smooth caster wheels for easy movement',
+            'Lockable wheels for secure positioning',
+            'Suitable for large screen presentations',
+            'Designed for professional and commercial use',
+            'Custom size and load capacity options available'
+        ],
         published: true,
-        material: 'Reinforced Steel',
-        finish: 'Silver',
-        application: 'Mobile',
-        compatibility: 'VESA up to 800x600'
+        material: 'High-Strength Steel Frame',
+        finish: 'Powder Coated (Matte Black)',
+        application: 'Corporate / Events / Exhibition / Control Rooms',
+        compatibility: 'Large LED & Flat Panel Displays (VESA Mount Support)'
     }
 ];
 
