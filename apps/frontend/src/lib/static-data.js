@@ -8,9 +8,9 @@ export const STATIC_PRODUCTS = [
         description: 'An immersive interactive experience pod designed to create engaging, multi-sensory digital environments. The installation features a circular LED-lit arch, a high-resolution vertical display backdrop, and an interactive touch kiosk positioned at the center. The integrated glass floor panel enhances visual depth and user immersion.',
         category: 'Interactive Installation / Digital Experience Zone',
         images: [
-            '/products/immersive-interactive-experience-pod/70dca54d-0bbd-4dd4-9340-d5ea52946e8a.JPG',
-            '/products/immersive-interactive-experience-pod/8ecd88b7-2409-4f61-91c6-bcc76e1268e1.JPG',
-            '/products/immersive-interactive-experience-pod/b6b29abc-3442-404c-bcb3-1f997e1af9a1.JPG'
+            '/product-static-assets/immersive-interactive-experience-pod/70dca54d-0bbd-4dd4-9340-d5ea52946e8a.JPG',
+            '/product-static-assets/immersive-interactive-experience-pod/8ecd88b7-2409-4f61-91c6-bcc76e1268e1.JPG',
+            '/product-static-assets/immersive-interactive-experience-pod/b6b29abc-3442-404c-bcb3-1f997e1af9a1.JPG'
         ],
         features: [
             'Circular arch structure with integrated LED lighting',
@@ -35,9 +35,9 @@ export const STATIC_PRODUCTS = [
         description: 'A modern, industrial-grade interactive kiosk enclosure designed for high-traffic commercial environments. The unit features a robust metal body with a curved arch structure that supports overhead components and enhances visual appeal. Its open-front design allows easy integration of touch displays, internal hardware, and cable management systems.',
         category: 'Interactive Display Stand / Digital Kiosk',
         images: [
-            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162256_Original.JPG',
-            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162318_Original.JPG',
-            '/products/smart-interactive-kiosk-enclosure/IMG_20210129_162339_Original.JPG'
+            '/product-static-assets/smart-interactive-kiosk-enclosure/IMG_20210129_162256_Original.JPG',
+            '/product-static-assets/smart-interactive-kiosk-enclosure/IMG_20210129_162318_Original.JPG',
+            '/product-static-assets/smart-interactive-kiosk-enclosure/IMG_20210129_162339_Original.JPG'
         ],
         features: [
             'Heavy-duty metal construction for long-term durability',
@@ -62,9 +62,9 @@ export const STATIC_PRODUCTS = [
         description: 'A space-saving flip-down ceiling TV mount designed for both flat and pitched ceilings. The mount features a strong scissor-arm mechanism that allows the display to flip down for viewing and fold up when not in use. Its robust steel construction ensures secure mounting while maintaining smooth movement.',
         category: 'Ceiling Mount / Display Mount',
         images: [
-            '/products/flip-down-ceiling-tv-mount/41RuSwUlyzL.jpg',
-            '/products/flip-down-ceiling-tv-mount/41jpYlfmfAL-400x400.jpg',
-            '/products/flip-down-ceiling-tv-mount/41N1lVvl3fL-100x100.jpg'
+            '/product-static-assets/flip-down-ceiling-tv-mount/41RuSwUlyzL.jpg',
+            '/product-static-assets/flip-down-ceiling-tv-mount/41jpYlfmfAL-400x400.jpg',
+            '/product-static-assets/flip-down-ceiling-tv-mount/41N1lVvl3fL-100x100.jpg'
         ],
         features: [
             'Fits both flat and pitched ceilings',
@@ -89,9 +89,9 @@ export const STATIC_PRODUCTS = [
         description: 'A fully adjustable monitor arm designed to provide maximum flexibility and ergonomic comfort for workstation setups. The arm supports smooth swivel, tilt, and rotation movements, allowing users to customize screen position and viewing angle with ease. Its sturdy clamp-mounted base ensures stable desk installation while freeing up valuable workspace.',
         category: 'Monitor Mount / Desk Mount',
         images: [
-            '/products/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-2.webp',
-            '/products/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-3.webp',
-            '/products/full-motion-adjustable-monitor-arm/product-jpeg-500x500-1-1.webp'
+            '/product-static-assets/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-2.webp',
+            '/product-static-assets/full-motion-adjustable-monitor-arm/gas-monitor-arm-360-degree-rotation-500x500-3.webp',
+            '/product-static-assets/full-motion-adjustable-monitor-arm/product-jpeg-500x500-1-1.webp'
         ],
         features: [
             '180° swivel for easy screen sharing',
@@ -116,9 +116,9 @@ export const STATIC_PRODUCTS = [
         description: 'A heavy-duty mobile display stand engineered to support large-format LED and flat-panel displays. The stand features a strong steel frame with a wide base for enhanced stability and smooth caster wheels for effortless mobility. Designed for professional environments, it ensures secure mounting, easy repositioning, and reliable performance.',
         category: 'Mobile Display Stand / Video Wall Stand',
         images: [
-            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-1.webp',
-            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-4.webp',
-            '/products/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-5.webp'
+            '/product-static-assets/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-1.webp',
+            '/product-static-assets/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-4.webp',
+            '/product-static-assets/heavy-duty-mobile-led-display-stand/audiovan-low-height-director-tv-trolly-with-wheels-for-32-inch-to-75-inch-led-500x500-5.webp'
         ],
         features: [
             'Heavy-duty construction for large and heavy displays',

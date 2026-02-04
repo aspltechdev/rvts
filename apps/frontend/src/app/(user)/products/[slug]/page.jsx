@@ -106,7 +106,7 @@ const ProductDetailContent = ({ params }) => {
     // Helper to process image URLs
     const getImageUrl = (url) => {
         if (!url) return null;
-        if (url.startsWith('http') || url.startsWith('/products')) return url;
+        if (url.startsWith('http') || url.startsWith('/product-static-assets')) return url;
         return `${API_BASE_URL}${url}`;
     };
 

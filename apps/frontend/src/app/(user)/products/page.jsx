@@ -225,7 +225,7 @@ const ProductsListContent = () => {
                                             <div className="relative w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
                                                 {p.images && p.images[0] ? (
                                                     <Image
-                                                        src={(p.images[0].startsWith('http') || p.images[0].startsWith('/products')) ? p.images[0] : (API_BASE_URL + p.images[0])}
+                                                        src={(p.images[0].startsWith('http') || p.images[0].startsWith('/product-static-assets')) ? p.images[0] : (API_BASE_URL + p.images[0])}
                                                         alt={p.name}
                                                         fill
                                                         className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
