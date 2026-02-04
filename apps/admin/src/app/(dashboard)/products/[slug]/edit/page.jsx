@@ -71,11 +71,23 @@ export default function EditProductPage({ params }) {
 
     const handleImageUpload = async (e) => {
         if (!e.target.files?.length) return;
-        setUploading(true);
-        const files = Array.from(e.target.files);
 
+        const files = Array.from(e.target.files);
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+
+        const validFiles = files.filter(file => {
+            if (file.size > MAX_FILE_SIZE) {
+                alert(`File "${file.name}" is too large (max 10MB). It might cause upload errors.`);
+                return false;
+            }
+            return true;
+        });
+
+        if (validFiles.length === 0) return;
+
+        setUploading(true);
         try {
-            for (const file of files) {
+            for (const file of validFiles) {
                 const data = new FormData();
                 data.append('file', file);
                 const res = await api.post(`/api/upload`, data);
