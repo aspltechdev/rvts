@@ -17,6 +17,7 @@ import {
     Maximize,
     Loader2
 } from 'lucide-react';
+import { STATIC_PRODUCTS } from '@/lib/static-data';
 
 const ProductDetailContent = ({ params }) => {
     const { slug } = params;
@@ -53,7 +54,6 @@ const ProductDetailContent = ({ params }) => {
 
                 // Static Fallback Logic
                 try {
-                    const { STATIC_PRODUCTS } = await import('@/lib/static-data');
                     const staticProduct = STATIC_PRODUCTS.find(p => p.slug === slug);
                     if (staticProduct) {
                         setProduct(staticProduct);

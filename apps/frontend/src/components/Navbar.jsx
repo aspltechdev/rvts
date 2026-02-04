@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { Sun, Moon, ChevronDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
+import { getStaticCategories } from '@/lib/static-data';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -38,7 +39,6 @@ export default function Navbar() {
 
                 // Always merge with static data to ensure these 5 products are present
                 try {
-                    const { getStaticCategories } = await import('@/lib/static-data');
                     const staticData = getStaticCategories();
 
                     // Merge logic: Add static categories if they don't exist, or append products if they do
@@ -62,7 +62,6 @@ export default function Navbar() {
                 setCategories(finalCategories);
             } catch (error) {
                 console.error('Failed to fetch categories, using static data fallback:', error);
-                const { getStaticCategories } = await import('@/lib/static-data');
                 const staticData = getStaticCategories();
                 setCategories(staticData.categories);
             }

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Monitor, Cpu, LayoutGrid, Sliders, Speaker, Wifi, Settings, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/config';
+import { STATIC_PRODUCTS } from '@/lib/static-data';
 
 const ProductsListContent = () => {
     const searchParams = useSearchParams();
@@ -52,9 +53,6 @@ const ProductsListContent = () => {
                     apiProducts = await res.json();
                 }
 
-                // Always include static products
-                const { STATIC_PRODUCTS } = await import('@/lib/static-data');
-
                 // Merge logic: Add static products that aren't already in the API list (matching by slug)
                 const mergedProducts = [...apiProducts];
                 STATIC_PRODUCTS.forEach(sp => {
@@ -66,7 +64,6 @@ const ProductsListContent = () => {
                 setProducts(mergedProducts);
             } catch (err) {
                 console.warn("Fetch error, using static data only:", err);
-                const { STATIC_PRODUCTS } = await import('@/lib/static-data');
                 setProducts(STATIC_PRODUCTS);
             } finally {
                 setLoading(false);
