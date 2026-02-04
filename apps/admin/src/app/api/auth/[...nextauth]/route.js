@@ -55,7 +55,7 @@ export const authOptions = {
             return session;
         }
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET || "rvts_production_fallback_secret_998877",
 };
 
 const handler = NextAuth(authOptions);
