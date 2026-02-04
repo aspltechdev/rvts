@@ -96,7 +96,6 @@ export default function Footer() {
                                 <li key={item}>
                                     <a
                                         href={item === 'Products' ? '/products' : (item === 'Home' ? '/' : (item === 'About Us' ? '/about' : (item === 'Services' ? '/services' : '/contact')))}
-                                        onClick={item === 'Products' ? (e) => handleScrollToSection(e, 'products-showcase') : undefined}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
                                         {item}
@@ -135,7 +134,6 @@ export default function Footer() {
                                 <li key={item}>
                                     <a
                                         href="/products"
-                                        onClick={(e) => handleScrollToSection(e, 'products-showcase')}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
                                         {item}
