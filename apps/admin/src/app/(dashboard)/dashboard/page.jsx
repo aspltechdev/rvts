@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Edit2, Eye, Trash2, Plus, Package, CheckCircle, FileText } from 'lucide-react';
+import { Edit2, Trash2, Plus, Package, CheckCircle, FileText } from 'lucide-react';
 
 export default function Dashboard() {
     const [products, setProducts] = useState([]);
