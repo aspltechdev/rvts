@@ -12,10 +12,12 @@ export async function GET(
         const product = await prisma.product.findUnique({
             where: { slug: params.slug },
         });
-        if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
-        return NextResponse.json(product);
+        if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json(product, {
+            headers: { 'Access-Control-Allow-Origin': '*' }
+        });
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
+        return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
     }
 }
 
@@ -23,33 +25,21 @@ export async function PUT(
     request: Request,
     { params }: { params: { slug: string } }
 ) {
-    console.log(`[PUT] Updating product: ${params.slug}`);
     try {
         const body = await request.json();
 
-        // Remove system fields and unique identifiers that shouldn't change via simple update
-        delete body.id;
-        delete body.createdAt;
-        delete body.updatedAt;
-        delete body.slug;
+        // Clean system fields
+        const { id, createdAt, updatedAt, slug, ...updateData } = body;
 
-        // Ensure arrays are handled if they come as objects (legacy protection)
-        if (body.features && typeof body.features[0] === 'object') {
-            body.features = body.features.map((f: any) => f.value || f);
+        // Ensure features is a clean array of strings
+        if (updateData.features && Array.isArray(updateData.features)) {
+            updateData.features = updateData.features.map((f: any) => typeof f === 'object' ? f.value : f);
         }
-        if (body.useCases && typeof body.useCases[0] === 'object') {
-            body.useCases = body.useCases.map((u: any) => u.value || u);
-        }
-        if (body.certifications && !Array.isArray(body.certifications)) {
-            body.certifications = [];
-        }
-
-        console.log(`[PUT] Payload for ${params.slug}:`, JSON.stringify(body, null, 2));
 
         const product = await prisma.product.update({
             where: { slug: params.slug },
             data: {
-                ...body,
+                ...updateData,
                 updatedAt: new Date()
             },
         });
@@ -61,8 +51,7 @@ export async function PUT(
             }
         });
     } catch (error: any) {
-        console.error("Update error:", error);
-        return NextResponse.json({ error: 'Failed to update product: ' + error.message }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json({ error: 'Failed' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
     }
 }
 
