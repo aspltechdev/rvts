@@ -17,7 +17,11 @@ export async function POST(request: Request) {
     const buffer = Buffer.from(bytes)
 
     const isImage = file.type.startsWith('image/')
-    const originalName = file.name.replace(/\.[^/.]+$/, '').replace(/\s+/g, '-')
+    const originalName = file.name
+      .replace(/\.[^/.]+$/, '') // Remove extension
+      .replace(/[^a-zA-Z0-9]/g, '-') // Replace everything non-alphanumeric with -
+      .replace(/-+/g, '-') // Replace multiple dashes with one
+      .replace(/^-|-$/g, '') // Remove leading/trailing dashes
 
     let name = ''
     let finalBuffer: Buffer = buffer
