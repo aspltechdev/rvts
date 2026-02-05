@@ -72,15 +72,10 @@ export default function ServicesPage() {
           }
         }
       `}</style>
-      <div className="min-h-screen dark:bg-[#0c0c0c] bg-zinc-50 py-24 px-4">
+      <div className="min-h-screen dark:bg-[#0c0c0c] bg-zinc-50 pt-28 pb-24 px-4 text-zinc-900">
         <div className="max-w-[1500px] mx-auto">
 
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-8xl font-black text-[#ff3333] mb-4 uppercase tracking-tighter">Services</h1>
-            <p className="dark:text-gray-400 text-gray-600 text-lg max-w-2xl mx-auto">Explore our comprehensive range of audiovisual and technology solutions.</p>
-          </div>
-
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
             {services.map((service, index) => {
               const isOdd = index % 2 !== 0;
               return (
@@ -93,10 +88,10 @@ export default function ServicesPage() {
                     {/* Mobile gradient override */}
                     <div className={`absolute inset-0 md:hidden pointer-events-none bg-gradient-to-t dark:from-[#09090b] dark:via-[#09090b]/80 dark:to-transparent from-white via-white/90 to-transparent`} style={{ background: '' }}></div>
 
-                    <div className={`movie_header relative p-[30px] h-auto md:h-[40%] w-full md:w-[50%] mt-[85px] md:mt-0 z-10 ${isOdd ? 'md:ml-auto md:text-right' : ''}`}>
+                    <div className={`movie_header relative p-[30px] h-auto md:h-[50%] w-full md:w-[60%] mt-[60px] md:mt-0 z-10 ${isOdd ? 'md:ml-auto md:text-right' : ''}`}>
                       {/* Poster/Icon Image */}
                       <Image
-                        className={`locandina relative h-[120px] shadow-[0_0_20px_-10px_rgba(0,0,0,0.5)] object-cover rounded-xl dark:bg-zinc-900 bg-white dark:border-white/10 border-black/10 border ${isOdd ? 'float-right ml-[25px]' : 'float-left mr-[25px]'}`}
+                        className={`locandina relative h-[100px] md:h-[120px] shadow-[0_0_20px_-10px_rgba(0,0,0,0.5)] object-cover rounded-xl dark:bg-zinc-900 bg-white dark:border-white/10 border-black/10 border ${isOdd ? 'float-right ml-[25px]' : 'float-left mr-[25px]'}`}
                         src={service.image}
                         alt={service.title}
                         width={120}
@@ -104,17 +99,17 @@ export default function ServicesPage() {
                       />
 
                       <div className="pt-2">
-                        <h1 className="dark:text-white text-black font-bold text-3xl mb-2">{service.title}</h1>
+                        <h1 className="dark:text-white text-black font-bold text-2xl md:text-3xl mb-2">{service.title}</h1>
                         <h4 className="dark:text-zinc-300 text-zinc-600 font-bold text-sm tracking-wide uppercase">{service.category}</h4>
-                        <span className="minutes inline-block mt-[15px] dark:text-zinc-200 text-zinc-700 p-[5px] px-3 rounded-md dark:bg-white/10 bg-black/5 dark:border-white/20 border-black/10 border text-xs font-bold">
+                        <span className="minutes inline-block mt-[10px] md:mt-[15px] dark:text-zinc-200 text-zinc-700 p-[5px] px-3 rounded-md dark:bg-white/10 bg-black/5 dark:border-white/20 border-black/10 border text-xs font-bold">
                           {service.duration}
                         </span>
                         <p className="type inline-block dark:text-zinc-400 text-zinc-500 ml-[10px] text-xs uppercase tracking-wider font-semibold">Service</p>
                       </div>
                     </div>
 
-                    <div className={`movie_desc relative p-[30px] h-auto md:h-[50%] w-full md:w-[50%] z-10 ${isOdd ? 'md:ml-auto md:text-right' : ''}`}>
-                      <p className="dark:text-zinc-200 text-zinc-700 text-base leading-relaxed font-medium">
+                    <div className={`movie_desc relative p-[30px] py-2 md:py-[20px] h-auto w-full md:w-[60%] z-10 ${isOdd ? 'md:ml-auto text-left md:text-right' : 'text-left'}`}>
+                      <p className="dark:text-zinc-200 text-zinc-700 text-sm md:text-base leading-relaxed font-medium">
                         {service.description}
                       </p>
                     </div>
