@@ -9,7 +9,7 @@ const getBaseURL = () => {
 };
 
 const api = axios.create({
-    baseURL: getBaseURL().replace(/^"|"$/g, ''),
+    baseURL: (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3002').replace(/^"|"$/g, ''),
 });
 
 export default api;
