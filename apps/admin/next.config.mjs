@@ -34,6 +34,23 @@ const nextConfig = {
             },
         ],
     },
+    images: {
+        unoptimized: true,
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'researchvisions.com',
+                port: '',
+                pathname: '/uploads/**',
+            },
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+                port: '3002',
+                pathname: '/uploads/**',
+            }
+        ],
+    },
     eslint: {
         ignoreDuringBuilds: true,
     },

@@ -16,6 +16,7 @@ const nextConfig = {
         ignoreBuildErrors: true,
     },
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: 'https',
@@ -28,15 +29,10 @@ const nextConfig = {
                 pathname: '/uploads/**'
             },
             {
-                protocol: 'https',
-                hostname: 'api.researchvisions.com',
-                pathname: '/uploads/**'
-            },
-            {
                 protocol: 'http',
-                hostname: 'api.researchvisions.com',
+                hostname: 'researchvisions.com',
                 pathname: '/uploads/**'
-            },
+            }
         ],
     },
 };
