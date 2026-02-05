@@ -234,7 +234,7 @@ export default function Navbar() {
                                                         {catObj.category}
                                                     </Link>
                                                     <div className="flex flex-col gap-2.5">
-                                                        {catObj.products.map((product, pIndex) => (
+                                                        {catObj.products.slice(0, 6).map((product, pIndex) => (
                                                             <Link
                                                                 key={pIndex}
                                                                 href={`/products/${product.slug}`}
@@ -482,7 +482,7 @@ export default function Navbar() {
                                                                         {catObj.category}
                                                                     </Link>
                                                                     <div className="flex flex-col gap-2 pl-2">
-                                                                        {catObj.products.map((product, pIndex) => (
+                                                                        {catObj.products.slice(0, 6).map((product, pIndex) => (
                                                                             <Link
                                                                                 key={pIndex}
                                                                                 href={`/products/${product.slug}`}
