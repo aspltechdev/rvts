@@ -4,7 +4,7 @@ import { Send } from 'lucide-react';
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { z } from 'zod';
-import { submitContactQuery } from '../../actions/contact';
+import { submitContactQuery } from '@/app/actions/contact';
 
 const contactSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
