@@ -33,6 +33,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+        console.log("Creating product with body:", JSON.stringify(body, null, 2));
+
         const {
             name, title, description, slug, images, category,
             whyThisProduct, whatDoesItDo, features, useCases, published,
@@ -42,9 +44,16 @@ export async function POST(request: Request) {
             application, compatibility, finish, brochure
         } = body;
 
+        if (!name || !slug || !description) {
+            return NextResponse.json({ error: "Missing required fields: name, slug, and description are mandatory" }, {
+                status: 400,
+                headers: { 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+
         const existing = await prisma.product.findUnique({ where: { slug } });
         if (existing) {
-            return NextResponse.json({ error: "Slug already exists" }, {
+            return NextResponse.json({ error: "Slug already exists: " + slug }, {
                 status: 400,
                 headers: { 'Access-Control-Allow-Origin': '*' }
             });
@@ -52,16 +61,33 @@ export async function POST(request: Request) {
 
         const product = await prisma.product.create({
             data: {
-                name, title, description, slug, category,
-                images: images || [],
-                whyThisProduct, whatDoesItDo,
-                features: features || [],
-                useCases: useCases || [],
-                published: published || false,
-                sku, vesa, maxWeight, screenSize, adjustments,
-                technicalDrawing, installationManual, technicalDataSheet,
-                material, certifications: certifications || [], videoUrl, fusionUrl,
-                application, compatibility, finish, brochure
+                name,
+                title: title || name,
+                description,
+                slug,
+                category: category || "Uncategorized",
+                images: Array.isArray(images) ? images : [],
+                whyThisProduct: whyThisProduct || "",
+                whatDoesItDo: whatDoesItDo || "",
+                features: Array.isArray(features) ? features : [],
+                useCases: Array.isArray(useCases) ? useCases : [],
+                published: published === true,
+                sku: sku || "",
+                vesa: vesa || "",
+                maxWeight: maxWeight || "",
+                screenSize: screenSize || "",
+                adjustments: adjustments || "",
+                technicalDrawing: technicalDrawing || "",
+                installationManual: installationManual || "",
+                technicalDataSheet: technicalDataSheet || "",
+                material: material || "",
+                certifications: Array.isArray(certifications) ? certifications : [],
+                videoUrl: videoUrl || "",
+                fusionUrl: fusionUrl || "",
+                application: application || "",
+                compatibility: compatibility || "",
+                finish: finish || "",
+                brochure: brochure || ""
             }
         });
 

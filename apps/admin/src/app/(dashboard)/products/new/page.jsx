@@ -119,9 +119,9 @@ export default function AddProductPage() {
             await api.post(`/api/products`, payload);
             router.push('/dashboard');
         } catch (err) {
-            console.error("Submission error", err);
-            const msg = err.response?.data?.error || err.response?.data?.details || "Failed to save product";
-            alert(msg);
+            console.error("Submission error details:", err.response?.data);
+            const msg = err.response?.data?.details || err.response?.data?.error || err.message || "Failed to save product";
+            alert("Error: " + msg);
         }
     };
 
