@@ -96,6 +96,7 @@ export default function Footer() {
                                 <li key={item}>
                                     <a
                                         href={item === 'Products' ? '/products' : (item === 'Home' ? '/' : (item === 'About Us' ? '/about' : (item === 'Services' ? '/services' : '/contact')))}
+                                        onClick={item === 'Products' ? (e) => handleScrollToSection(e, 'products-showcase') : undefined}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
                                         {item}
@@ -134,6 +135,7 @@ export default function Footer() {
                                 <li key={item}>
                                     <a
                                         href="/products"
+                                        onClick={(e) => handleScrollToSection(e, 'products-showcase')}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
                                         {item}
@@ -232,9 +234,9 @@ export default function Footer() {
 
             {/* Copyright */}
             <div className="max-w-7xl mx-auto dark:border-zinc-800 border-zinc-200 border-t pt-4 text-center">
-                <p className="dark:text-zinc-400 text-zinc-500 text-xs flex flex-col gap-1">
-                    <span>© 2026 RVTS – Research Vision Tech Services</span>
-                    <span className="opacity-70 font-medium">Engineered for reliability. Designed for the future.</span>
+                <p className="dark:text-white text-zinc-900 text-sm flex flex-col gap-1">
+                    <span>©️ 2026 RVTS. All rights reserved by Aspltech.in</span>
+                    <span className="opacity-80 dark:opacity-70 font-medium text-xs md:text-sm">Designed with ❤️ for memorable celebrations</span>
                 </p>
             </div>
         </footer >
