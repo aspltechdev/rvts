@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Edit2, Trash2, Plus, Package, CheckCircle, FileText } from 'lucide-react';
+import { Edit2, Trash2, Plus, Package, CheckCircle, FileText, Eye } from 'lucide-react';
 
 export default function Dashboard() {
     const [products, setProducts] = useState([]);
@@ -147,6 +147,16 @@ export default function Dashboard() {
                                         </td>
                                         <td className="p-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
+
+                                                <a
+                                                    href={`http://researchvisions.com/products/${p.slug}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-2 text-gray-400 dark:text-zinc-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all"
+                                                    title="View on Website"
+                                                >
+                                                    <Eye size={18} />
+                                                </a>
 
                                                 <Link
                                                     href={`/products/${p.slug}/edit`}
