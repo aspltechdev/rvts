@@ -134,11 +134,11 @@ const ProductDetailContent = ({ params }) => {
                     <span className="text-zinc-900 dark:text-zinc-100 font-medium truncate max-w-[200px]">{product.name}</span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 mb-20 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 mb-20 items-start">
 
                     {/* LEFT COLUMN: IMAGES */}
-                    <div className="product-gallery flex flex-col gap-4">
-                        <div className="relative aspect-video w-full flex items-center justify-center p-0 group z-0 bg-zinc-50 dark:bg-zinc-900 rounded-xl overflow-hidden border border-zinc-100 dark:border-zinc-800">
+                    <div className="product-gallery flex flex-col gap-6 lg:col-span-7">
+                        <div className="relative aspect-square md:aspect-[4/3] w-full flex items-center justify-center p-0 group z-0 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50 transition-all duration-500 hover:border-red-600/30">
                             {/* 3D View */}
                             {product.fusionUrl && (
                                 <iframe
@@ -193,28 +193,29 @@ const ProductDetailContent = ({ params }) => {
                     </div>
 
                     {/* RIGHT COLUMN: INFO */}
-                    <div className="product-info flex flex-col sticky top-24">
+                    <div className="product-info flex flex-col lg:col-span-5 sticky top-24">
                         <div className="mb-4">
-                            <span className="inline-block px-3 py-1 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 text-[10px] font-bold uppercase tracking-widest rounded-full mb-3">
+                            <span className="inline-block px-3 py-1 bg-red-50/50 dark:bg-red-900/10 backdrop-blur-sm text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-4 border border-red-100 dark:border-red-900/20">
                                 {product.category || 'Product'}
                             </span>
-                            <h1 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white leading-tight mb-3">
+                            <h1 className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white leading-[1.1] tracking-tight mb-4 uppercase">
                                 {product.name}
                             </h1>
-                            <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed border-l-2 border-zinc-200 dark:border-zinc-800 pl-3 py-1">
+                            <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed border-l-4 border-[#ff3333] pl-6 py-2 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-r-xl italic font-medium">
                                 {product.description || "No data is been given."}
                             </p>
                         </div>
 
-                        {/* Specifications */}
-                        <div className="mb-6">
-                            <div className="grid grid-cols-2 gap-3">
+                        <div className="mb-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {highlights.map((item, i) => (
-                                    <div key={i} className="flex items-center gap-3 p-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-lg">
-                                        <item.icon size={16} className="text-zinc-400" />
+                                    <div key={i} className="flex items-center gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item">
+                                        <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex items-center justify-center shadow-sm group-hover/item:text-[#ff3333] transition-colors">
+                                            <item.icon size={20} className="text-zinc-400 group-hover/item:text-[#ff3333]" />
+                                        </div>
                                         <div className="flex flex-col">
-                                            <span className="text-[10px] text-zinc-400 uppercase font-bold">{item.label}</span>
-                                            <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 truncate">{item.value && item.value !== 'N/A' ? item.value : 'No data is been given'}</span>
+                                            <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider">{item.label}</span>
+                                            <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 truncate">{item.value && item.value !== 'N/A' ? item.value : 'No data is been given'}</span>
                                         </div>
                                     </div>
                                 ))}
