@@ -159,6 +159,7 @@ const ProductDetailContent = ({ params }) => {
                                             fill
                                             className="object-contain transition-transform duration-500 group-hover:scale-105"
                                             priority
+                                            unoptimized
                                         />
                                     ) : (
                                         <Monitor size={80} className="text-zinc-200 dark:text-zinc-800" />
@@ -175,7 +176,7 @@ const ProductDetailContent = ({ params }) => {
                                     onClick={() => { setActiveImageIndex(idx); setViewMode('image'); }}
                                     className={`relative aspect-square bg-zinc-50 dark:bg-[#111] border rounded-lg overflow-hidden transition-all ${activeImageIndex === idx && viewMode === 'image' ? 'border-red-600 ring-1 ring-red-600/20' : 'border-zinc-100 dark:border-zinc-800'}`}
                                 >
-                                    <Image src={img} alt="" fill className="object-contain p-2" />
+                                    <Image src={img} alt="" fill className="object-contain p-2" unoptimized />
                                 </button>
                             ))}
                             {/* 3D Button */}

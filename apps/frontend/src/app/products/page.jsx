@@ -226,6 +226,7 @@ const ProductsListContent = () => {
                                                         alt={p.name}
                                                         fill
                                                         className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                                                        unoptimized
                                                     />
                                                 ) : (
                                                     <div className="w-full h-full flex items-center justify-center text-zinc-300 dark:text-zinc-700">
