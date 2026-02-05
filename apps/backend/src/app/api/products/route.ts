@@ -70,10 +70,11 @@ export async function POST(request: Request) {
             headers: { 'Access-Control-Allow-Origin': '*' }
         });
     } catch (error: any) {
-        console.error("Create product error:", error);
+        console.error("Create product fatal error:", error);
         return NextResponse.json({
-            error: 'Failed to create product: ' + error.message,
-            details: error.meta?.cause || error.message
+            error: 'Failed to create product',
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         }, {
             status: 500,
             headers: { 'Access-Control-Allow-Origin': '*' }

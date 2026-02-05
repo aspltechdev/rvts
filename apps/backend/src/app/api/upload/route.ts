@@ -91,9 +91,16 @@ export async function POST(request: Request) {
     const url = `${baseUrl}/uploads/${name}`
     return NextResponse.json({ url })
   } catch (e: any) {
-    console.error('Upload error:', e)
+    console.error('--- UPLOAD ERROR START ---');
+    console.error('Message:', e.message);
+    console.error('Stack:', e.stack);
+    console.error('--- UPLOAD ERROR END ---');
     return NextResponse.json(
-      { error: 'Upload failed: ' + e.message },
+      {
+        error: 'Backend upload failed',
+        details: e.message,
+        timestamp: new Date().toISOString()
+      },
       { status: 500 }
     )
   }
