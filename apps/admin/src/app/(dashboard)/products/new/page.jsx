@@ -253,7 +253,7 @@ export default function AddProductPage() {
                         <div className="flex flex-wrap gap-4">
                             {images.map((url, i) => (
                                 <div key={i} className="relative w-24 h-24 border border-gray-200 dark:border-zinc-700 rounded-xl overflow-hidden group shadow-sm">
-                                    <Image src={url} alt="Uploaded" width={96} height={96} className="object-cover w-full h-full" />
+                                    <Image src={url} alt="Uploaded" width={96} height={96} className="object-cover w-full h-full" unoptimized />
                                     <button type="button" onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))} className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <X size={20} className="text-white" />
                                     </button>
