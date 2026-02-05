@@ -222,7 +222,7 @@ const ProductsListContent = () => {
                                             <div className="relative w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
                                                 {p.images && p.images[0] ? (
                                                     <Image
-                                                        src={(p.images[0].startsWith('http') || p.images[0].startsWith('/product-static-assets')) ? p.images[0] : (API_BASE_URL + p.images[0])}
+                                                        src={p.images[0].startsWith('http') ? p.images[0] : `http://researchvisions.com${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
                                                         alt={p.name}
                                                         fill
                                                         className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
@@ -245,7 +245,7 @@ const ProductsListContent = () => {
                                             {/* CARD TITLE & INFO */}
                                             <div className="p-5 flex flex-col flex-grow">
                                                 <div className="text-[10px] font-bold text-[#ff3333] dark:text-[#ff5555] uppercase tracking-wider mb-2">
-                                                    {p.category}
+                                                    {p.category || "No data is been given"}
                                                 </div>
                                                 <h3 className="text-base font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-[#ff3333] dark:group-hover:text-[#ff4444] transition-colors leading-snug">
                                                     {p.name}

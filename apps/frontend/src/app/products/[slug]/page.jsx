@@ -63,11 +63,11 @@ const ProductDetailContent = ({ params }) => {
                             name: slug.replace(/-/g, ' '),
                             category: "Uncategorized",
                             title: "Product Not Found",
-                            description: "Content is currently unavailable.",
+                            description: "No data is been given.",
                             images: [],
                             features: [],
-                            material: "N/A",
-                            finish: "N/A"
+                            material: "No data is been given.",
+                            finish: "No data is been given."
                         });
                     }
                 } catch {
@@ -107,7 +107,7 @@ const ProductDetailContent = ({ params }) => {
     const getImageUrl = (url) => {
         if (!url) return null;
         if (url.startsWith('http') || url.startsWith('/product-static-assets')) return url;
-        return `${API_BASE_URL}${url}`;
+        return `http://researchvisions.com${url.startsWith('/') ? '' : '/'}${url}`;
     };
 
     const highlights = [
@@ -202,7 +202,7 @@ const ProductDetailContent = ({ params }) => {
                                 {product.name}
                             </h1>
                             <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed border-l-2 border-zinc-200 dark:border-zinc-800 pl-3 py-1">
-                                {product.description}
+                                {product.description || "No data is been given."}
                             </p>
                         </div>
 
@@ -214,7 +214,7 @@ const ProductDetailContent = ({ params }) => {
                                         <item.icon size={16} className="text-zinc-400" />
                                         <div className="flex flex-col">
                                             <span className="text-[10px] text-zinc-400 uppercase font-bold">{item.label}</span>
-                                            <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 truncate">{item.value || 'N/A'}</span>
+                                            <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 truncate">{item.value && item.value !== 'N/A' ? item.value : 'No data is been given'}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -257,17 +257,19 @@ const ProductDetailContent = ({ params }) => {
                     <div className="min-h-[200px]">
                         {activeTab === 'description' && (
                             <div className="prose prose-zinc dark:prose-invert max-w-none">
-                                <p>{product.description}</p>
+                                <p>{product.description || "No data is been given."}</p>
                             </div>
                         )}
                         {activeTab === 'keyfeatures' && (
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {product.features?.map((f, i) => (
+                                {product.features && product.features.length > 0 ? product.features?.map((f, i) => (
                                     <div key={i} className="flex items-start gap-3 p-3 border rounded-lg border-zinc-100 dark:border-zinc-800">
                                         <Check size={16} className="text-green-500 mt-0.5" />
                                         <span className="text-sm font-medium">{f}</span>
                                     </div>
-                                ))}
+                                )) : (
+                                    <p className="text-zinc-500 text-sm py-4">No data is been given.</p>
+                                )}
                             </div>
                         )}
                         {/* More tabs can be added similarly */}

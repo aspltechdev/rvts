@@ -224,26 +224,28 @@ export default function Navbar() {
                                     className="w-[700px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
                                 >
                                     <div className="p-8">
-                                        <div className="grid grid-cols-3 gap-8">
-                                            {categories.map((catObj, index) => (
+                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-10">
+                                            {[...categories].sort((a, b) => a.category.localeCompare(b.category)).map((catObj, index) => (
                                                 <div key={index} className="flex flex-col gap-4">
                                                     <Link
                                                         href={`/products?category=${encodeURIComponent(catObj.category)}`}
-                                                        className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider"
+                                                        className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider underline decoration-zinc-100 underline-offset-8 decoration-2"
                                                     >
                                                         {catObj.category}
                                                     </Link>
                                                     <div className="flex flex-col gap-2.5">
-                                                        {catObj.products.slice(0, 6).map((product, pIndex) => (
+                                                        {catObj.products.length > 0 ? catObj.products.slice(0, 6).map((product, pIndex) => (
                                                             <Link
                                                                 key={pIndex}
                                                                 href={`/products/${product.slug}`}
                                                                 className="group flex items-center gap-3 text-sm text-zinc-500 hover:text-[#ff3333] transition-colors"
                                                             >
                                                                 <span className="w-1 h-1 rounded-full bg-zinc-300 group-hover:bg-[#ff3333] transition-colors" />
-                                                                {product.name}
+                                                                <span className="truncate">{product.name}</span>
                                                             </Link>
-                                                        ))}
+                                                        )) : (
+                                                            <span className="text-[10px] text-zinc-400 font-medium italic">No data is been given.</span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             ))}

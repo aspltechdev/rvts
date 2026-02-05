@@ -120,13 +120,17 @@ export default function Dashboard() {
                                         <td className="p-6">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-lg bg-gray-100 dark:bg-zinc-800 overflow-hidden flex-shrink-0 border border-gray-200 dark:border-zinc-700/50">
-                                                    {p.images[0] ? (
-                                                        <Image src={p.images[0]} width={48} height={48} className="w-full h-full object-cover" alt={p.name} unoptimized />
-                                                    ) : (
-                                                        <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-zinc-600">
-                                                            <div className="w-4 h-4 bg-gray-300 dark:bg-zinc-700 rounded-full" />
-                                                        </div>
-                                                    )}
+                                                    {(() => {
+                                                        const img = p.images?.[0];
+                                                        if (!img) return (
+                                                            <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-zinc-600">
+                                                                <div className="w-4 h-4 bg-gray-300 dark:bg-zinc-700 rounded-full" />
+                                                            </div>
+                                                        );
+                                                        // Ensure absolute URL for admin panel loads
+                                                        const src = img.startsWith('http') ? img : `http://researchvisions.com${img.startsWith('/') ? '' : '/'}${img}`;
+                                                        return <Image src={src} width={48} height={48} className="w-full h-full object-cover" alt={p.name} unoptimized />;
+                                                    })()}
                                                 </div>
                                                 <div>
                                                     <div className="text-gray-900 dark:text-white font-bold group-hover:text-brand-red transition-colors">{p.name}</div>
