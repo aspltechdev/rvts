@@ -15,21 +15,29 @@ export const authOptions = {
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null;
 
+                console.log(`Auth: Attempting login for ${credentials.email}`);
                 try {
                     const user = await prisma.user.findUnique({
                         where: { email: credentials.email }
                     });
 
-                    if (user) {
-                        const isValid = await bcrypt.compare(credentials.password, user.password);
-                        if (isValid) {
-                            return { id: user.id, name: user.name, email: user.email };
-                        }
+                    if (!user) {
+                        console.log(`Auth: User not found - ${credentials.email}`);
+                        return null;
                     }
-                    console.log(`Login failed for email: ${credentials.email}`);
+
+                    console.log(`Auth: User found, checking password...`);
+                    const isValid = await bcrypt.compare(credentials.password, user.password);
+
+                    if (isValid) {
+                        console.log(`Auth: Password match! SUCCESS for ${credentials.email}`);
+                        return { id: user.id, name: user.name, email: user.email };
+                    }
+
+                    console.log(`Auth: Invalid password for ${credentials.email}`);
                     return null;
                 } catch (error) {
-                    console.error("Auth authorize error:", error);
+                    console.error("Auth: DATABASE ERROR:", error);
                     return null;
                 }
             }
@@ -61,12 +69,12 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET || "rvts_production_fallback_secret_998877",
     cookies: {
         sessionToken: {
-            name: `rvts-session-new`,
+            name: `rvts-session-final`,
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true
+                secure: process.env.NEXTAUTH_URL?.startsWith('https') || false
             }
         }
     }
