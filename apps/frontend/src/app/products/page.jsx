@@ -218,14 +218,14 @@ const ProductsListContent = () => {
                                             key={index}
                                             className="group bg-white dark:bg-[#0a0a0a] rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden hover:shadow-2xl hover:shadow-black/5 dark:hover:shadow-black/50 transition-all duration-300 flex flex-col h-full hover:-translate-y-1"
                                         >
-                                            {/* IMAGE */}
-                                            <div className="relative w-full aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 overflow-hidden">
+                                            {/* IMAGE CONTAINER */}
+                                            <div className="relative w-full aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 overflow-hidden border-b border-zinc-50 dark:border-zinc-800">
                                                 {p.images && p.images[0] ? (
                                                     <Image
                                                         src={p.images[0].startsWith('http') ? p.images[0] : `http://researchvisions.com${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
                                                         alt={p.name}
                                                         fill
-                                                        className="object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
                                                         unoptimized
                                                     />
                                                 ) : (
@@ -234,22 +234,35 @@ const ProductsListContent = () => {
                                                     </div>
                                                 )}
 
-                                                {/* Hover Overlay */}
-                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                                    <span className="bg-white text-black text-xs font-bold px-4 py-2 rounded-full uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                                        View Details
+                                                {/* Category Badge Floating */}
+                                                <div className="absolute top-4 left-4 z-10">
+                                                    <span className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black text-[#ff3333] px-2.5 py-1 rounded-full uppercase tracking-[0.15em] border border-zinc-200/50 dark:border-zinc-700/50 shadow-sm">
+                                                        {p.category || "General"}
                                                     </span>
                                                 </div>
+
+                                                {/* Hover Glow Effect */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-[#ff3333]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                             </div>
 
-                                            {/* CARD TITLE & INFO */}
+                                            {/* CARD CONTENT */}
                                             <div className="p-5 flex flex-col flex-grow">
-                                                <div className="text-[10px] font-bold text-[#ff3333] dark:text-[#ff5555] uppercase tracking-wider mb-2">
-                                                    {p.category || "No data is been given"}
+                                                <div className="mb-4 flex-grow">
+                                                    <h3 className="text-base md:text-lg font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-[#ff3333] transition-colors leading-tight mb-2">
+                                                        {p.name}
+                                                    </h3>
+                                                    <div className="w-10 h-1 bg-[#ff3333]/20 group-hover:w-full group-hover:bg-[#ff3333] transition-all duration-500 rounded-full" />
                                                 </div>
-                                                <h3 className="text-base font-bold text-zinc-800 dark:text-zinc-100 group-hover:text-[#ff3333] dark:group-hover:text-[#ff4444] transition-colors leading-snug">
-                                                    {p.name}
-                                                </h3>
+
+                                                {/* FIXED BUTTON AT BOTTOM */}
+                                                <div className="mt-auto">
+                                                    <div className="flex items-center justify-between group/btn py-2 px-4 rounded-xl bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-100 dark:border-zinc-800 transition-all duration-300 group-hover:bg-[#ff3333] group-hover:border-[#ff3333]">
+                                                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-600 dark:text-zinc-400 group-hover:text-white transition-colors">
+                                                            View Details
+                                                        </span>
+                                                        <ChevronRight size={14} className="text-[#ff3333] group-hover:text-white group-hover:translate-x-1 transition-all" />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </Link>
                                     ))}
