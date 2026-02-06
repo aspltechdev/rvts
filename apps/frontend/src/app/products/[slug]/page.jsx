@@ -209,13 +209,15 @@ const ProductDetailContent = ({ params }) => {
                         <div className="mb-8">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {highlights.map((item, i) => (
-                                    <div key={i} className="flex items-center gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item">
-                                        <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex items-center justify-center shadow-sm group-hover/item:text-[#ff3333] transition-colors">
+                                    <div key={i} className="flex items-start gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item h-full">
+                                        <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex flex-shrink-0 items-center justify-center shadow-sm group-hover/item:border-red-600/50 border border-transparent transition-all">
                                             <item.icon size={20} className="text-zinc-400 group-hover/item:text-[#ff3333]" />
                                         </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider">{item.label}</span>
-                                            <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 truncate">{item.value && item.value !== 'N/A' ? item.value : 'No data is been given'}</span>
+                                        <div className="flex flex-col min-w-0">
+                                            <span className="text-[10px] text-zinc-400 uppercase font-extrabold tracking-widest mb-1">{item.label}</span>
+                                            <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 leading-snug break-words">
+                                                {item.value && item.value !== 'N/A' && item.value !== '' ? item.value : 'No data given'}
+                                            </span>
                                         </div>
                                     </div>
                                 ))}
