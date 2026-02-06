@@ -43,6 +43,9 @@ export const authOptions = {
             }
         })
     ],
+    jwt: {
+        maxAge: 30 * 24 * 60 * 60,
+    },
     session: {
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60,
@@ -53,14 +56,14 @@ export const authOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.sub = user.id;
+                token.id = user.id;
                 token.email = user.email;
             }
             return token;
         },
         async session({ session, token }) {
             if (session?.user) {
-                session.user.id = token.sub;
+                session.user.id = token.id;
                 session.user.email = token.email;
             }
             return session;
@@ -69,12 +72,12 @@ export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET || "rvts_production_fallback_secret_998877",
     cookies: {
         sessionToken: {
-            name: `rvts-session-final`,
+            name: `rvts-auth-v2`,
             options: {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: process.env.NEXTAUTH_URL?.startsWith('https') || false
+                secure: true
             }
         }
     }
