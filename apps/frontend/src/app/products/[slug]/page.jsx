@@ -137,7 +137,7 @@ const ProductDetailContent = ({ params }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 mb-20 items-start">
 
                     {/* LEFT COLUMN: IMAGES */}
-                    <div className="product-gallery flex flex-col gap-6 lg:col-span-7">
+                    <div className="product-gallery flex flex-col gap-6 lg:col-span-6">
                         <div className="relative aspect-square md:aspect-[4/3] w-full flex items-center justify-center p-0 group z-0 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50 transition-all duration-500 hover:border-red-600/30">
                             {/* 3D View */}
                             {product.fusionUrl && (
@@ -193,7 +193,7 @@ const ProductDetailContent = ({ params }) => {
                     </div>
 
                     {/* RIGHT COLUMN: INFO */}
-                    <div className="product-info flex flex-col lg:col-span-5 sticky top-24">
+                    <div className="product-info flex flex-col lg:col-span-6 sticky top-24">
                         <div className="mb-4">
                             <span className="inline-block px-3 py-1 bg-red-50/50 dark:bg-red-900/10 backdrop-blur-sm text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-[0.2em] rounded-full mb-4 border border-red-100 dark:border-red-900/20">
                                 {product.category || 'Product'}
