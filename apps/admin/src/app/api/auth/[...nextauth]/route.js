@@ -59,17 +59,6 @@ export const authOptions = {
         }
     },
     secret: process.env.NEXTAUTH_SECRET || "rvts_production_fallback_secret_998877",
-    cookies: {
-        sessionToken: {
-            name: `rvts-admin-session`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production'
-            }
-        }
-    }
 };
 
 const handler = NextAuth(authOptions);
