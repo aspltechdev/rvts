@@ -234,13 +234,6 @@ const ProductsListContent = () => {
                                                     </div>
                                                 )}
 
-                                                {/* Category Badge Floating */}
-                                                <div className="absolute top-4 left-4 z-10">
-                                                    <span className="bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md text-[9px] font-black text-[#ff3333] px-2.5 py-1 rounded-full uppercase tracking-[0.15em] border border-zinc-200/50 dark:border-zinc-700/50 shadow-sm">
-                                                        {p.category || "General"}
-                                                    </span>
-                                                </div>
-
                                                 {/* Hover Glow Effect */}
                                                 <div className="absolute inset-0 bg-gradient-to-t from-[#ff3333]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                             </div>
