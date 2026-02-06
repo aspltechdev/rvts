@@ -221,50 +221,68 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="w-[700px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
+                                    className="w-[850px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
                                 >
                                     <div className="p-8">
-                                        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-10">
-                                            {[...categories].sort((a, b) => a.category.localeCompare(b.category)).map((catObj, index) => (
-                                                <div key={index} className="flex flex-col gap-4">
-                                                    <Link
-                                                        href={`/products?category=${encodeURIComponent(catObj.category)}`}
-                                                        className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider underline decoration-zinc-100 underline-offset-8 decoration-2"
-                                                    >
-                                                        {catObj.category}
-                                                    </Link>
-                                                    <div className="flex flex-col gap-2.5">
-                                                        {catObj.products.length > 0 ? catObj.products.slice(0, 6).map((product, pIndex) => (
-                                                            <Link
-                                                                key={pIndex}
-                                                                href={`/products/${product.slug}`}
-                                                                className="group flex items-center gap-3 text-sm text-zinc-500 hover:text-[#ff3333] transition-colors"
-                                                            >
-                                                                <span className="w-1 h-1 rounded-full bg-zinc-300 group-hover:bg-[#ff3333] transition-colors" />
-                                                                <span className="truncate">{product.name}</span>
-                                                            </Link>
-                                                        )) : (
-                                                            <span className="text-[10px] text-zinc-400 font-medium italic">No data is been given.</span>
-                                                        )}
+                                        <div className="flex gap-12">
+                                            {(() => {
+                                                // 1. Prepare and Sort Categories
+                                                const sortedCats = [...categories].sort((a, b) => a.category.localeCompare(b.category));
+
+                                                // 2. Balance into 3 columns based on total item height (Header + Products)
+                                                const cols = [[], [], []];
+                                                const heights = [0, 0, 0];
+
+                                                sortedCats.forEach(cat => {
+                                                    const minIdx = heights.indexOf(Math.min(...heights));
+                                                    cols[minIdx].push(cat);
+                                                    heights[minIdx] += (2 + Math.min(cat.products.length, 5)); // 2 for header/spacing
+                                                });
+
+                                                return cols.map((col, colIdx) => (
+                                                    <div key={colIdx} className="flex-1 flex flex-col gap-10">
+                                                        {col.map((catObj, index) => (
+                                                            <div key={index} className="flex flex-col gap-4">
+                                                                <Link
+                                                                    href={`/products?category=${encodeURIComponent(catObj.category)}`}
+                                                                    className="text-zinc-900 font-black text-[11px] hover:text-[#ff3333] transition-colors uppercase tracking-[0.15em] border-b border-zinc-50 pb-2"
+                                                                >
+                                                                    {catObj.category}
+                                                                </Link>
+                                                                <div className="flex flex-col gap-2">
+                                                                    {catObj.products.length > 0 ? catObj.products.slice(0, 5).map((product, pIndex) => (
+                                                                        <Link
+                                                                            key={pIndex}
+                                                                            href={`/products/${product.slug}`}
+                                                                            className="group flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
+                                                                        >
+                                                                            <span className="w-1 h-1 rounded-full bg-zinc-200 group-hover:bg-[#ff3333] transition-colors" />
+                                                                            <span className="truncate group-hover:translate-x-1 transition-transform">{product.name}</span>
+                                                                        </Link>
+                                                                    )) : (
+                                                                        <span className="text-[10px] text-zinc-300 font-medium italic">General Collection</span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        ))}
                                                     </div>
-                                                </div>
-                                            ))}
+                                                ));
+                                            })()}
                                         </div>
-                                        <div className="mt-8 pt-6 border-t border-zinc-100 flex justify-between items-center">
-                                            <p className="text-xs text-zinc-400 font-medium uppercase tracking-widest">
-                                                Explore our full range of professional solutions
-                                            </p>
+
+                                        <div className="mt-10 pt-6 border-t border-zinc-100 flex justify-between items-center">
+                                            <div className="flex flex-col">
+                                                <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
+                                                    Professional Solutions
+                                                </p>
+                                                <p className="text-[9px] text-zinc-300 mt-0.5">Updated from Admin Panel</p>
+                                            </div>
                                             <Link
                                                 href="/products"
-                                                className="group flex items-center gap-2 text-xs font-bold text-zinc-900 hover:text-[#ff3333] transition-all uppercase tracking-widest"
+                                                className="group flex items-center gap-2 bg-[#ff3333] text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-red-500/20 hover:shadow-none"
                                             >
                                                 View All Collection
-                                                <motion.span
-                                                    animate={{ x: [0, 5, 0] }}
-                                                    transition={{ repeat: Infinity, duration: 1.5 }}
-                                                >
-                                                    →
-                                                </motion.span>
+                                                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                             </Link>
                                         </div>
                                     </div>
@@ -484,7 +502,7 @@ export default function Navbar() {
                                                                         {catObj.category}
                                                                     </Link>
                                                                     <div className="flex flex-col gap-2 pl-2">
-                                                                        {catObj.products.slice(0, 6).map((product, pIndex) => (
+                                                                        {catObj.products.slice(0, 5).map((product, pIndex) => (
                                                                             <Link
                                                                                 key={pIndex}
                                                                                 href={`/products/${product.slug}`}
