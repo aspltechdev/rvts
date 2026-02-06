@@ -12,12 +12,10 @@ export async function GET(
         const product = await prisma.product.findUnique({
             where: { slug: params.slug },
         });
-        if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404, headers: { 'Access-Control-Allow-Origin': '*' } });
-        return NextResponse.json(product, {
-            headers: { 'Access-Control-Allow-Origin': '*' }
-        });
+        if (!product) return NextResponse.json({ error: 'Product not found' }, { status: 404 });
+        return NextResponse.json(product);
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
     }
 }
 
@@ -44,26 +42,12 @@ export async function PUT(
             },
         });
 
-        return NextResponse.json(product, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'PUT, OPTIONS',
-            }
-        });
+        return NextResponse.json(product);
     } catch (error: any) {
-        return NextResponse.json({ error: 'Failed' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json({ error: 'Failed' }, { status: 500 });
     }
 }
 
-export async function OPTIONS() {
-    return NextResponse.json({}, {
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, DELETE, POST, PUT, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
-    });
-}
 
 // Handler for deleting a product by ID.
 // Note: We use the dynamic slug parameter as the ID here.
@@ -116,11 +100,7 @@ export async function DELETE(req: Request, { params }: { params: { slug: string 
         });
 
         console.log(`[DELETE] Successfully deleted product ${productId}`);
-        return NextResponse.json({ message: 'Deleted successfully' }, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-            }
-        });
+        return NextResponse.json({ message: 'Deleted successfully' });
     } catch (error: any) {
         console.error("[DELETE] Error:", error);
         return NextResponse.json({ error: 'Failed to delete product: ' + error.message }, { status: 500 });

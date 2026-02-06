@@ -11,21 +11,17 @@ export async function GET(request: Request) {
                 where: { slug }
             });
             return NextResponse.json(product || { error: 'Product not found' }, {
-                status: product ? 200 : 404,
-                headers: { 'Access-Control-Allow-Origin': '*' }
+                status: product ? 200 : 404
             });
         }
 
         const products = await prisma.product.findMany({
             orderBy: { createdAt: 'desc' },
         });
-        return NextResponse.json(products, {
-            headers: { 'Access-Control-Allow-Origin': '*' }
-        });
+        return NextResponse.json(products);
     } catch (error) {
         return NextResponse.json({ error: 'Failed to fetch products' }, {
-            status: 500,
-            headers: { 'Access-Control-Allow-Origin': '*' }
+            status: 500
         });
     }
 }
@@ -46,16 +42,14 @@ export async function POST(request: Request) {
 
         if (!name || !slug || !description) {
             return NextResponse.json({ error: "Missing required fields: name, slug, and description are mandatory" }, {
-                status: 400,
-                headers: { 'Access-Control-Allow-Origin': '*' }
+                status: 400
             });
         }
 
         const existing = await prisma.product.findUnique({ where: { slug } });
         if (existing) {
             return NextResponse.json({ error: "Slug already exists: " + slug }, {
-                status: 400,
-                headers: { 'Access-Control-Allow-Origin': '*' }
+                status: 400
             });
         }
 
@@ -92,8 +86,7 @@ export async function POST(request: Request) {
         });
 
         return NextResponse.json(product, {
-            status: 201,
-            headers: { 'Access-Control-Allow-Origin': '*' }
+            status: 201
         });
     } catch (error: any) {
         console.error("Create product fatal error:", error);
@@ -102,8 +95,7 @@ export async function POST(request: Request) {
             details: error.message,
             stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         }, {
-            status: 500,
-            headers: { 'Access-Control-Allow-Origin': '*' }
+            status: 500
         });
     }
 }

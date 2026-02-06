@@ -47,11 +47,9 @@ export async function GET() {
         return NextResponse.json({
             categories: categoriesWithProducts,
             count: categoriesWithProducts.length
-        }, {
-            headers: { 'Access-Control-Allow-Origin': '*' }
         });
     } catch (error) {
         console.error("Error fetching categories:", error);
-        return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500, headers: { 'Access-Control-Allow-Origin': '*' } });
+        return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500 });
     }
 }
