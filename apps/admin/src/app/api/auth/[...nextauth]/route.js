@@ -15,26 +15,29 @@ export const authOptions = {
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) return null;
 
-                const user = await prisma.user.findUnique({
-                    where: { email: credentials.email }
-                });
+                try {
+                    const user = await prisma.user.findUnique({
+                        where: { email: credentials.email }
+                    });
 
-                if (user) {
-                    const isValid = await bcrypt.compare(credentials.password, user.password);
-                    if (isValid) {
-                        return { id: user.id, name: user.name, email: user.email };
+                    if (user) {
+                        const isValid = await bcrypt.compare(credentials.password, user.password);
+                        if (isValid) {
+                            return { id: user.id, name: user.name, email: user.email };
+                        }
                     }
+                    console.log(`Login failed for email: ${credentials.email}`);
+                    return null;
+                } catch (error) {
+                    console.error("Auth authorize error:", error);
+                    return null;
                 }
-                return null;
             }
         })
     ],
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60, // 30 days
-    },
-    jwt: {
-        maxAge: 30 * 24 * 60 * 60, // 30 days
+        maxAge: 30 * 24 * 60 * 60,
     },
     pages: {
         signIn: "/login",
@@ -56,18 +59,6 @@ export const authOptions = {
         }
     },
     secret: process.env.NEXTAUTH_SECRET || "rvts_production_fallback_secret_998877",
-    cookies: {
-        sessionToken: {
-            name: `next-auth.session-token`,
-            options: {
-                httpOnly: true,
-                sameSite: 'lax',
-                path: '/',
-                secure: process.env.NODE_ENV === 'production',
-                domain: process.env.NODE_ENV === 'production' ? '.researchvisions.com' : 'localhost'
-            }
-        }
-    }
 };
 
 const handler = NextAuth(authOptions);
