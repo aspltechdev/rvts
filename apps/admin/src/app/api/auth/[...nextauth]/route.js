@@ -77,7 +77,7 @@ export const authOptions = {
                 httpOnly: true,
                 sameSite: 'lax',
                 path: '/',
-                secure: true
+                secure: process.env.NEXTAUTH_URL?.startsWith('https')
             }
         }
     }
