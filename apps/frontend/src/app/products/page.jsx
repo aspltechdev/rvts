@@ -222,7 +222,7 @@ const ProductsListContent = () => {
                                             <div className="relative w-full aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 overflow-hidden border-b border-zinc-50 dark:border-zinc-800">
                                                 {p.images && p.images[0] ? (
                                                     <Image
-                                                        src={p.images[0].startsWith('http') ? p.images[0] : `http://researchvisions.com${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
+                                                        src={p.images[0].startsWith('http') ? p.images[0] : `${API_BASE_URL}${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
                                                         alt={p.name}
                                                         fill
                                                         className="object-cover group-hover:scale-110 transition-transform duration-700"

@@ -107,7 +107,7 @@ const ProductDetailContent = ({ params }) => {
     const getImageUrl = (url) => {
         if (!url) return null;
         if (url.startsWith('http') || url.startsWith('/product-static-assets')) return url;
-        return `http://researchvisions.com${url.startsWith('/') ? '' : '/'}${url}`;
+        return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
     };
 
     const highlights = [
