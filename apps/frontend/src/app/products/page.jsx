@@ -258,17 +258,25 @@ const ProductsListContent = () => {
                     </aside>
 
                     {/* --- PRODUCT GRID ARCHITECTURE --- */}
-                    <div className="flex-1 space-y-12">
-                        {/* Floating Filter Button for Mobile */}
-                        <div className="fixed bottom-8 right-8 z-[80] lg:hidden">
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
+                    <div className="flex-1 space-y-8 md:space-y-12">
+                        {/* Mobile Search/Filter Bar */}
+                        <div className="lg:hidden flex items-center gap-3 mb-8">
+                            <div className="relative flex-1 group">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 group-focus-within:text-brand-red transition-colors" size={18} />
+                                <input
+                                    type="text"
+                                    placeholder="Search systems..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-brand-red/5 focus:border-brand-red transition-all"
+                                />
+                            </div>
+                            <button
                                 onClick={() => setIsMobileMenuOpen(true)}
-                                className="w-16 h-16 rounded-full bg-brand-red text-white flex items-center justify-center shadow-2xl shadow-brand-red/40 border border-white/20"
+                                className="w-[52px] h-[52px] shrink-0 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-black flex items-center justify-center shadow-lg active:scale-95 transition-all"
                             >
-                                <Filter size={24} />
-                            </motion.button>
+                                <Filter size={20} />
+                            </button>
                         </div>
 
                         {/* Loading State */}
