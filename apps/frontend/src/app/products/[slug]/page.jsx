@@ -32,6 +32,14 @@ const ProductDetailContent = ({ params }) => {
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
     const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
     const [pendingDownload, setPendingDownload] = useState(null);
+    const [shareSuccess, setShareSuccess] = useState(false);
+
+    useEffect(() => {
+        if (shareSuccess) {
+            const timer = setTimeout(() => setShareSuccess(false), 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [shareSuccess]);
 
     const initiateDownload = (type, url) => {
         if (!url) return;
@@ -168,16 +176,18 @@ const ProductDetailContent = ({ params }) => {
 
                             {/* Image View */}
                             <div className={`relative w-full h-full transition-opacity duration-300 ${viewMode === '3d' ? 'opacity-0 pointer-events-none' : 'opacity-100 z-10'}`}>
-                                <div className="relative w-full h-full p-8 md:p-12 flex items-center justify-center cursor-zoom-in" onClick={() => setIsImageModalOpen(true)}>
+                                <div className="relative w-full h-full p-4 md:p-8 flex items-center justify-center cursor-zoom-in group-hover:scale-[1.02] transition-transform duration-500" onClick={() => setIsImageModalOpen(true)}>
                                     {displayImages[activeImageIndex] ? (
-                                        <Image
-                                            src={displayImages[activeImageIndex]}
-                                            alt={product.name}
-                                            fill
-                                            className="object-contain transition-transform duration-500 group-hover:scale-105"
-                                            priority
-                                            unoptimized
-                                        />
+                                        <div className="relative w-full h-full flex items-center justify-center bg-white dark:bg-zinc-800/50 rounded-xl overflow-hidden p-4">
+                                            <Image
+                                                src={displayImages[activeImageIndex]}
+                                                alt={product.name}
+                                                fill
+                                                className="object-contain"
+                                                priority
+                                                unoptimized
+                                            />
+                                        </div>
                                     ) : (
                                         <Monitor size={80} className="text-zinc-200 dark:text-zinc-800" />
                                     )}
@@ -215,31 +225,48 @@ const ProductDetailContent = ({ params }) => {
                             <span className="inline-block px-3 py-1 bg-red-50/50 dark:bg-red-900/10 backdrop-blur-sm text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-red-100 dark:border-red-900/20">
                                 {product.category || 'Product'}
                             </span>
-                            <button
-                                onClick={() => {
-                                    if (navigator.share) {
-                                        navigator.share({
-                                            title: product.name,
+                            <div className="flex items-center gap-3">
+                                {shareSuccess && (
+                                    <span className="text-[10px] font-bold text-red-600 uppercase tracking-widest animate-in fade-in slide-in-from-right-2">
+                                        Link Copied!
+                                    </span>
+                                )}
+                                <button
+                                    onClick={() => {
+                                        const shareData = {
+                                            title: `RVTS - ${product.name}`,
                                             text: product.description,
                                             url: window.location.href,
-                                        });
-                                    } else {
-                                        navigator.clipboard.writeText(window.location.href);
-                                        alert('Link copied to clipboard!');
-                                    }
-                                }}
-                                className="p-2 rounded-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 text-zinc-500 hover:text-red-600 transition-all shadow-sm"
-                                title="Share Product"
-                            >
-                                <Share2 size={18} />
-                            </button>
+                                        };
+
+                                        if (navigator.share) {
+                                            navigator.share(shareData).then(() => {
+                                                setShareSuccess(true);
+                                            }).catch(err => {
+                                                navigator.clipboard.writeText(window.location.href);
+                                                setShareSuccess(true);
+                                            });
+                                        } else {
+                                            navigator.clipboard.writeText(window.location.href);
+                                            setShareSuccess(true);
+                                        }
+                                    }}
+                                    className={`p-2.5 rounded-full border transition-all shadow-sm ${shareSuccess ? 'bg-red-600 border-red-600 text-white' : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-100 dark:border-zinc-800 text-zinc-500 hover:text-red-600 hover:bg-red-50'}`}
+                                    title="Share Product"
+                                >
+                                    <Share2 size={20} />
+                                </button>
+                            </div>
                         </div>
                         <h1 className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white leading-[1.1] tracking-tight mb-4 uppercase">
                             {product.name}
                         </h1>
-                        <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed border-l-4 border-[#ff3333] pl-6 py-2 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-r-xl italic font-medium">
-                            {product.description || "No data is been given."}
-                        </p>
+                        <div className="relative mb-8">
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#ff3333] rounded-full" />
+                            <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed pl-6 py-1 font-medium italic">
+                                {product.description || "No data is been given."}
+                            </p>
+                        </div>
 
                         <div className="mb-8">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
