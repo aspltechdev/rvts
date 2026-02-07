@@ -147,11 +147,6 @@ export default function AdminLayout({ children }) {
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
 
-                        {/* Notifications */}
-                        <button className="relative p-2.5 rounded-full text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-brand-red dark:hover:text-brand-red transition-all duration-200">
-                            <Bell size={20} />
-                            <span className="absolute top-2 right-2.5 w-2 h-2 bg-brand-red rounded-full ring-2 ring-white dark:ring-zinc-900 animate-pulse"></span>
-                        </button>
 
                         {/* User Profile */}
                         <div className="relative">
