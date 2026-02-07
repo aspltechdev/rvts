@@ -27,7 +27,7 @@ export async function PUT(
         const body = await request.json();
 
         // Clean system fields
-        const { id, createdAt, updatedAt, slug, ...updateData } = body;
+        const { id, createdAt, updatedAt, ...updateData } = body;
 
         // Ensure features is a clean array of strings
         if (updateData.features && Array.isArray(updateData.features)) {
