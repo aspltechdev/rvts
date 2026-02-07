@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+export const dynamic = 'force-dynamic';
 import prisma from '@/lib/db';
 
 export async function GET(request: Request) {
@@ -18,7 +19,13 @@ export async function GET(request: Request) {
         const products = await prisma.product.findMany({
             orderBy: { createdAt: 'desc' },
         });
-        return NextResponse.json(products);
+        return NextResponse.json(products, {
+            headers: {
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0',
+            }
+        });
     } catch (error) {
         return NextResponse.json({ error: 'Failed to fetch products' }, {
             status: 500
