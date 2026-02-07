@@ -374,7 +374,7 @@ export default function Navbar() {
 
     return (
         <nav className={cn(
-            "fixed left-1/2 -translate-x-1/2 z-[5000] rounded-full border top-4 py-3 px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl"
+            "fixed left-1/2 -translate-x-1/2 z-[5000] rounded-full border top-4 py-2.5 px-4 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl"
         )}>
             <div className="flex items-center justify-between w-full">
                 {/* Left Nav Links - Only on product pages */}
@@ -387,14 +387,14 @@ export default function Navbar() {
                 {/* Logo - Centered on product pages, left-aligned on others */}
                 <Link href="/" className={cn(
                     "group z-[6000] flex items-center shrink-0",
-                    isProductPage ? "mx-2" : ""
+                    isProductPage ? "mx-2 md:mx-4" : ""
                 )}>
-                    <div className="relative w-[110px] h-[40px] md:w-[130px] md:h-[46px]">
+                    <div className="relative w-[90px] h-[32px] md:w-[130px] md:h-[46px]">
                         <Image
                             src="/assets/rvts-logo.png"
                             alt="RVTS Logo"
                             fill
-                            className="object-contain p-1"
+                            className="object-contain"
                             priority
                         />
                     </div>
@@ -412,8 +412,8 @@ export default function Navbar() {
                 </div>
 
                 {/* Right Actions & Professional Toggle */}
-                <div className="flex items-center gap-6 z-[6001]">
-                    <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 md:gap-6 z-[6001]">
+                    <div className="flex items-center">
                         <button
                             onClick={toggleTheme}
                             className={cn(

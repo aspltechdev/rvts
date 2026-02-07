@@ -272,7 +272,7 @@ const ProductsListContent = () => {
 
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="lg:hidden p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white"
+                                className="lg:hidden w-10 h-10 flex items-center justify-center shrink-0 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white"
                             >
                                 <Filter size={18} />
                             </button>
