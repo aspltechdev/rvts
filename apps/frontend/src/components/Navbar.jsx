@@ -374,8 +374,8 @@ export default function Navbar() {
 
     return (
         <nav className={cn(
-            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-5 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl h-[64px] flex items-center transition-all duration-300",
-            scrolled ? "top-2" : "top-4"
+            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-6 md:px-10 bg-white/90 backdrop-blur-md shadow-xl border-zinc-200 w-[94%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-500 overflow-hidden",
+            scrolled ? "top-3 shadow-2xl" : "top-5"
         )}>
             <div className="flex items-center justify-between w-full h-full">
                 {/* Left Nav Links - Only on product pages */}
@@ -387,10 +387,10 @@ export default function Navbar() {
 
                 {/* Logo - Centered on product pages, left-aligned on others */}
                 <Link href="/" className={cn(
-                    "group flex items-center shrink-0 h-full",
-                    isProductPage ? "mx-2 md:mx-4" : ""
+                    "group flex items-center shrink-0 h-full py-2",
+                    isProductPage ? "mx-2 md:mx-6" : ""
                 )}>
-                    <div className="relative w-[110px] h-[38px] md:w-[130px] md:h-[46px] flex items-center">
+                    <div className="relative w-[120px] h-[42px] md:w-[150px] md:h-[50px] flex items-center">
                         <Image
                             src="/assets/rvts-logo.png"
                             alt="RVTS Logo"
@@ -425,27 +425,27 @@ export default function Navbar() {
                     </div>
 
                     <button
-                        className="lg:hidden relative w-10 h-10 flex flex-col justify-center items-center gap-1.5"
+                        className="lg:hidden relative w-12 h-12 flex flex-col justify-center items-center gap-2"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         <motion.span
-                            animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+                            animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
                             className={cn(
-                                "w-6 h-[2px] rounded-full transition-colors duration-500",
+                                "w-7 h-[3px] rounded-full transition-colors duration-500",
                                 isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
                         <motion.span
                             animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
                             className={cn(
-                                "w-6 h-[2px] rounded-full transition-colors duration-500",
+                                "w-7 h-[3px] rounded-full transition-colors duration-500",
                                 isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
                         <motion.span
-                            animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+                            animate={isOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
                             className={cn(
-                                "w-6 h-[2px] rounded-full transition-colors duration-500",
+                                "w-7 h-[3px] rounded-full transition-colors duration-500",
                                 isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
                             )}
                         />
