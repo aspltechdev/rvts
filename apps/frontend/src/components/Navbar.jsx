@@ -172,28 +172,30 @@ export default function Navbar() {
             return (
                 <div
                     key={link.name}
-                    className="relative h-full flex items-center justify-center"
+                    className="relative h-full flex items-center"
                     onMouseEnter={() => setIsProductsHovered(true)}
                     onMouseLeave={() => setIsProductsHovered(false)}
                 >
-                    <Link
-                        href={link.href}
-                        className={cn(
-                            "flex items-center gap-1 px-3 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 relative group",
-                            (isActive || isProductsHovered)
-                                ? "bg-[#ff3333] text-white shadow-md shadow-red-500/20"
-                                : "text-zinc-900 hover:text-[#ff3333] hover:bg-zinc-50"
-                        )}
-                    >
-                        {link.name}
-                        <ChevronDown className="w-3 h-3 md:w-4 md:h-4" />
-                    </Link>
+                    <div className="h-full flex items-center px-2">
+                        <Link
+                            href={link.href}
+                            className={cn(
+                                "flex items-center gap-1 px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 relative group",
+                                (isActive || isProductsHovered)
+                                    ? "bg-[#ff3333] text-white shadow-md shadow-red-500/20"
+                                    : "text-zinc-900 hover:text-[#ff3333] hover:bg-zinc-50"
+                            )}
+                        >
+                            {link.name}
+                            <ChevronDown className="w-3 h-3 md:w-4 md:h-4" />
+                        </Link>
+                    </div>
 
                     {/* Mega Menu Dropdown */}
                     <AnimatePresence>
                         {isProductsHovered && (
                             <div
-                                className="fixed inset-0 top-[80px] flex justify-center z-[7000] pointer-events-none"
+                                className="fixed left-0 right-0 top-[70px] md:top-[85px] pt-4 flex justify-center z-[8000] pointer-events-none"
                                 onMouseEnter={() => setIsProductsHovered(true)}
                                 onMouseLeave={() => setIsProductsHovered(false)}
                             >
@@ -284,7 +286,7 @@ export default function Navbar() {
                                 animate={{ opacity: 1, y: 0, scale: 1, x: "-50%" }}
                                 exit={{ opacity: 0, y: 10, scale: 0.95, x: "-50%" }}
                                 transition={{ duration: 0.2 }}
-                                className="absolute top-full left-1/2 mt-4 w-[260px] bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden"
+                                className="absolute top-full left-1/2 w-[260px] bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden z-[8000]"
                                 onMouseEnter={() => setIsAboutHovered(true)}
                                 onMouseLeave={() => setIsAboutHovered(false)}
                             >
@@ -336,7 +338,8 @@ export default function Navbar() {
     return (
         <>
             <nav className={cn(
-                "fixed left-0 right-0 mx-auto md:left-1/2 md:-translate-x-1/2 z-[7000] rounded-full border top-3 md:top-4 px-6 bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[92%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-500 overflow-hidden"
+                "fixed left-0 right-0 mx-auto z-[7000] rounded-full border bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[94%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-300",
+                scrolled ? "top-2" : "top-5"
             )}>
                 <div className="flex items-center justify-between w-full h-full px-4">
                     {/* Left Nav Links - Only on product pages */}
