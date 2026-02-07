@@ -127,11 +127,11 @@ const ProductsListContent = () => {
             {/* --- PREMIUM HERO SECTION --- */}
             <section className="relative pt-32 pb-24 md:pb-32 overflow-hidden bg-white dark:bg-black border-b border-zinc-100 dark:border-zinc-900">
                 {/* Visual Elements / Icons / Diagrams Background */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-30">
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-50 dark:opacity-70">
                     <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-                        className="absolute top-[-10%] right-[-5%] text-zinc-200 dark:text-zinc-800"
+                        className="absolute top-[-10%] right-[-5%] text-zinc-300 dark:text-zinc-700"
                     >
                         <Settings size={300} strokeWidth={0.5} />
                     </motion.div>
@@ -139,16 +139,16 @@ const ProductsListContent = () => {
                     <motion.div
                         animate={{ y: [0, -20, 0] }}
                         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute bottom-[10%] left-[5%] text-zinc-200 dark:text-zinc-800"
+                        className="absolute bottom-[10%] left-[5%] text-zinc-300 dark:text-zinc-700"
                     >
                         <Monitor size={200} strokeWidth={0.5} />
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: [0.1, 0.3, 0.1] }}
+                        animate={{ opacity: [0.2, 0.4, 0.2] }}
                         transition={{ duration: 5, repeat: Infinity }}
-                        className="absolute top-[20%] left-[20%] text-brand-red/10"
+                        className="absolute top-[20%] left-[20%] text-brand-red/20"
                     >
                         <Cpu size={150} strokeWidth={0.5} />
                     </motion.div>
@@ -181,12 +181,7 @@ const ProductsListContent = () => {
                             transition={{ delay: 0.1, duration: 0.5 }}
                             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9] max-w-4xl"
                         >
-                            The <span className="text-brand-red italic relative">
-                                Solution
-                                <svg className="absolute -bottom-2 left-0 w-full h-2 text-brand-red/20" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                    <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="2" />
-                                </svg>
-                            </span> Archive
+                            The <span className="text-brand-red italic">Solution</span> Archive
                         </motion.h1>
 
                         <motion.p
@@ -340,18 +335,12 @@ const ProductsListContent = () => {
 
                                                 {/* Content */}
                                                 <div className="p-8">
-                                                    <div className="mb-6 h-12 flex flex-col justify-center">
+                                                    <div className="flex items-start justify-between gap-4">
                                                         <h3 className="text-lg font-black text-zinc-900 dark:text-white group-hover:text-brand-red transition-colors leading-tight line-clamp-2">
                                                             {p.name}
                                                         </h3>
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between pt-6 border-t border-zinc-50 dark:border-zinc-900 group-hover:border-brand-red/20 transition-colors">
-                                                        <div className="text-[10px] font-black uppercase tracking-[0.1em] text-zinc-400">
-                                                            Internal Specs
-                                                        </div>
-                                                        <div className="w-10 h-10 rounded-full border border-zinc-200 dark:border-zinc-800 flex items-center justify-center group-hover:bg-brand-red group-hover:border-brand-red group-hover:text-white transition-all duration-300">
-                                                            <ArrowRight size={18} />
+                                                        <div className="shrink-0 w-8 h-8 rounded-full bg-zinc-50 dark:bg-zinc-900 flex items-center justify-center group-hover:bg-brand-red group-hover:text-white transition-all duration-300">
+                                                            <ArrowRight size={16} />
                                                         </div>
                                                     </div>
                                                 </div>
