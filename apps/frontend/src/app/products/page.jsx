@@ -201,7 +201,7 @@ const ProductsListContent = () => {
                 <div className="flex flex-col lg:flex-row gap-12">
 
                     {/* --- SIDEBAR / FILTER ARCHITECTURE --- */}
-                    <aside className="lg:w-1/4 shrink-0 h-fit lg:sticky lg:top-28 space-y-10">
+                    <aside className="hidden lg:block lg:w-1/4 shrink-0 h-fit lg:sticky lg:top-28 space-y-10">
                         {/* Search Component */}
                         <div className="space-y-4">
                             <label className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400 dark:text-zinc-500">Find Equipment</label>
@@ -259,23 +259,16 @@ const ProductsListContent = () => {
 
                     {/* --- PRODUCT GRID ARCHITECTURE --- */}
                     <div className="flex-1 space-y-12">
-                        {/* Status bar */}
-                        <div className="flex items-center justify-between bg-white dark:bg-zinc-900 p-3 pl-6 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm">
-                            <div className="flex items-center gap-3">
-                                <div className="text-xs font-black uppercase tracking-widest text-zinc-400 border-r border-zinc-200 dark:border-zinc-800 pr-4">
-                                    Archive View
-                                </div>
-                                <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                                    {filteredProducts.length} <span className="text-zinc-400">matching systems</span>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="lg:hidden w-10 h-10 flex items-center justify-center shrink-0 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white"
+                        {/* Floating Filter Button for Mobile */}
+                        <div className="fixed bottom-8 right-8 z-[80] lg:hidden">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => setIsMobileMenuOpen(true)}
+                                className="w-16 h-16 rounded-full bg-brand-red text-white flex items-center justify-center shadow-2xl shadow-brand-red/40 border border-white/20"
                             >
-                                <Filter size={18} />
-                            </button>
+                                <Filter size={24} />
+                            </motion.button>
                         </div>
 
                         {/* Loading State */}
@@ -432,6 +425,21 @@ const ProductsListContent = () => {
                             </div>
 
                             <div className="space-y-8">
+                                {/* Mobile Search */}
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Search Products</label>
+                                    <div className="relative">
+                                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
+                                        <input
+                                            type="text"
+                                            placeholder="Type to search..."
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            className="w-full pl-12 pr-4 py-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-red/20"
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="space-y-4">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Categories</label>
                                     <div className="grid grid-cols-1 gap-2">
