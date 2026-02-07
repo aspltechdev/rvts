@@ -374,8 +374,8 @@ export default function Navbar() {
 
     return (
         <nav className={cn(
-            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-5 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl h-[56px] md:h-[64px] flex items-center transition-all duration-300",
-            scrolled ? "top-2 py-0" : "top-4 py-0"
+            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-5 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl h-[64px] flex items-center transition-all duration-300",
+            scrolled ? "top-2" : "top-4"
         )}>
             <div className="flex items-center justify-between w-full h-full">
                 {/* Left Nav Links - Only on product pages */}
@@ -390,7 +390,7 @@ export default function Navbar() {
                     "group flex items-center shrink-0 h-full",
                     isProductPage ? "mx-2 md:mx-4" : ""
                 )}>
-                    <div className="relative w-[100px] h-[32px] md:w-[130px] md:h-[46px] flex items-center">
+                    <div className="relative w-[110px] h-[38px] md:w-[130px] md:h-[46px] flex items-center">
                         <Image
                             src="/assets/rvts-logo.png"
                             alt="RVTS Logo"
@@ -461,7 +461,7 @@ export default function Navbar() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: '100%' }}
                         transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed inset-0 z-[5500] bg-white dark:bg-[#050505] lg:hidden flex flex-col pt-24 px-8 overflow-y-auto"
+                        className="fixed inset-0 z-[5500] bg-white dark:bg-[#050505] lg:hidden flex flex-col pt-28 px-8 overflow-y-auto scrollbar-hide"
                     >
                         <div className="flex flex-col gap-2 w-full pb-10">
                             {navLinks.map((link) => {
