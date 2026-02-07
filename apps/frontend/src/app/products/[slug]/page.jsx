@@ -18,6 +18,7 @@ import {
     Loader2
 } from 'lucide-react';
 import { STATIC_PRODUCTS } from '@/lib/static-data';
+import DownloadForm from '@/components/DownloadForm';
 
 const ProductDetailContent = ({ params }) => {
     const { slug } = params;
@@ -28,12 +29,27 @@ const ProductDetailContent = ({ params }) => {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [viewMode, setViewMode] = useState('image'); // 'image' or '3d'
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+    const [pendingDownload, setPendingDownload] = useState(null);
 
     const initiateDownload = (type, url) => {
-        if (url) {
+        if (!url) return;
+
+        if (type === 'Brochure') {
+            setPendingDownload({ type, url });
+            setIsDownloadModalOpen(true);
+        } else {
             // Ensure full URL if it's relative
             const fullUrl = url.startsWith('http') ? url : `${API_BASE_URL}${url}`;
             window.open(fullUrl, '_blank');
+        }
+    };
+
+    const handleActualDownload = () => {
+        if (pendingDownload?.url) {
+            const fullUrl = pendingDownload.url.startsWith('http') ? pendingDownload.url : `${API_BASE_URL}${pendingDownload.url}`;
+            window.open(fullUrl, '_blank');
+            setPendingDownload(null);
         }
     };
 
@@ -293,6 +309,15 @@ const ProductDetailContent = ({ params }) => {
                     </div>
                 </div>
             )}
+
+            {/* Download Lead Form */}
+            <DownloadForm
+                isOpen={isDownloadModalOpen}
+                onClose={() => setIsDownloadModalOpen(false)}
+                productName={product.name}
+                downloadType={pendingDownload?.type || 'Brochure'}
+                onDownload={handleActualDownload}
+            />
         </main>
     );
 };
