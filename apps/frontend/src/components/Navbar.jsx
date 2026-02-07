@@ -341,19 +341,9 @@ export default function Navbar() {
                 "fixed left-0 right-0 mx-auto z-[7000] rounded-full border bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[94%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-300",
                 scrolled ? "top-2" : "top-5"
             )}>
-                <div className="flex items-center justify-between w-full h-full px-4">
-                    {/* Left Nav Links - Only on product pages */}
-                    {isProductPage && (
-                        <div className="hidden lg:flex items-center gap-2 h-full">
-                            {leftNavLinks.map(renderNavLink)}
-                        </div>
-                    )}
-
-                    {/* Logo - Centered on product pages, left-aligned on others */}
-                    <Link href="/" className={cn(
-                        "group flex items-center shrink-0 h-full",
-                        isProductPage ? "mx-2" : ""
-                    )}>
+                <div className="flex items-center justify-between w-full h-full px-6">
+                    {/* Logo - Classic Left Position */}
+                    <Link href="/" className="group flex items-center shrink-0 h-full">
                         <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
                             <Image
                                 src="/assets/rvts-logo.png"
@@ -365,14 +355,9 @@ export default function Navbar() {
                         </div>
                     </Link>
 
-                    {/* Desktop Menu - All links on non-product pages, or right links on product pages */}
-                    <div className={cn(
-                        "hidden lg:flex items-center gap-2 h-full"
-                    )}>
-                        {isProductPage
-                            ? rightNavLinks.map(renderNavLink)
-                            : navLinks.map(renderNavLink)
-                        }
+                    {/* Desktop Menu - All links on the right */}
+                    <div className="hidden lg:flex items-center gap-1 h-full">
+                        {navLinks.map(renderNavLink)}
                     </div>
 
                     {/* Right Actions & Professional Toggle */}

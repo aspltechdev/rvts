@@ -240,103 +240,103 @@ const ProductDetailContent = ({ params }) => {
                         <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed border-l-4 border-[#ff3333] pl-6 py-2 bg-zinc-50/50 dark:bg-zinc-900/30 rounded-r-xl italic font-medium">
                             {product.description || "No data is been given."}
                         </p>
-                    </div>
 
-                    <div className="mb-8">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {highlights.map((item, i) => (
-                                <div key={i} className="flex items-start gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item h-full">
-                                    <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex flex-shrink-0 items-center justify-center shadow-sm group-hover/item:border-red-600/50 border border-transparent transition-all">
-                                        <item.icon size={20} className="text-zinc-400 group-hover/item:text-[#ff3333]" />
+                        <div className="mb-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {highlights.map((item, i) => (
+                                    <div key={i} className="flex items-start gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item h-full">
+                                        <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex flex-shrink-0 items-center justify-center shadow-sm group-hover/item:border-red-600/50 border border-transparent transition-all">
+                                            <item.icon size={20} className="text-zinc-400 group-hover/item:text-[#ff3333]" />
+                                        </div>
+                                        <div className="flex flex-col min-w-0">
+                                            <span className="text-[10px] text-zinc-400 uppercase font-extrabold tracking-widest mb-1">{item.label}</span>
+                                            <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 leading-snug break-words">
+                                                {item.value && item.value !== 'N/A' && item.value !== '' ? item.value : 'No data given'}
+                                            </span>
+                                        </div>
                                     </div>
-                                    <div className="flex flex-col min-w-0">
-                                        <span className="text-[10px] text-zinc-400 uppercase font-extrabold tracking-widest mb-1">{item.label}</span>
-                                        <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 leading-snug break-words">
-                                            {item.value && item.value !== 'N/A' && item.value !== '' ? item.value : 'No data given'}
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Downloads Actions */}
-                    <div className="flex gap-3 mb-6">
-                        {product.brochure && (
-                            <button onClick={() => initiateDownload('Brochure', product.brochure)} className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase shadow-lg shadow-red-600/20 transition-all flex items-center justify-center gap-2">
-                                <Download size={18} /> Brochure
-                            </button>
-                        )}
-                        {product.installationManual && (
-                            <button onClick={() => initiateDownload('Manual', product.installationManual)} className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase transition-all flex items-center justify-center gap-2">
-                                <FileText size={18} /> Manual
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* BOTTOM TABS */}
-            <div className="mt-12">
-                <div className="flex items-center gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8 overflow-x-auto">
-                    {['Description', 'Key Features', 'Downloads'].map((tab) => {
-                        const key = tab.toLowerCase().replace(' ', '');
-                        return (
-                            <button
-                                key={key}
-                                onClick={() => setActiveTab(key)}
-                                className={`pb-4 text-sm font-bold uppercase tracking-widest border-b-2 transition-colors ${activeTab === key ? 'text-red-600 border-red-600' : 'text-zinc-500 border-transparent hover:text-zinc-900'}`}
-                            >
-                                {tab}
-                            </button>
-                        );
-                    })}
-                </div>
-
-                <div className="min-h-[200px]">
-                    {activeTab === 'description' && (
-                        <div className="prose prose-zinc dark:prose-invert max-w-none">
-                            <p>{product.description || "No data is been given."}</p>
-                        </div>
-                    )}
-                    {activeTab === 'keyfeatures' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {product.features && product.features.length > 0 ? product.features?.map((f, i) => (
-                                <div key={i} className="flex items-start gap-3 p-3 border rounded-lg border-zinc-100 dark:border-zinc-800">
-                                    <Check size={16} className="text-green-500 mt-0.5" />
-                                    <span className="text-sm font-medium">{f}</span>
-                                </div>
-                            )) : (
-                                <p className="text-zinc-500 text-sm py-4">No data is been given.</p>
+                        {/* Downloads Actions */}
+                        <div className="flex gap-3 mb-6">
+                            {product.brochure && (
+                                <button onClick={() => initiateDownload('Brochure', product.brochure)} className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase shadow-lg shadow-red-600/20 transition-all flex items-center justify-center gap-2">
+                                    <Download size={18} /> Brochure
+                                </button>
+                            )}
+                            {product.installationManual && (
+                                <button onClick={() => initiateDownload('Manual', product.installationManual)} className="flex-1 bg-zinc-900 hover:bg-zinc-800 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase transition-all flex items-center justify-center gap-2">
+                                    <FileText size={18} /> Manual
+                                </button>
                             )}
                         </div>
-                    )}
-                    {/* More tabs can be added similarly */}
-                </div>
-            </div>
-
-            {/* Modal */}
-            {isImageModalOpen && (
-                <div className="fixed inset-0 z-[6000] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setIsImageModalOpen(false)}>
-                    <button className="absolute top-4 right-4 text-white hover:text-red-600" onClick={() => setIsImageModalOpen(false)}>
-                        <X size={32} />
-                    </button>
-                    <div className="relative w-full max-w-7xl h-[80vh]" onClick={e => e.stopPropagation()}>
-                        {displayImages[activeImageIndex] && (
-                            <Image src={displayImages[activeImageIndex]} alt="Full View" fill className="object-contain" />
-                        )}
                     </div>
                 </div>
-            )}
 
-            {/* Download Lead Form */}
-            <DownloadForm
-                isOpen={isDownloadModalOpen}
-                onClose={() => setIsDownloadModalOpen(false)}
-                productName={product.name}
-                downloadType={pendingDownload?.type || 'Brochure'}
-                onDownload={handleActualDownload}
-            />
+                {/* BOTTOM TABS */}
+                <div className="mt-12">
+                    <div className="flex items-center gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8 overflow-x-auto">
+                        {['Description', 'Key Features', 'Downloads'].map((tab) => {
+                            const key = tab.toLowerCase().replace(' ', '');
+                            return (
+                                <button
+                                    key={key}
+                                    onClick={() => setActiveTab(key)}
+                                    className={`pb-4 text-sm font-bold uppercase tracking-widest border-b-2 transition-colors ${activeTab === key ? 'text-red-600 border-red-600' : 'text-zinc-500 border-transparent hover:text-zinc-900'}`}
+                                >
+                                    {tab}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    <div className="min-h-[200px]">
+                        {activeTab === 'description' && (
+                            <div className="prose prose-zinc dark:prose-invert max-w-none">
+                                <p>{product.description || "No data is been given."}</p>
+                            </div>
+                        )}
+                        {activeTab === 'keyfeatures' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {product.features && product.features.length > 0 ? product.features?.map((f, i) => (
+                                    <div key={i} className="flex items-start gap-3 p-3 border rounded-lg border-zinc-100 dark:border-zinc-800">
+                                        <Check size={16} className="text-green-500 mt-0.5" />
+                                        <span className="text-sm font-medium">{f}</span>
+                                    </div>
+                                )) : (
+                                    <p className="text-zinc-500 text-sm py-4">No data is been given.</p>
+                                )}
+                            </div>
+                        )}
+                        {/* More tabs can be added similarly */}
+                    </div>
+                </div>
+
+                {/* Modal */}
+                {isImageModalOpen && (
+                    <div className="fixed inset-0 z-[6000] bg-black/95 flex items-center justify-center p-4 backdrop-blur-sm" onClick={() => setIsImageModalOpen(false)}>
+                        <button className="absolute top-4 right-4 text-white hover:text-red-600" onClick={() => setIsImageModalOpen(false)}>
+                            <X size={32} />
+                        </button>
+                        <div className="relative w-full max-w-7xl h-[80vh]" onClick={e => e.stopPropagation()}>
+                            {displayImages[activeImageIndex] && (
+                                <Image src={displayImages[activeImageIndex]} alt="Full View" fill className="object-contain" />
+                            )}
+                        </div>
+                    </div>
+                )}
+
+                {/* Download Lead Form */}
+                <DownloadForm
+                    isOpen={isDownloadModalOpen}
+                    onClose={() => setIsDownloadModalOpen(false)}
+                    productName={product.name}
+                    downloadType={pendingDownload?.type || 'Brochure'}
+                    onDownload={handleActualDownload}
+                />
+            </div>
         </main>
     );
 };
