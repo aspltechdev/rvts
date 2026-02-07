@@ -16,8 +16,8 @@ module.exports = {
                 "brand-gray": "#1a1a1a",
             },
             fontFamily: {
-                sans: ['var(--font-poppins)', 'sans-serif'],
-                poppins: ['var(--font-poppins)', 'sans-serif'],
+                sans: ['var(--font-inter)', 'sans-serif'],
+                inter: ['var(--font-inter)', 'sans-serif'],
             },
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

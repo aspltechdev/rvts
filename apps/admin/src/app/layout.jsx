@@ -1,13 +1,7 @@
-import { Outfit, Inter } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import AuthProvider from '@/components/AuthProvider';
 import { ThemeProvider } from '@/components/ThemeContext';
-
-const outfit = Outfit({ 
-    subsets: ['latin'],
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-    variable: '--font-outfit',
-});
 
 const inter = Inter({
     subsets: ['latin'],
@@ -18,12 +12,15 @@ const inter = Inter({
 export const metadata = {
     title: 'RVTS - Admin Panel',
     description: 'Next Gen Digital Solutions',
+    icons: {
+        icon: '/rvts-logo.png',
+    }
 };
 
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className={`${outfit.variable} ${inter.variable} font-inter antialiased`}>
+            <body className={`${inter.variable} font-sans antialiased`}>
                 <AuthProvider>
                     <ThemeProvider>
                         {children}
