@@ -23,7 +23,6 @@ import {
     List
 } from 'lucide-react';
 import { API_BASE_URL } from '@/lib/config';
-import { STATIC_PRODUCTS } from '@/lib/static-data';
 
 const ProductsListContent = () => {
     const searchParams = useSearchParams();
@@ -65,22 +64,15 @@ const ProductsListContent = () => {
             try {
                 const apiUrl = API_BASE_URL;
                 const res = await fetch(`${apiUrl}/api/products`);
-                let apiProducts = [];
                 if (res.ok) {
-                    apiProducts = await res.json();
+                    const apiProducts = await res.json();
+                    setProducts(apiProducts);
+                } else {
+                    setProducts([]);
                 }
-
-                const mergedProducts = [...apiProducts];
-                STATIC_PRODUCTS.forEach(sp => {
-                    if (!mergedProducts.find(ap => ap.slug === sp.slug)) {
-                        mergedProducts.push(sp);
-                    }
-                });
-
-                setProducts(mergedProducts);
             } catch (err) {
-                console.warn("Fetch error, using static data only:", err);
-                setProducts(STATIC_PRODUCTS);
+                console.error("Fetch error:", err);
+                setProducts([]);
             } finally {
                 setLoading(false);
             }
@@ -126,7 +118,7 @@ const ProductsListContent = () => {
         <div className="min-h-screen bg-[#fafafa] dark:bg-[#020202] text-zinc-900 dark:text-zinc-100 transition-colors duration-500 overflow-x-hidden">
             {/* --- PREMIUM HERO SECTION --- */}
             <section className="relative pt-32 pb-24 md:pb-32 overflow-hidden bg-white dark:bg-black border-b border-zinc-100 dark:border-zinc-900">
-                {/* Visual Elements / Icons / Diagrams Background */}
+                {/* Visual Elements Background */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-50 dark:opacity-70">
                     <motion.div
                         animate={{ rotate: 360 }}
@@ -144,21 +136,7 @@ const ProductsListContent = () => {
                         <Monitor size={200} strokeWidth={0.5} />
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0.2, 0.4, 0.2] }}
-                        transition={{ duration: 5, repeat: Infinity }}
-                        className="absolute top-[20%] left-[20%] text-brand-red/20"
-                    >
-                        <Cpu size={150} strokeWidth={0.5} />
-                    </motion.div>
-
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white dark:via-black/50 dark:to-black" />
-                </div>
-
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                    <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand-red/5 rounded-full blur-[120px]" />
-                    <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-zinc-400/5 rounded-full blur-[100px]" />
                 </div>
 
                 <div className="container mx-auto px-6 relative z-10 max-w-7xl">
@@ -168,17 +146,12 @@ const ProductsListContent = () => {
                             animate={{ opacity: 1, y: 0 }}
                             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-[10px] font-black uppercase tracking-[0.2em] mb-8"
                         >
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-red"></span>
-                            </span>
                             Professional Catalog
                         </motion.div>
 
                         <motion.h1
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.1, duration: 0.5 }}
                             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9] max-w-4xl"
                         >
                             The <span className="text-brand-red italic">Solution</span> Archive
@@ -187,7 +160,6 @@ const ProductsListContent = () => {
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
                             className="text-zinc-500 dark:text-zinc-400 text-lg md:text-xl max-w-2xl font-medium"
                         >
                             Explore our curated collection of enterprise-grade visual experiences and technical innovations.
@@ -200,9 +172,8 @@ const ProductsListContent = () => {
             <div className="container mx-auto px-6 max-w-7xl py-12">
                 <div className="flex flex-col lg:flex-row gap-12">
 
-                    {/* --- SIDEBAR / FILTER ARCHITECTURE --- */}
+                    {/* SIDENAV */}
                     <aside className="hidden lg:block lg:w-1/4 shrink-0 h-fit lg:sticky lg:top-28 space-y-10">
-                        {/* Search Component */}
                         <div className="space-y-4">
                             <label className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400 dark:text-zinc-500">Find Equipment</label>
                             <div className="relative group">
@@ -217,7 +188,6 @@ const ProductsListContent = () => {
                             </div>
                         </div>
 
-                        {/* Category Navigation */}
                         <div className="space-y-4">
                             <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-400 dark:text-zinc-500 flex items-center justify-between">
                                 Specialized Sectors
@@ -257,7 +227,7 @@ const ProductsListContent = () => {
                         </div>
                     </aside>
 
-                    {/* --- PRODUCT GRID ARCHITECTURE --- */}
+                    {/* PRODUCT GRID */}
                     <div className="flex-1 space-y-8 md:space-y-12">
                         {/* Mobile Search/Filter Bar */}
                         <div className="lg:hidden flex items-center gap-3 mb-8">
@@ -311,7 +281,6 @@ const ProductsListContent = () => {
                                                 href={`/products/${p.slug}`}
                                                 className="group block relative bg-white dark:bg-[#0a0a0a] rounded-[32px] overflow-hidden border border-zinc-100 dark:border-zinc-900 hover:border-brand-red/30 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-red/5"
                                             >
-                                                {/* Image */}
                                                 <div className="relative aspect-[16/11] overflow-hidden bg-zinc-50 dark:bg-zinc-950">
                                                     {p.images && p.images[0] ? (
                                                         <Image
@@ -326,15 +295,8 @@ const ProductsListContent = () => {
                                                             <Monitor size={64} strokeWidth={1} />
                                                         </div>
                                                     )}
-                                                    {/* Badge */}
-                                                    <div className="absolute top-4 left-4 z-10">
-                                                        <span className="px-3 py-1 rounded-full bg-white/90 dark:bg-black/80 backdrop-blur-md text-[9px] font-black uppercase tracking-widest text-zinc-900 dark:text-zinc-300 border border-white/20">
-                                                            NEW TECH
-                                                        </span>
-                                                    </div>
                                                 </div>
 
-                                                {/* Content */}
                                                 <div className="p-8">
                                                     <div className="flex items-start justify-between gap-4">
                                                         <h3 className="text-lg font-black text-zinc-900 dark:text-white group-hover:text-brand-red transition-colors leading-tight line-clamp-2">
@@ -365,7 +327,7 @@ const ProductsListContent = () => {
                             )}
                         </AnimatePresence>
 
-                        {/* --- PAGINATION ARCHITECTURE --- */}
+                        {/* Pagination */}
                         {totalPages > 1 && (
                             <div className="flex items-center justify-between pt-10 border-t border-zinc-100 dark:border-zinc-900">
                                 <button
@@ -404,7 +366,7 @@ const ProductsListContent = () => {
                 </div>
             </div>
 
-            {/* --- MOBILE FILTER OVERLAY --- */}
+            {/* MOBILE FILTER OVERLAY */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <>
@@ -419,41 +381,21 @@ const ProductsListContent = () => {
                             initial={{ y: '100%' }}
                             animate={{ y: 0 }}
                             exit={{ y: '100%' }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                             className="fixed inset-x-0 bottom-0 bg-white dark:bg-[#0a0a0a] z-[100] rounded-t-[40px] p-8 lg:hidden max-h-[85vh] overflow-y-auto"
                         >
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-2xl font-black uppercase tracking-tighter">Refine Selection</h2>
-                                <button
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center"
-                                >
+                                <button onClick={() => setIsMobileMenuOpen(false)} className="w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center">
                                     <X size={20} />
                                 </button>
                             </div>
-
                             <div className="space-y-8">
-                                {/* Mobile Search */}
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Search Products</label>
-                                    <div className="relative">
-                                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
-                                        <input
-                                            type="text"
-                                            placeholder="Type to search..."
-                                            value={searchQuery}
-                                            onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="w-full pl-12 pr-4 py-4 bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-red/20"
-                                        />
-                                    </div>
-                                </div>
-
                                 <div className="space-y-4">
                                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Categories</label>
                                     <div className="grid grid-cols-1 gap-2">
                                         <button
                                             onClick={() => { setSelectedCategory('All Categories'); setIsMobileMenuOpen(false); }}
-                                            className={`w-full text-left px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all ${selectedCategory === 'All Categories' ? 'bg-brand-red border-brand-red text-white' : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400'}`}
+                                            className={`w-full text-left px-6 py-4 rounded-2xl text-xs font-black border transition-all ${selectedCategory === 'All Categories' ? 'bg-brand-red border-brand-red text-white' : 'border-zinc-200 dark:border-zinc-800'}`}
                                         >
                                             All Collections
                                         </button>
@@ -461,7 +403,7 @@ const ProductsListContent = () => {
                                             <button
                                                 key={idx}
                                                 onClick={() => { setSelectedCategory(cat.name); setIsMobileMenuOpen(false); }}
-                                                className={`w-full text-left px-6 py-4 rounded-2xl text-xs font-bold border transition-all ${selectedCategory === cat.name ? 'bg-zinc-900 dark:bg-white text-white dark:text-black border-transparent' : 'border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400'}`}
+                                                className={`w-full text-left px-6 py-4 rounded-2xl text-xs font-bold border transition-all ${selectedCategory === cat.name ? 'bg-zinc-900 dark:bg-white text-white dark:text-black' : 'border-zinc-200 dark:border-zinc-800'}`}
                                             >
                                                 {cat.name}
                                             </button>
@@ -481,7 +423,7 @@ const ProductsListFallback = () => (
     <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="animate-pulse flex flex-col items-center gap-6">
             <div className="w-16 h-16 border-t-2 border-brand-red rounded-full animate-spin" />
-            <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Synching Archive</span>
+            <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Syncing Archive</span>
         </div>
     </div>
 );
@@ -495,4 +437,3 @@ const ProductsListPage = () => {
 };
 
 export default ProductsListPage;
-

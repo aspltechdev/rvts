@@ -18,7 +18,6 @@ import {
     Loader2,
     Share2
 } from 'lucide-react';
-import { STATIC_PRODUCTS } from '@/lib/static-data';
 import DownloadForm from '@/components/DownloadForm';
 
 const ProductDetailContent = ({ params }) => {
@@ -75,29 +74,8 @@ const ProductDetailContent = ({ params }) => {
                     throw new Error("Product not found or API error");
                 }
             } catch (err) {
-                console.error("API Error, using fallback:", err);
-
-                // Static Fallback Logic
-                try {
-                    const staticProduct = STATIC_PRODUCTS.find(p => p.slug === slug);
-                    if (staticProduct) {
-                        setProduct(staticProduct);
-                    } else {
-                        // Fallback for demo purposes if absolutely nothing found
-                        setProduct({
-                            name: slug.replace(/-/g, ' '),
-                            category: "Uncategorized",
-                            title: "Product Not Found",
-                            description: "No data is been given.",
-                            images: [],
-                            features: [],
-                            material: "No data is been given.",
-                            finish: "No data is been given."
-                        });
-                    }
-                } catch {
-                    setError("Could not load product data.");
-                }
+                console.error("API Error or Product not found:", err);
+                setError("Could not load product data.");
             } finally {
                 setLoading(false);
             }

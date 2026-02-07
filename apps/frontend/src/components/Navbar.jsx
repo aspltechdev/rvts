@@ -41,10 +41,8 @@ export default function Navbar() {
                     throw new Error('No categories found via API');
                 }
             } catch (error) {
-                console.error('Failed to fetch categories, using static data:', error);
-                const { getStaticCategories } = await import('@/lib/static-data');
-                const staticData = getStaticCategories();
-                setCategories(staticData.categories);
+                console.error('Failed to fetch categories:', error);
+                setCategories([]);
             }
         };
         fetchCategories();
