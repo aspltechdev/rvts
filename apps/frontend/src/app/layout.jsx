@@ -20,6 +20,9 @@ const inter = Inter({
 export const metadata = {
     title: 'RVTS | Research Vision Tech Services',
     description: 'Next Gen Digital Solutions',
+    icons: {
+        icon: '/assets/rvts-logo.png',
+    }
 };
 
 export default function RootLayout({ children }) {

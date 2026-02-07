@@ -102,22 +102,8 @@ export default function ProductShowcase() {
     };
 
     const handleCardClick = (title) => {
-        // Map showcase titles to actual categories in the Products Listing page
-        const categoryMap = {
-            "Display Mounts": "Mounting Solutions",
-            "Sound Bar Mounts": "PTZ / Soundbars / Trolleys",
-            "PTZ Camera Mounts": "PTZ / Soundbars / Trolleys",
-            "Motorized Mount Solutions": "Mounting Solutions",
-            "Mobile Trolley Solutions": "PTZ / Soundbars / Trolleys",
-            "Digital Kiosk": "Touch Screen Kiosks",
-            "Digital Podium": "Touch Screen Kiosks",
-            "Audio Visual Accessories": "Cables & Accessories",
-            // Add mapping for new items if they appear in the showcase
-            "Mosaic LED Wall": "Displays & Video Walls",
-            "Nexus Control Panel": "Control Systems"
-        };
-        const category = categoryMap[title] || title;
-        router.push(`/products?category=${encodeURIComponent(category)}`);
+        // Redirect to products page with "All Categories" active as requested
+        router.push(`/products?category=All%20Categories`);
     };
 
     return (
@@ -259,7 +245,7 @@ export default function ProductShowcase() {
                                             {isCenter && (
                                                 <div className="flex flex-col items-center gap-3 mt-4 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                                                     <a
-                                                        href={`/products?category=${encodeURIComponent(product.title)}`}
+                                                        href={`/products?category=All%20Categories`}
                                                         target="_self"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => {
