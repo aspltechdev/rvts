@@ -1,8 +1,7 @@
 'use server'
 
-
-
 import { z } from 'zod';
+import prisma from '@/lib/prisma';
 
 const contactSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
@@ -32,12 +31,24 @@ export async function submitContactQuery(formData) {
             return { success: false, error: firstError };
         }
 
-        // Dummy success for static hosting
-        console.log('Contact form submitted (Static Mode):', validatedData.data);
-        return { success: true }
+        // Save to Database via Prisma
+        const query = await prisma.contactQuery.create({
+            data: {
+                firstName: validatedData.data.firstName,
+                lastName: validatedData.data.lastName,
+                email: validatedData.data.email,
+                phoneNumber: validatedData.data.phoneNumber,
+                subject: validatedData.data.subject,
+                message: validatedData.data.message,
+                status: "PENDING"
+            }
+        });
+
+        console.log('Contact query stored in DB:', query.id);
+
+        return { success: true };
     } catch (error) {
-        console.error('Failed to submit contact query:', error)
-        return { success: false, error: 'Failed to submit query. Please try again.' }
+        console.error('Failed to submit contact query:', error);
+        return { success: false, error: 'Database connection failed. Please try again later.' };
     }
 }
-
