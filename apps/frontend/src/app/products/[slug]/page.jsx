@@ -140,10 +140,10 @@ const ProductDetailContent = ({ params }) => {
 
     return (
         <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-300 overflow-x-hidden w-full">
-            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-28 md:pt-32">
+            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-24 md:pt-28">
 
                 {/* BREADCRUMB */}
-                <div className="flex items-center gap-2 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mb-8">
+                <div className="flex items-center gap-2 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mb-6">
                     <Link href="/" className="hover:text-red-600 transition-colors"><Home size={14} /></Link>
                     <ChevronRight size={14} />
                     <Link href="/products" className="hover:text-red-600 transition-colors">Products</Link>
@@ -151,7 +151,7 @@ const ProductDetailContent = ({ params }) => {
                     <span className="text-zinc-900 dark:text-zinc-100 font-medium truncate max-w-[200px]">{product.name}</span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 xl:gap-20 mb-20 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 items-start">
 
                     {/* LEFT COLUMN: IMAGES */}
                     <div className="product-gallery flex flex-col gap-6 lg:col-span-6">
@@ -277,14 +277,14 @@ const ProductDetailContent = ({ params }) => {
 
                 {/* BOTTOM TABS */}
                 <div className="mt-12">
-                    <div className="flex items-center gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8 overflow-x-auto">
+                    <div className="flex items-center gap-4 sm:gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8">
                         {['Description', 'Key Features', 'Downloads'].map((tab) => {
                             const key = tab.toLowerCase().replace(' ', '');
                             return (
                                 <button
                                     key={key}
                                     onClick={() => setActiveTab(key)}
-                                    className={`pb-4 text-sm font-bold uppercase tracking-widest border-b-2 transition-colors ${activeTab === key ? 'text-red-600 border-red-600' : 'text-zinc-500 border-transparent hover:text-zinc-900'}`}
+                                    className={`pb-4 text-[11px] sm:text-sm font-bold uppercase tracking-widest border-b-2 transition-colors whitespace-nowrap ${activeTab === key ? 'text-red-600 border-red-600' : 'text-zinc-500 border-transparent hover:text-zinc-900'}`}
                                 >
                                     {tab}
                                 </button>
