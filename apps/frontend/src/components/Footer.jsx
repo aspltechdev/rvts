@@ -1,7 +1,9 @@
 "use client";
+
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Footer() {
     const footerRef = useRef(null);
@@ -92,15 +94,21 @@ export default function Footer() {
                     <div className={`order-1 ${isVisible ? "animate-slide-up" : "opacity-0"}`} style={{ animationDelay: '200ms' }}>
                         <h4 className="font-bold text-xs uppercase tracking-wider mb-4 text-red-600 hover:text-red-500 transition-colors cursor-pointer">Quick Links</h4>
                         <ul className="space-y-2 dark:text-zinc-200 text-zinc-600 text-sm">
-                            {['Home', 'About Us', 'Products', 'Services', 'Contact Us'].map((item) => (
-                                <li key={item}>
-                                    <a
-                                        href={item === 'Products' ? '/products' : (item === 'Home' ? '/' : (item === 'About Us' ? '/about' : (item === 'Services' ? '/services' : '/contact')))}
-                                        onClick={item === 'Products' ? (e) => handleScrollToSection(e, 'products-showcase') : undefined}
+                            {[
+                                { name: 'Home', href: '/' },
+                                { name: 'About Us', href: '/#about', onClick: (e) => handleScrollToSection(e, 'about') },
+                                { name: 'Products', href: '/products' },
+                                { name: 'Services', href: '/services' },
+                                { name: 'Contact Us', href: '/contact' }
+                            ].map((item) => (
+                                <li key={item.name}>
+                                    <Link
+                                        href={item.href}
+                                        onClick={item.onClick}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
-                                        {item}
-                                    </a>
+                                        {item.name}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
@@ -131,15 +139,14 @@ export default function Footer() {
                     <div className={`order-3 ${isVisible ? "animate-slide-up" : "opacity-0"}`} style={{ animationDelay: '400ms' }}>
                         <h4 className="font-bold text-xs uppercase tracking-wider mb-4 text-red-600 hover:text-red-500 transition-colors cursor-pointer">PRODUCTS</h4>
                         <ul className="space-y-2 dark:text-zinc-200 text-zinc-600 text-sm">
-                            {['Displays & Video Walls', 'Control Systems', 'Video Systems', 'Touch Screen Kiosk', 'Mounting solutions'].map((item) => (
+                            {['Displays & Video Walls', 'Control Systems', 'Video Systems', 'Touch Screen Kiosks', 'Mounting Solutions'].map((item) => (
                                 <li key={item}>
-                                    <a
-                                        href="/products"
-                                        onClick={(e) => handleScrollToSection(e, 'products-showcase')}
+                                    <Link
+                                        href={`/products?category=${encodeURIComponent(item)}`}
                                         className="hover:text-red-600 transition-colors cursor-pointer"
                                     >
                                         {item}
-                                    </a>
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
