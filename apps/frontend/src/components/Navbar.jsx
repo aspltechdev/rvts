@@ -5,10 +5,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Sun, Moon, ChevronDown, ChevronRight } from 'lucide-react';
+import { Sun, Moon, ChevronDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
-import { getStaticCategories } from '@/lib/static-data';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -35,33 +34,15 @@ export default function Navbar() {
                 if (!res.ok) throw new Error('API request failed');
 
                 const data = await res.json();
-                let finalCategories = data.categories || [];
-
-                // Always merge with static data to ensure these 5 products are present
-                try {
-                    const staticData = getStaticCategories();
-
-                    // Merge logic: Add static categories if they don't exist, or append products if they do
-                    staticData.categories.forEach(staticCat => {
-                        const existingCat = finalCategories.find(c => c.category === staticCat.category);
-                        if (existingCat) {
-                            // Append products that aren't already there (by slug)
-                            staticCat.products.forEach(p => {
-                                if (!existingCat.products.find(ep => ep.slug === p.slug)) {
-                                    existingCat.products.push(p);
-                                }
-                            });
-                        } else {
-                            finalCategories.push(staticCat);
-                        }
-                    });
-                } catch (e) {
-                    console.warn("Could not merge static categories:", e);
+                if (data.categories && data.categories.length > 0) {
+                    setCategories(data.categories);
+                } else {
+                    // If API returns empty, try static
+                    throw new Error('No categories found via API');
                 }
-
-                setCategories(finalCategories);
             } catch (error) {
-                console.error('Failed to fetch categories, using static data fallback:', error);
+                console.error('Failed to fetch categories, using static data:', error);
+                const { getStaticCategories } = await import('@/lib/static-data');
                 const staticData = getStaticCategories();
                 setCategories(staticData.categories);
             }
@@ -172,7 +153,7 @@ export default function Navbar() {
         { name: 'About', href: '/about' },
         { name: 'Products', href: '/products' },
         { name: 'Services', href: '/services' },
-        { name: 'Blog', href: '/blog' },
+        // { name: 'Blog', href: '/blog' },
         { name: 'Contact', href: '/contact' },
     ];
 
@@ -221,68 +202,48 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="w-[850px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
+                                    className="w-[700px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
                                 >
                                     <div className="p-8">
-                                        <div className="flex gap-12">
-                                            {(() => {
-                                                // 1. Prepare and Sort Categories
-                                                const sortedCats = [...categories].sort((a, b) => a.category.localeCompare(b.category));
-
-                                                // 2. Balance into 3 columns based on total item height (Header + Products)
-                                                const cols = [[], [], []];
-                                                const heights = [0, 0, 0];
-
-                                                sortedCats.forEach(cat => {
-                                                    const minIdx = heights.indexOf(Math.min(...heights));
-                                                    cols[minIdx].push(cat);
-                                                    heights[minIdx] += (2 + Math.min(cat.products.length, 5)); // 2 for header/spacing
-                                                });
-
-                                                return cols.map((col, colIdx) => (
-                                                    <div key={colIdx} className="flex-1 flex flex-col gap-10">
-                                                        {col.map((catObj, index) => (
-                                                            <div key={index} className="flex flex-col gap-4">
-                                                                <Link
-                                                                    href={`/products?category=${encodeURIComponent(catObj.category)}`}
-                                                                    className="text-zinc-900 font-black text-[11px] hover:text-[#ff3333] transition-colors uppercase tracking-[0.15em] border-b border-zinc-50 pb-2"
-                                                                >
-                                                                    {catObj.category}
-                                                                </Link>
-                                                                <div className="flex flex-col gap-2">
-                                                                    {catObj.products.length > 0 ? catObj.products.slice(0, 5).map((product, pIndex) => (
-                                                                        <Link
-                                                                            key={pIndex}
-                                                                            href={`/products/${product.slug}`}
-                                                                            className="group flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
-                                                                        >
-                                                                            <span className="w-1 h-1 rounded-full bg-zinc-200 group-hover:bg-[#ff3333] transition-colors" />
-                                                                            <span className="truncate group-hover:translate-x-1 transition-transform">{product.name}</span>
-                                                                        </Link>
-                                                                    )) : (
-                                                                        <span className="text-[10px] text-zinc-300 font-medium italic">General Collection</span>
-                                                                    )}
-                                                                </div>
-                                                            </div>
+                                        <div className="grid grid-cols-3 gap-8">
+                                            {categories.map((catObj, index) => (
+                                                <div key={index} className="flex flex-col gap-4">
+                                                    <Link
+                                                        href={`/products?category=${encodeURIComponent(catObj.category)}`}
+                                                        className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider"
+                                                    >
+                                                        {catObj.category}
+                                                    </Link>
+                                                    <div className="flex flex-col gap-2.5">
+                                                        {catObj.products.map((product, pIndex) => (
+                                                            <Link
+                                                                key={pIndex}
+                                                                href={`/products/${product.slug}`}
+                                                                className="group flex items-center gap-3 text-sm text-zinc-500 hover:text-[#ff3333] transition-colors"
+                                                            >
+                                                                <span className="w-1 h-1 rounded-full bg-zinc-300 group-hover:bg-[#ff3333] transition-colors" />
+                                                                {product.name}
+                                                            </Link>
                                                         ))}
                                                     </div>
-                                                ));
-                                            })()}
+                                                </div>
+                                            ))}
                                         </div>
-
-                                        <div className="mt-10 pt-6 border-t border-zinc-100 flex justify-between items-center">
-                                            <div className="flex flex-col">
-                                                <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-widest">
-                                                    Professional Solutions
-                                                </p>
-                                                <p className="text-[9px] text-zinc-300 mt-0.5">Updated from Admin Panel</p>
-                                            </div>
+                                        <div className="mt-8 pt-6 border-t border-zinc-100 flex justify-between items-center">
+                                            <p className="text-xs text-zinc-400 font-medium uppercase tracking-widest">
+                                                Explore our full range of professional solutions
+                                            </p>
                                             <Link
                                                 href="/products"
-                                                className="group flex items-center gap-2 bg-[#ff3333] text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-black transition-all shadow-lg shadow-red-500/20 hover:shadow-none"
+                                                className="group flex items-center gap-2 text-xs font-bold text-zinc-900 hover:text-[#ff3333] transition-all uppercase tracking-widest"
                                             >
                                                 View All Collection
-                                                <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                                                <motion.span
+                                                    animate={{ x: [0, 5, 0] }}
+                                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                                >
+                                                    →
+                                                </motion.span>
                                             </Link>
                                         </div>
                                     </div>
@@ -373,200 +334,100 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={cn(
-            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-6 md:px-10 bg-white/90 backdrop-blur-md shadow-xl border-zinc-200 w-[94%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-500 overflow-hidden",
-            scrolled ? "top-3 shadow-2xl" : "top-5"
-        )}>
-            <div className="flex items-center justify-between w-full h-full">
-                {/* Left Nav Links - Only on product pages */}
-                {isProductPage && (
-                    <div className="hidden lg:flex items-center gap-2 h-full">
-                        {leftNavLinks.map(renderNavLink)}
+        <>
+            <nav className={cn(
+                "fixed left-0 right-0 mx-auto md:left-1/2 md:-translate-x-1/2 z-[7000] rounded-full border top-3 md:top-4 px-6 bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[92%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-500 overflow-hidden"
+            )}>
+                <div className="flex items-center justify-between w-full h-full px-4">
+                    {/* Left Nav Links - Only on product pages */}
+                    {isProductPage && (
+                        <div className="hidden lg:flex items-center gap-2 h-full">
+                            {leftNavLinks.map(renderNavLink)}
+                        </div>
+                    )}
+
+                    {/* Logo - Centered on product pages, left-aligned on others */}
+                    <Link href="/" className={cn(
+                        "group flex items-center shrink-0 h-full",
+                        isProductPage ? "mx-2" : ""
+                    )}>
+                        <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
+                            <Image
+                                src="/assets/rvts-logo.png"
+                                alt="RVTS Logo"
+                                fill
+                                className="object-contain p-1"
+                                priority
+                            />
+                        </div>
+                    </Link>
+
+                    {/* Desktop Menu - All links on non-product pages, or right links on product pages */}
+                    <div className={cn(
+                        "hidden lg:flex items-center gap-2 h-full"
+                    )}>
+                        {isProductPage
+                            ? rightNavLinks.map(renderNavLink)
+                            : navLinks.map(renderNavLink)
+                        }
                     </div>
-                )}
 
-                {/* Logo - Centered on product pages, left-aligned on others */}
-                <Link href="/" className={cn(
-                    "group flex items-center shrink-0 h-full py-2",
-                    isProductPage ? "mx-2 md:mx-6" : ""
-                )}>
-                    <div className="relative w-[120px] h-[42px] md:w-[150px] md:h-[50px] flex items-center">
-                        <Image
-                            src="/assets/rvts-logo.png"
-                            alt="RVTS Logo"
-                            fill
-                            className="object-contain"
-                            priority
-                        />
-                    </div>
-                </Link>
+                    {/* Right Actions & Professional Toggle */}
+                    <div className="flex items-center gap-6 h-full">
+                        <div className="flex items-center gap-4 h-full">
+                            <button
+                                onClick={toggleTheme}
+                                className={cn(
+                                    "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 border bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]"
+                                )}
+                            >
+                                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                            </button>
+                        </div>
 
-                {/* Desktop Menu - All links on non-product pages, or right links on product pages */}
-                <div className={cn(
-                    "hidden lg:flex items-center gap-2 h-full"
-                )}>
-                    {isProductPage
-                        ? rightNavLinks.map(renderNavLink)
-                        : navLinks.map(renderNavLink)
-                    }
-                </div>
-
-                {/* Right Actions & Professional Toggle */}
-                <div className="flex items-center gap-2 md:gap-6 h-full">
-                    <div className="flex items-center h-full">
                         <button
-                            onClick={toggleTheme}
-                            className={cn(
-                                "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 border bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]"
-                            )}
+                            className="lg:hidden relative w-12 h-12 flex flex-col justify-center items-center gap-2 focus:outline-none"
+                            onClick={() => setIsOpen(!isOpen)}
                         >
-                            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                            <motion.span
+                                animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
+                                className={cn(
+                                    "w-7 h-[3px] rounded-full transition-colors duration-500",
+                                    isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
+                                )}
+                            />
+                            <motion.span
+                                animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
+                                className={cn(
+                                    "w-7 h-[3px] rounded-full transition-colors duration-500",
+                                    isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
+                                )}
+                            />
+                            <motion.span
+                                animate={isOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
+                                className={cn(
+                                    "w-7 h-[3px] rounded-full transition-colors duration-500",
+                                    isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
+                                )}
+                            />
                         </button>
                     </div>
-
-                    <button
-                        className="lg:hidden relative w-12 h-12 flex flex-col justify-center items-center gap-2"
-                        onClick={() => setIsOpen(!isOpen)}
-                    >
-                        <motion.span
-                            animate={isOpen ? { rotate: 45, y: 10 } : { rotate: 0, y: 0 }}
-                            className={cn(
-                                "w-7 h-[3px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
-                            )}
-                        />
-                        <motion.span
-                            animate={isOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
-                            className={cn(
-                                "w-7 h-[3px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
-                            )}
-                        />
-                        <motion.span
-                            animate={isOpen ? { rotate: -45, y: -10 } : { rotate: 0, y: 0 }}
-                            className={cn(
-                                "w-7 h-[3px] rounded-full transition-colors duration-500",
-                                isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
-                            )}
-                        />
-                    </button>
                 </div>
-            </div>
+            </nav>
 
             {/* Mobile Menu - Full Screen Drawer */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, x: '100%' }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: '100%' }}
-                        transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                        className="fixed inset-0 z-[5500] bg-white dark:bg-[#050505] lg:hidden flex flex-col pt-28 px-8 overflow-y-auto scrollbar-hide"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        className="fixed inset-0 z-[6000] bg-black/90 backdrop-blur-2xl lg:hidden flex flex-col pt-32 px-8 overflow-y-auto scrollbar-hide"
                     >
-                        <div className="flex flex-col gap-2 w-full pb-10">
+                        <div className="flex flex-col gap-5 w-full pb-10">
                             {navLinks.map((link) => {
-                                const isActive = pathname === link.href;
-
-                                if (link.name === 'Products') {
-                                    return (
-                                        <div key={link.name} className="flex flex-col w-full border-b border-zinc-100 dark:border-zinc-800">
-                                            <button
-                                                onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                                                className="flex items-center justify-between w-full py-4 text-sm font-bold uppercase tracking-widest text-zinc-900 dark:text-white"
-                                            >
-                                                <span>{link.name}</span>
-                                                <motion.div
-                                                    animate={{ rotate: isMobileProductsOpen ? 180 : 0 }}
-                                                    transition={{ duration: 0.3 }}
-                                                >
-                                                    <ChevronDown size={16} />
-                                                </motion.div>
-                                            </button>
-                                            <AnimatePresence>
-                                                {isMobileProductsOpen && (
-                                                    <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: "auto", opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        className="overflow-hidden"
-                                                    >
-                                                        <div className="flex flex-col gap-6 pl-4 pb-6">
-                                                            {categories.map((catObj, index) => (
-                                                                <div key={index} className="flex flex-col gap-3">
-                                                                    <Link
-                                                                        href={`/products?category=${encodeURIComponent(catObj.category)}`}
-                                                                        onClick={() => setIsOpen(false)}
-                                                                        className="text-[10px] font-black text-zinc-900 dark:text-zinc-100 uppercase tracking-[0.2em]"
-                                                                    >
-                                                                        {catObj.category}
-                                                                    </Link>
-                                                                    <div className="flex flex-col gap-2 pl-2">
-                                                                        {catObj.products.slice(0, 5).map((product, pIndex) => (
-                                                                            <Link
-                                                                                key={pIndex}
-                                                                                href={`/products/${product.slug}`}
-                                                                                onClick={() => setIsOpen(false)}
-                                                                                className="text-xs font-medium text-zinc-500 dark:text-zinc-400 hover:text-[#ff3333] transition-colors"
-                                                                            >
-                                                                                • {product.name}
-                                                                            </Link>
-                                                                        ))}
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </div>
-                                    );
-                                }
-
-                                if (link.name === 'About') {
-                                    return (
-                                        <div key={link.name} className="flex flex-col w-full border-b border-zinc-100 dark:border-zinc-800">
-                                            <button
-                                                onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
-                                                className="flex items-center justify-between w-full py-4 text-sm font-bold uppercase tracking-widest text-zinc-900 dark:text-white"
-                                            >
-                                                <span>{link.name}</span>
-                                                <motion.div
-                                                    animate={{ rotate: isMobileAboutOpen ? 180 : 0 }}
-                                                    transition={{ duration: 0.3 }}
-                                                >
-                                                    <ChevronDown size={16} />
-                                                </motion.div>
-                                            </button>
-                                            <AnimatePresence>
-                                                {isMobileAboutOpen && (
-                                                    <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: "auto", opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        className="overflow-hidden"
-                                                    >
-                                                        <div className="flex flex-col gap-3 pl-4 pb-6">
-                                                            {[
-                                                                { name: 'Company Overview', id: 'about-overview' },
-                                                                { name: 'Why Choose RVTS', id: 'about-why-choose' },
-                                                                { name: 'Our Partners', id: 'about-partners' }
-                                                            ].map(item => (
-                                                                <Link
-                                                                    key={item.name}
-                                                                    href={`/about#${item.id}`}
-                                                                    onClick={(e) => handleAboutScroll(e, item.id)}
-                                                                    className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 hover:text-[#ff3333] dark:hover:text-[#ff3333] uppercase tracking-wider transition-colors"
-                                                                >
-                                                                    {item.name}
-                                                                </Link>
-                                                            ))}
-                                                        </div>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </div>
-                                    );
-                                }
+                                const isActive = pathname === link.href || (link.name === 'Products' && pathname?.startsWith('/products/'));
 
                                 return (
                                     <Link
@@ -577,8 +438,8 @@ export default function Navbar() {
                                             else setIsOpen(false);
                                         }}
                                         className={cn(
-                                            "flex items-center justify-between w-full py-4 text-sm font-bold uppercase tracking-widest border-b border-zinc-100 dark:border-zinc-800 transition-colors",
-                                            isActive ? "text-[#ff3333]" : "text-zinc-900 dark:text-white"
+                                            "flex items-center justify-between w-full py-5 text-base md:text-lg font-bold uppercase tracking-[0.15em] border-b border-zinc-800 transition-colors",
+                                            isActive ? "text-[#ff3333]" : "text-white"
                                         )}
                                     >
                                         {link.name}
@@ -589,7 +450,6 @@ export default function Navbar() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </nav>
+        </>
     );
 }
-
