@@ -374,22 +374,23 @@ export default function Navbar() {
 
     return (
         <nav className={cn(
-            "fixed left-1/2 -translate-x-1/2 z-[5000] rounded-full border top-4 py-2 px-5 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl h-[56px] md:h-auto flex items-center"
+            "fixed left-1/2 -translate-x-1/2 z-[7000] rounded-full border top-4 px-5 md:px-8 bg-white/90 backdrop-blur-md shadow-lg border-zinc-200 w-[95%] max-w-5xl h-[56px] md:h-[64px] flex items-center transition-all duration-300",
+            scrolled ? "top-2 py-0" : "top-4 py-0"
         )}>
             <div className="flex items-center justify-between w-full h-full">
                 {/* Left Nav Links - Only on product pages */}
                 {isProductPage && (
-                    <div className="hidden lg:flex items-center gap-2 z-[6001]">
+                    <div className="hidden lg:flex items-center gap-2 h-full">
                         {leftNavLinks.map(renderNavLink)}
                     </div>
                 )}
 
                 {/* Logo - Centered on product pages, left-aligned on others */}
                 <Link href="/" className={cn(
-                    "group z-[6000] flex items-center shrink-0",
+                    "group flex items-center shrink-0 h-full",
                     isProductPage ? "mx-2 md:mx-4" : ""
                 )}>
-                    <div className="relative w-[100px] h-[34px] md:w-[130px] md:h-[46px]">
+                    <div className="relative w-[100px] h-[32px] md:w-[130px] md:h-[46px] flex items-center">
                         <Image
                             src="/assets/rvts-logo.png"
                             alt="RVTS Logo"
@@ -402,8 +403,7 @@ export default function Navbar() {
 
                 {/* Desktop Menu - All links on non-product pages, or right links on product pages */}
                 <div className={cn(
-                    "hidden lg:flex items-center gap-2",
-                    isProductPage && "z-[6001]"
+                    "hidden lg:flex items-center gap-2 h-full"
                 )}>
                     {isProductPage
                         ? rightNavLinks.map(renderNavLink)
@@ -412,13 +412,12 @@ export default function Navbar() {
                 </div>
 
                 {/* Right Actions & Professional Toggle */}
-                <div className="flex items-center gap-2 md:gap-6 z-[6001]">
-                    <div className="flex items-center">
+                <div className="flex items-center gap-2 md:gap-6 h-full">
+                    <div className="flex items-center h-full">
                         <button
                             onClick={toggleTheme}
                             className={cn(
-                                "p-2 rounded-xl transition-all duration-300 border relative z-[6000] bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]",
-                                scrolled ? "shadow-sm" : ""
+                                "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 border bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]"
                             )}
                         >
                             {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -426,11 +425,11 @@ export default function Navbar() {
                     </div>
 
                     <button
-                        className="lg:hidden relative w-10 h-10 z-[6000] group flex flex-col justify-center items-center gap-1.5"
+                        className="lg:hidden relative w-10 h-10 flex flex-col justify-center items-center gap-1.5"
                         onClick={() => setIsOpen(!isOpen)}
                     >
                         <motion.span
-                            animate={isOpen ? { rotate: 45, y: 7.5 } : { rotate: 0, y: 0 }}
+                            animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
                             className={cn(
                                 "w-6 h-[2px] rounded-full transition-colors duration-500",
                                 isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
@@ -444,7 +443,7 @@ export default function Navbar() {
                             )}
                         />
                         <motion.span
-                            animate={isOpen ? { rotate: -45, y: -7.5 } : { rotate: 0, y: 0 }}
+                            animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
                             className={cn(
                                 "w-6 h-[2px] rounded-full transition-colors duration-500",
                                 isOpen ? "bg-[#ff3333]" : "bg-zinc-900"
