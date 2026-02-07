@@ -22,7 +22,7 @@ const countryCodes = [
 
 const formSchema = z.object({
     firstName: z.string().min(2, 'First name is too short'),
-    lastName: z.string().min(2, 'Last name is too short'),
+    lastName: z.string().optional().or(z.literal('')),
     email: z.string().email('Please enter a valid email address'),
     phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits').regex(/^\d+$/, 'Phone number must contain only digits'),
     countryCode: z.string(),

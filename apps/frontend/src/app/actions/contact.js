@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 
 const contactSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
-    lastName: z.string().min(2, 'Last name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'Last name must contain only letters'),
+    lastName: z.string().optional().or(z.literal('')),
     email: z.string().email('Invalid email address'),
     phoneNumber: z.string().regex(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/, 'Invalid phone number format'),
     subject: z.string().min(1, 'Subject is required'),

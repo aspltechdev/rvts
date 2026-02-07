@@ -124,7 +124,7 @@ export default function About() {
                                         initial={{ opacity: 0, y: 10 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, delay: 0.5 }}
-                                        className="dark:text-zinc-300 text-zinc-500 text-sm md:text-base leading-relaxed"
+                                        className="dark:text-zinc-200 text-zinc-600 text-base md:text-lg leading-relaxed"
                                     >
                                         At RVTS, we blend technical expertise with thoughtful design to build solutions that are scalable, efficient, and future-ready. From corporate environments to large-scale installations, our work reflects precision, reliability, and attention to detail—ensuring every project meets both functional and visual excellence.
                                     </motion.p>

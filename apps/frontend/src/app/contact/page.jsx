@@ -8,7 +8,7 @@ import { submitContactQuery } from '@/app/actions/contact';
 
 const contactSchema = z.object({
     firstName: z.string().min(2, 'First name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'First name must contain only letters'),
-    lastName: z.string().min(2, 'Last name must be at least 2 characters').regex(/^[a-zA-Z\s]+$/, 'Last name must contain only letters'),
+    lastName: z.string().optional().or(z.literal('')),
     email: z.string().email('Invalid email address'),
     phoneNumber: z.string().regex(/^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/, 'Invalid phone number format'),
     subject: z.string().min(1, 'Subject is required'),
