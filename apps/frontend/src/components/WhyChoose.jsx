@@ -104,9 +104,6 @@ export default function WhyChoose() {
                                         <p className="text-[15px] dark:text-[#ff3333] text-red-600 font-bold uppercase tracking-[0.2em] mb-1">Success Metric</p>
                                         <p className="text-xl font-black dark:text-white text-black leading-none">99.8% <span className="text-xs font-bold dark:text-zinc-100 text-zinc-100">Satisfaction</span></p>
                                     </div>
-                                    <div className="w-10 h-10 rounded-full bg-[#ff3333] flex items-center justify-center text-white shadow-lg">
-                                        <ArrowUpRight size={20} />
-                                    </div>
                                 </motion.div>
                             </div>
 

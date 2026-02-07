@@ -320,8 +320,8 @@ export default function Navbar() {
             <Link
                 key={link.name}
                 href={link.href}
-                onClick={(e) => {
-                    if (link.name === 'Services') handleScrollToSection(e, '[data-scroll="services"]');
+                onClick={() => {
+                    setIsOpen(false);
                 }}
                 className={cn(
                     "px-3 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 relative group",
@@ -436,9 +436,8 @@ export default function Navbar() {
                                     <Link
                                         key={link.name}
                                         href={link.href}
-                                        onClick={(e) => {
-                                            if (link.name === 'Services') handleScrollToSection(e, '[data-scroll="services"]');
-                                            else setIsOpen(false);
+                                        onClick={() => {
+                                            setIsOpen(false);
                                         }}
                                         className={cn(
                                             "flex items-center justify-between w-full py-5 text-base md:text-lg font-bold uppercase tracking-[0.15em] border-b border-zinc-800 transition-colors",
