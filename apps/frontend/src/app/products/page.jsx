@@ -123,9 +123,39 @@ const ProductsListContent = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#fafafa] dark:bg-[#020202] text-zinc-900 dark:text-zinc-100 transition-colors duration-500">
+        <div className="min-h-screen bg-[#fafafa] dark:bg-[#020202] text-zinc-900 dark:text-zinc-100 transition-colors duration-500 overflow-x-hidden">
             {/* --- PREMIUM HERO SECTION --- */}
-            <section className="relative pt-32 pb-20 overflow-hidden bg-white dark:bg-black border-b border-zinc-100 dark:border-zinc-900">
+            <section className="relative pt-32 pb-24 md:pb-32 overflow-hidden bg-white dark:bg-black border-b border-zinc-100 dark:border-zinc-900">
+                {/* Visual Elements / Icons / Diagrams Background */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 dark:opacity-30">
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                        className="absolute top-[-10%] right-[-5%] text-zinc-200 dark:text-zinc-800"
+                    >
+                        <Settings size={300} strokeWidth={0.5} />
+                    </motion.div>
+
+                    <motion.div
+                        animate={{ y: [0, -20, 0] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute bottom-[10%] left-[5%] text-zinc-200 dark:text-zinc-800"
+                    >
+                        <Monitor size={200} strokeWidth={0.5} />
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0.1, 0.3, 0.1] }}
+                        transition={{ duration: 5, repeat: Infinity }}
+                        className="absolute top-[20%] left-[20%] text-brand-red/10"
+                    >
+                        <Cpu size={150} strokeWidth={0.5} />
+                    </motion.div>
+
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white dark:via-black/50 dark:to-black" />
+                </div>
+
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                     <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-brand-red/5 rounded-full blur-[120px]" />
                     <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-zinc-400/5 rounded-full blur-[100px]" />
@@ -146,12 +176,17 @@ const ProductsListContent = () => {
                         </motion.div>
 
                         <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 leading-none"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: 0.1, duration: 0.5 }}
+                            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter mb-6 leading-[0.9] max-w-4xl"
                         >
-                            The <span className="text-brand-red italic">Solution</span> Archive
+                            The <span className="text-brand-red italic relative">
+                                Solution
+                                <svg className="absolute -bottom-2 left-0 w-full h-2 text-brand-red/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0 5 Q 25 0 50 5 T 100 5" fill="none" stroke="currentColor" strokeWidth="2" />
+                                </svg>
+                            </span> Archive
                         </motion.h1>
 
                         <motion.p
