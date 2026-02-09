@@ -340,23 +340,53 @@ export default function Navbar() {
                 scrolled ? "top-2" : "top-5"
             )}>
                 <div className="flex items-center justify-between w-full h-full px-6">
-                    {/* Logo - Classic Left Position */}
-                    <Link href="/" className="group flex items-center shrink-0 h-full">
-                        <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
-                            <Image
-                                src="/assets/rvts-logo.png"
-                                alt="RVTS Logo"
-                                fill
-                                className="object-contain p-1"
-                                priority
-                            />
-                        </div>
-                    </Link>
+                    {isProductPage ? (
+                        <>
+                            {/* Product Page Layout: Left Menu | Logo Center | Right Menu */}
+                            <div className="hidden lg:flex items-center gap-1 flex-1">
+                                {leftNavLinks.map(renderNavLink)}
+                            </div>
 
-                    {/* Desktop Menu - All links on the right */}
-                    <div className="hidden lg:flex items-center gap-1 h-full">
-                        {navLinks.map(renderNavLink)}
-                    </div>
+                            {/* Center Logo */}
+                            <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                                <Link href="/" className="group flex items-center shrink-0 h-full">
+                                    <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
+                                        <Image
+                                            src="/assets/rvts-logo.png"
+                                            alt="RVTS Logo"
+                                            fill
+                                            className="object-contain p-1"
+                                            priority
+                                        />
+                                    </div>
+                                </Link>
+                            </div>
+
+                            <div className="hidden lg:flex items-center gap-1 flex-1 justify-end mr-4">
+                                {rightNavLinks.map(renderNavLink)}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            {/* Logo - Classic Left Position */}
+                            <Link href="/" className="group flex items-center shrink-0 h-full">
+                                <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
+                                    <Image
+                                        src="/assets/rvts-logo.png"
+                                        alt="RVTS Logo"
+                                        fill
+                                        className="object-contain p-1"
+                                        priority
+                                    />
+                                </div>
+                            </Link>
+
+                            {/* Desktop Menu - All links on the right */}
+                            <div className="hidden lg:flex items-center gap-1 h-full">
+                                {navLinks.map(renderNavLink)}
+                            </div>
+                        </>
+                    )}
 
                     {/* Right Actions & Professional Toggle */}
                     <div className="flex items-center gap-6 h-full">
