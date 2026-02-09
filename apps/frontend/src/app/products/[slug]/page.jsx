@@ -65,7 +65,10 @@ const ProductDetailContent = ({ params }) => {
         const fetchProduct = async () => {
             if (!slug) return;
             try {
-                const res = await fetch(`${API_BASE_URL}/api/products/${slug}`);
+                const res = await fetch(`${API_BASE_URL}/api/products/${slug}`, {
+                    cache: 'no-store',
+                    next: { revalidate: 0 }
+                });
 
                 if (res.ok) {
                     const data = await res.json();
