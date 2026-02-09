@@ -6,7 +6,7 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Plus, X, Upload, ArrowLeft, Save } from 'lucide-react';
+import { Plus, X, Upload, ArrowLeft, Save, ChevronDown } from 'lucide-react';
 
 export default function AddProductPage() {
     const { register, control, handleSubmit, setValue, watch, reset } = useForm({
@@ -117,6 +117,7 @@ export default function AddProductPage() {
     const onSubmit = async (data) => {
         const payload = {
             ...data,
+            title: data.title || data.name, // Use name as title if title is missing
             images,
             features: data.features.filter(f => f.value.trim() !== '').map((f) => f.value),
             published: true
@@ -174,30 +175,24 @@ export default function AddProductPage() {
                             />
                         </div>
 
-                        {/* Title Input */}
-                        <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Internal SEO Title <span className="text-brand-red">*</span></label>
-                            <input
-                                {...register("title")}
-                                className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white"
-                                placeholder="e.g. Professional Series X100"
-                                required
-                            />
-                        </div>
-
                         {/* Category Dropdown */}
                         <div className="space-y-3">
                             <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Asset Category <span className="text-brand-red">*</span></label>
-                            <select {...register("category")} className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
-                                <option value="">Select Category</option>
-                                <option value="Displays & video walls">Displays & video walls</option>
-                                <option value="Control system">Control system</option>
-                                <option value="Video systems">Video systems</option>
-                                <option value="Touch screen Kiosk">Touch screen Kiosk</option>
-                                <option value="Mounting solutions">Mounting solutions</option>
-                                <option value="PTX/Soundbars/Mobile trolley">PTX/Soundbars/Mobile trolley</option>
-                                <option value="Cables and accessories">Cables and accessories</option>
-                            </select>
+                            <div className="relative group/select">
+                                <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Displays & video walls">Displays & video walls</option>
+                                    <option value="Control system">Control system</option>
+                                    <option value="Video systems">Video systems</option>
+                                    <option value="Touch screen Kiosk">Touch screen Kiosk</option>
+                                    <option value="Mounting solutions">Mounting solutions</option>
+                                    <option value="PTX/Soundbars/Mobile trolley">PTX/Soundbars/Mobile trolley</option>
+                                    <option value="Cables and accessories">Cables and accessories</option>
+                                </select>
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
+                                    <ChevronDown size={20} />
+                                </div>
+                            </div>
                         </div>
 
                         {/* Slug Input */}
