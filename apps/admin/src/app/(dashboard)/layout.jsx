@@ -171,11 +171,17 @@ export default function AdminLayout({ children }) {
                                     <div className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-zinc-900 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-black/50 border border-gray-100 dark:border-zinc-800 overflow-hidden z-20 transform origin-top-right transition-all animate-in fade-in slide-in-from-top-2">
                                         <div className="p-4 border-b border-gray-100 dark:border-zinc-800 bg-gray-50/50 dark:bg-zinc-800/20">
                                             <p className="text-sm font-bold text-gray-900 dark:text-white">Signed in as</p>
-                                            <p className="text-xs text-gray-500 dark:text-zinc-400 truncate mt-0.5">{session.user?.email}</p>
+                                            <p className="text-xs text-gray-400 dark:text-zinc-400 truncate mt-0.5 font-semibold">
+                                                {session.user?.email}
+                                            </p>
                                         </div>
                                         <div className="p-2 space-y-1">
-                                            <Link href="/settings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-900 dark:hover:text-white transition-colors">
-                                                <Settings size={16} />
+                                            <Link
+                                                href="/settings"
+                                                onClick={() => setIsProfileOpen(false)}
+                                                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-gray-700 dark:text-zinc-300 hover:bg-gray-100 dark:hover:bg-zinc-800/50 hover:text-brand-red dark:hover:text-brand-red transition-all duration-200"
+                                            >
+                                                <Settings size={16} className="text-gray-400 dark:text-zinc-500 group-hover:text-brand-red transition-colors" />
                                                 Account Settings
                                             </Link>
                                             <button
@@ -183,7 +189,7 @@ export default function AdminLayout({ children }) {
                                                     await signOut({ redirect: false });
                                                     router.push('/login');
                                                 }}
-                                                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-colors"
+                                                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all duration-200"
                                             >
                                                 <LogOut size={16} />
                                                 Sign Out
