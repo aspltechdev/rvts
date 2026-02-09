@@ -219,13 +219,14 @@ export default function EditProductPage({ params }) {
                             <div className="relative group/select">
                                 <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
                                     <option value="">Select Category</option>
-                                    <option value="Displays & video walls">Displays & video walls</option>
-                                    <option value="Control system">Control system</option>
-                                    <option value="Video systems">Video systems</option>
-                                    <option value="Touch screen Kiosk">Touch screen Kiosk</option>
-                                    <option value="Mounting solutions">Mounting solutions</option>
-                                    <option value="PTX/Soundbars/Mobile trolley">PTX/Soundbars/Mobile trolley</option>
-                                    <option value="Cables and accessories">Cables and accessories</option>
+                                    <option value="Displays & Video Walls">Displays & Video Walls</option>
+                                    <option value="Touch Screen Kiosks">Touch Screen Kiosks</option>
+                                    <option value="Video Systems">Video Systems</option>
+                                    <option value="Control Systems">Control Systems</option>
+                                    <option value="Mounting Solutions">Mounting Solutions</option>
+                                    <option value="PTX / Soundbars / Trolleys">PTX / Soundbars / Trolleys</option>
+                                    <option value="Cables & Accessories">Cables & Accessories</option>
+                                    <option value="Interactive Installation / Digital Experience Zone">Interactive Installation / Digital Experience Zone</option>
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
                                     <ChevronDown size={20} />

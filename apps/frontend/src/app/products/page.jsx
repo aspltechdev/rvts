@@ -63,7 +63,10 @@ const ProductsListContent = () => {
         const fetchProducts = async () => {
             try {
                 const apiUrl = API_BASE_URL;
-                const res = await fetch(`${apiUrl}/api/products`);
+                const res = await fetch(`${apiUrl}/api/products`, {
+                    cache: 'no-store',
+                    next: { revalidate: 0 }
+                });
                 if (res.ok) {
                     const apiProducts = await res.json();
                     setProducts(apiProducts);
