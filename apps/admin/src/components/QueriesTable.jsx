@@ -194,8 +194,8 @@ export default function QueriesTable({ queries }) {
                                             </td>
                                             <td className="px-6 py-2.5 align-middle">
                                                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${type === 'download'
-                                                        ? 'bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
-                                                        : 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+                                                    ? 'bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                                                    : 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
                                                     }`}>
                                                     {type === 'download' ? <Download size={10} /> : <Mail size={10} />}
                                                     {type === 'download' ? 'Download' : 'Contact'}
@@ -214,22 +214,38 @@ export default function QueriesTable({ queries }) {
                                                     <span className="text-gray-600 dark:text-zinc-300 whitespace-nowrap text-sm">{query.phoneNumber}</span>
                                                 ) : <span className="text-gray-400 italic text-xs">N/A</span>}
                                             </td>
-                                            <td className="px-6 py-2.5 align-middle max-w-xs">
-                                                {type === 'download' ? (
-                                                    <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white" title={query.message}>
-                                                        <FileText size={14} className="text-blue-500 shrink-0" />
-                                                        <span className="truncate">{query.message}</span>
-                                                    </div>
-                                                ) : (
-                                                    <div className="flex flex-col gap-0.5 max-w-[250px]">
-                                                        <div className="font-bold text-gray-900 dark:text-white text-xs truncate uppercase tracking-wide" title={query.subject}>
-                                                            {query.subject}
+                                            <td className="px-6 py-2.5 align-middle">
+                                                <div className="flex items-center justify-between gap-4">
+                                                    {type === 'download' ? (
+                                                        <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white flex-1" title={query.message}>
+                                                            <FileText size={14} className="text-blue-500 shrink-0" />
+                                                            <span className="truncate">{query.message}</span>
                                                         </div>
-                                                        <div className="text-gray-500 dark:text-zinc-400 text-xs truncate" title={query.message}>
-                                                            {query.message}
+                                                    ) : (
+                                                        <div className="flex flex-col gap-0.5 max-w-[200px] flex-1">
+                                                            <div className="font-bold text-gray-900 dark:text-white text-xs truncate uppercase tracking-wide" title={query.subject}>
+                                                                {query.subject}
+                                                            </div>
+                                                            <div className="text-gray-500 dark:text-zinc-400 text-xs truncate" title={query.message}>
+                                                                {query.message}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}
+                                                    )}
+
+                                                    <button
+                                                        onClick={async () => {
+                                                            if (window.confirm('Are you sure you want to delete this inquiry?')) {
+                                                                const { deleteQuery } = await import('../app/actions/queries');
+                                                                const res = await deleteQuery(query.id);
+                                                                if (!res.success) alert(res.error);
+                                                            }
+                                                        }}
+                                                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-all"
+                                                        title="Delete Inquiry"
+                                                    >
+                                                        <X size={16} />
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     );

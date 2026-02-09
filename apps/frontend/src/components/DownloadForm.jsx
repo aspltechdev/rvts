@@ -161,7 +161,7 @@ export default function DownloadForm({ isOpen, onClose, productName, downloadTyp
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
+                                    <label className="text-[10px] font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Official Email ID</label>
                                     <input
                                         name="email"
                                         type="email"
