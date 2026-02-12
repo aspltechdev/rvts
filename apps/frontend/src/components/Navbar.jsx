@@ -202,7 +202,7 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="w-[700px] h-fit bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-hidden pointer-events-auto"
+                                    className="w-[800px] h-fit max-h-[calc(100vh-120px)] bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-y-auto pointer-events-auto scrollbar-hide"
                                 >
                                     <div className="p-8">
                                         <div className="grid grid-cols-3 gap-8">
@@ -342,7 +342,19 @@ export default function Navbar() {
                 <div className="flex items-center justify-between w-full h-full px-6">
                     {isProductPage ? (
                         <>
-                            {/* Product Page Layout: Left Menu | Logo Center | Right Menu */}
+                            {/* Mobile Theme Toggle (Left) */}
+                            <div className="lg:hidden flex-1 flex items-center justify-start">
+                                <button
+                                    onClick={toggleTheme}
+                                    className={cn(
+                                        "w-10 h-10 flex items-center justify-center rounded-xl transition-all duration-300 border bg-zinc-100 border-zinc-200 hover:border-[#ff3333] text-zinc-900 hover:text-[#ff3333]"
+                                    )}
+                                >
+                                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                                </button>
+                            </div>
+
+                            {/* Product Page Layout: Left Menu | Logo Center | Right Menu (Desktop) */}
                             <div className="hidden lg:flex items-center gap-1 flex-1">
                                 {leftNavLinks.map(renderNavLink)}
                             </div>
@@ -389,8 +401,14 @@ export default function Navbar() {
                     )}
 
                     {/* Right Actions & Professional Toggle */}
-                    <div className="flex items-center gap-6 h-full">
-                        <div className="flex items-center gap-4 h-full">
+                    <div className={cn(
+                        "flex items-center gap-6 h-full",
+                        isProductPage ? "flex-1 lg:flex-none justify-end" : ""
+                    )}>
+                        <div className={cn(
+                            "flex items-center gap-4 h-full",
+                            isProductPage ? "hidden lg:flex" : "flex"
+                        )}>
                             <button
                                 onClick={toggleTheme}
                                 className={cn(

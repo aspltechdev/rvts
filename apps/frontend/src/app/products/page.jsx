@@ -260,9 +260,9 @@ const ProductsListContent = () => {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     exit={{ opacity: 0 }}
-                                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+                                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8"
                                 >
-                                    {[1, 2, 3, 4, 5, 6].map((n) => (
+                                    {[1, 2, 3, 4].map((n) => (
                                         <div key={n} className="bg-zinc-100 dark:bg-zinc-900 aspect-[4/5] rounded-[32px] animate-pulse" />
                                     ))}
                                 </motion.div>
@@ -271,7 +271,7 @@ const ProductsListContent = () => {
                                     key="content"
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
+                                    className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-8"
                                 >
                                     {currentProducts.map((p, index) => (
                                         <motion.div
@@ -284,13 +284,13 @@ const ProductsListContent = () => {
                                                 href={`/products/${p.slug}`}
                                                 className="group block relative bg-white dark:bg-[#0a0a0a] rounded-[32px] overflow-hidden border border-zinc-100 dark:border-zinc-900 hover:border-brand-red/30 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-red/5"
                                             >
-                                                <div className="relative aspect-[16/11] overflow-hidden bg-zinc-50 dark:bg-zinc-950">
+                                                <div className="relative aspect-[4/5] overflow-hidden bg-white dark:bg-zinc-950 p-4">
                                                     {p.images && p.images[0] ? (
                                                         <Image
                                                             src={p.images[0].startsWith('http') ? p.images[0] : `${API_BASE_URL}${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
                                                             alt={p.name}
                                                             fill
-                                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                            className="object-contain transition-transform duration-700 group-hover:scale-105"
                                                             unoptimized
                                                         />
                                                     ) : (
@@ -336,17 +336,18 @@ const ProductsListContent = () => {
                                 <button
                                     onClick={() => handlePageChange(currentPage - 1)}
                                     disabled={currentPage === 1}
-                                    className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 text-xs font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                                    className="flex items-center gap-1 md:gap-2 px-3 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl border border-zinc-200 dark:border-zinc-800 text-[10px] md:text-sm font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all active:scale-95 shrink-0"
                                 >
-                                    <ChevronLeft size={16} /> Previous
+                                    <ChevronLeft size={16} />
+                                    <span className="hidden sm:inline">Prev</span>
                                 </button>
 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-1 md:gap-2">
                                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
                                         <button
                                             key={num}
                                             onClick={() => handlePageChange(num)}
-                                            className={`w-10 h-10 rounded-xl text-xs font-black transition-all ${currentPage === num
+                                            className={`w-7 h-7 md:w-10 md:h-10 rounded-lg md:rounded-xl text-[10px] md:text-sm font-black transition-all ${currentPage === num
                                                 ? 'bg-brand-red text-white shadow-xl shadow-brand-red/20 scale-110'
                                                 : 'text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
                                                 }`}
@@ -359,9 +360,10 @@ const ProductsListContent = () => {
                                 <button
                                     onClick={() => handlePageChange(currentPage + 1)}
                                     disabled={currentPage === totalPages}
-                                    className="flex items-center gap-2 px-6 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 text-xs font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors"
+                                    className="flex items-center gap-1 md:gap-2 px-3 md:px-6 py-2.5 md:py-3 rounded-xl md:rounded-2xl border border-zinc-200 dark:border-zinc-800 text-[10px] md:text-sm font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all active:scale-95 shrink-0"
                                 >
-                                    Next <ChevronRight size={16} />
+                                    <span className="hidden sm:inline">Next</span>
+                                    <ChevronRight size={16} />
                                 </button>
                             </div>
                         )}

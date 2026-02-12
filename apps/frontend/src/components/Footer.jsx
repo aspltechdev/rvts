@@ -171,7 +171,7 @@ export default function Footer() {
                             </li>
                             <li className="flex items-start gap-3 group cursor-pointer">
                                 <Phone className="shrink-0 mt-0.5 group-hover:text-red-600 transition-colors" size={18} />
-                                <a href="tel:+13866883295" className="hover:text-red-600 transition-colors">+91 95911 33004</a>
+                                <a href="tel:+919591133004" className="hover:text-red-600 transition-colors">+91 95911 33004</a>
                             </li>
                         </ul>
                     </div>
@@ -215,7 +215,7 @@ export default function Footer() {
                                 },
                                 {
                                     name: "WhatsApp",
-                                    href: "https://wa.me/13866883295",
+                                    href: "https://wa.me/919591133004",
                                     className: "bg-[#25D366]",
                                     icon: (
                                         <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-white">

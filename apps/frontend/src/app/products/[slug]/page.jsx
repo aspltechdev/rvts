@@ -16,7 +16,8 @@ import {
     X,
     Maximize,
     Loader2,
-    Share2
+    Share2,
+    ArrowLeft
 } from 'lucide-react';
 import DownloadForm from '@/components/DownloadForm';
 
@@ -129,15 +130,24 @@ const ProductDetailContent = ({ params }) => {
 
     return (
         <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-300 overflow-x-hidden w-full">
-            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-24 md:pt-28">
+            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-32 md:pt-28">
 
-                {/* BREADCRUMB */}
-                <div className="flex items-center gap-2 text-xs md:text-sm text-zinc-500 dark:text-zinc-400 mb-6">
-                    <Link href="/" className="hover:text-red-600 transition-colors"><Home size={14} /></Link>
-                    <ChevronRight size={14} />
-                    <Link href="/products" className="hover:text-red-600 transition-colors">Products</Link>
-                    <ChevronRight size={14} />
-                    <span className="text-zinc-900 dark:text-zinc-100 font-medium truncate max-w-[200px]">{product.name}</span>
+                {/* MOBILE BACK BUTTON & BREADCRUMB */}
+                <div className="flex flex-col gap-3 mb-6">
+                    <Link
+                        href="/products"
+                        className="md:hidden flex items-center gap-2 text-[#ff3333] font-black text-[10px] uppercase tracking-[0.2em] hover:gap-3 transition-all w-fit"
+                    >
+                        <ArrowLeft size={14} /> Back to Collection
+                    </Link>
+
+                    <div className="flex items-center gap-2 text-[10px] md:text-sm text-zinc-500 dark:text-zinc-400 overflow-x-auto scrollbar-hide whitespace-nowrap py-1">
+                        <Link href="/" className="hover:text-red-600 transition-colors shrink-0"><Home size={14} /></Link>
+                        <ChevronRight size={14} className="shrink-0" />
+                        <Link href="/products" className="hover:text-red-600 transition-colors shrink-0">Products</Link>
+                        <ChevronRight size={14} className="shrink-0" />
+                        <span className="text-zinc-900 dark:text-zinc-100 font-medium truncate min-w-0">{product.name}</span>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 items-start">

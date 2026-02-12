@@ -226,7 +226,7 @@ export default function ProductShowcase() {
                                                 src={`/${product.image}`}
                                                 alt={product.title}
                                                 fill
-                                                className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+                                                className="object-contain p-4 transform group-hover:scale-105 transition-transform duration-700 bg-white/5"
                                                 sizes="(max-width: 768px) 220px, 320px"
                                             />
                                         </div>

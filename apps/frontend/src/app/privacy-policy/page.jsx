@@ -73,15 +73,6 @@ export default function PrivacyPolicy() {
                         RVTS may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.
                     </p>
 
-                    <h3 className="text-xl font-bold mt-6 mb-2 text-black dark:text-white">9. Contact Us</h3>
-                    <p className="mb-2">If you have any questions about this Privacy Policy or how your information is handled, please contact us:</p>
-                    <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p className="font-bold">Research Vision Tech Services</p>
-                        <p>📍 Bengaluru, Karnataka, India</p>
-                        <p>📧 Email: sales@researchvisions.com</p>
-                        <p>📞 Phone: +91 95911 33004</p>
-                        <p>🌐 Website: www.researchvisions.com</p>
-                    </div>
                 </div>
             </div>
         </section>

@@ -96,14 +96,6 @@ export default function TermsConditions() {
                         RVTS may update these Terms & Conditions at any time without prior notice. Continued use of the website or services after updates implies acceptance of the revised terms.
                     </p>
 
-                    <h3 className="text-xl font-bold mt-6 mb-2 text-black dark:text-white">14. Contact Information</h3>
-                    <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800">
-                        <p className="font-bold">Research Vision Tech Services</p>
-                        <p>📍 Bengaluru, Karnataka, India</p>
-                        <p>📧 Email: sales@researchvisions.com</p>
-                        <p>📞 Phone: +91 95911 33004</p>
-                        <p>🌐 Website: www.researchvisions.com</p>
-                    </div>
                 </div>
             </div>
         </section>

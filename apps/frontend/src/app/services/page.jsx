@@ -67,78 +67,83 @@ export default function ServicesPage() {
     <>
       <style jsx global>{`
         @media (min-width: 768px) {
-          .blur_back {
-             background-position: -100% 10% !important;
+          .movie_card {
+            height: 400px;
           }
         }
       `}</style>
       <div className="min-h-screen dark:bg-[#0c0c0c] bg-zinc-50 pt-28 pb-24 px-4 text-zinc-900">
         <div className="max-w-[1500px] mx-auto">
-
           <div className="flex flex-col gap-6">
             {services.map((service, index) => {
               const isOdd = index % 2 !== 0;
               return (
-                <div key={index} className="movie_card relative block w-full md:w-[900px] h-auto md:h-[400px] mx-auto overflow-hidden rounded-[10px] shadow-[0px_0px_120px_-25px_rgba(255,51,51,0.1)] transition-all duration-400 hover:scale-[1.02] hover:shadow-[0px_0px_80px_-25px_rgba(255,51,51,0.2)] dark:bg-[#09090b] bg-white border dark:border-[#ff3333] border-red-200 group">
+                <div key={index} className="movie_card relative w-full md:w-[900px] flex flex-col md:block mx-auto overflow-hidden rounded-[24px] md:rounded-[20px] shadow-2xl transition-all duration-500 hover:scale-[1.01] dark:bg-[#09090b] bg-white border dark:border-[#ff3333]/20 border-red-100 group mb-12 min-h-fit md:min-h-[400px]">
 
-                  {/* Info Section */}
-                  <div className={`info_section relative w-full h-full z-20 rounded-[10px] flex flex-col md:block ${isOdd ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} dark:from-[#09090b] dark:via-[#09090b]/80 dark:to-transparent from-white via-white/90 to-transparent`}
+                  {/* 1. Background Image Layer */}
+                  <div
+                    className={`relative md:absolute top-0 h-[240px] md:h-full w-full md:w-[70%] z-0 transition-all duration-700 grayscale group-hover:grayscale-0 ${isOdd ? 'md:left-0' : 'md:right-0'}`}
+                    style={{
+                      backgroundImage: `url('${service.image}')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
                   >
+                    {/* Mobile-only gradient shadow inside the image area */}
+                    <div className="absolute inset-0 md:hidden bg-gradient-to-t dark:from-[#09090b] from-white via-transparent to-transparent opacity-40" />
+                  </div>
 
-                    {/* Mobile gradient override */}
-                    <div className={`absolute inset-0 md:hidden pointer-events-none bg-gradient-to-t dark:from-[#09090b] dark:via-[#09090b]/80 dark:to-transparent from-white via-white/90 to-transparent`} style={{ background: '' }}></div>
+                  {/* 2. Desktop-only Side Gradient (The Splash) */}
+                  <div className={`hidden md:block absolute inset-0 z-10 transition-opacity duration-500
+                    ${isOdd ? 'bg-gradient-to-l' : 'bg-gradient-to-r'}
+                    dark:from-[#09090b] dark:via-[#09090b]/95 dark:to-transparent
+                    from-white via-white/95 to-transparent
+                  `} />
 
-                    <div className={`movie_header relative p-[30px] h-auto md:h-[50%] w-full md:w-[60%] mt-[60px] md:mt-0 z-10 ${isOdd ? 'md:ml-auto md:text-right' : ''}`}>
-                      {/* Poster/Icon Image */}
-                      <Image
-                        className={`locandina relative h-[100px] md:h-[120px] shadow-[0_0_20px_-10px_rgba(0,0,0,0.5)] object-cover rounded-xl dark:bg-zinc-900 bg-white dark:border-white/10 border-black/10 border ${isOdd ? 'float-right ml-[25px]' : 'float-left mr-[25px]'}`}
-                        src={service.image}
-                        alt={service.title}
-                        width={120}
-                        height={120}
-                      />
+                  {/* 3. Content Area */}
+                  <div className={`relative z-20 w-full p-8 md:p-10 flex flex-col justify-center h-full
+                    ${isOdd ? 'md:items-end md:text-right' : 'md:items-start md:text-left'}`}>
 
-                      <div className="pt-2">
-                        <h1 className="dark:text-white text-black font-bold text-2xl md:text-3xl mb-2">{service.title}</h1>
-                        <h4 className="dark:text-zinc-300 text-zinc-600 font-bold text-sm tracking-wide uppercase">{service.category}</h4>
-                        <span className="minutes inline-block mt-[10px] md:mt-[15px] dark:text-zinc-200 text-zinc-700 p-[5px] px-3 rounded-md dark:bg-white/10 bg-black/5 dark:border-white/20 border-black/10 border text-xs font-bold">
-                          {service.duration}
-                        </span>
-                        <p className="type inline-block dark:text-zinc-400 text-zinc-500 ml-[10px] text-xs uppercase tracking-wider font-semibold">Service</p>
+                    {/* Header: Title + Icon (Desktop only Icon) */}
+                    <div className={`flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 w-full md:w-[65%] ${isOdd ? 'md:flex-row-reverse' : ''}`}>
+                      {/* Box Icon - Desktop Only */}
+                      <div className="hidden md:block relative h-28 w-28 shrink-0 shadow-2xl rounded-2xl overflow-hidden border-2 dark:border-white/10 border-zinc-100 bg-white">
+                        <Image
+                          src={service.image}
+                          alt={service.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-1 md:gap-2 text-center md:text-left">
+                        <h1 className="dark:text-white text-black font-black text-3xl md:text-5xl leading-tight tracking-tighter">
+                          {service.title}
+                        </h1>
+
+                        {/* Labels - Desktop only */}
+                        <div className="hidden md:flex flex-col gap-2">
+                          <h4 className="dark:text-[#ff3333] text-red-600 font-black text-xs tracking-[0.3em] uppercase">
+                            {service.category}
+                          </h4>
+                          <div className={`flex flex-wrap items-center gap-3 mt-1 ${isOdd ? 'md:justify-end' : 'md:justify-start'}`}>
+                            <span className="inline-block dark:text-zinc-100 text-zinc-800 px-3 py-1 rounded-full dark:bg-white/10 bg-black/5 dark:border-white/20 border-black/10 border text-[9px] font-black uppercase tracking-widest">
+                              {service.duration}
+                            </span>
+                            <span className="dark:text-zinc-500 text-zinc-400 text-[9px] uppercase tracking-[0.4em] font-black">SERVICE</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
-                    <div className={`movie_desc relative p-[30px] py-2 md:py-[20px] h-auto w-full md:w-[60%] z-10 ${isOdd ? 'md:ml-auto text-left md:text-right' : 'text-left'}`}>
-                      <p className="dark:text-zinc-200 text-zinc-700 text-sm md:text-base leading-relaxed font-medium">
+                    {/* Description Section */}
+                    <div className={`mt-6 md:mt-6 w-full md:w-[60%] ${isOdd ? 'md:ml-auto' : ''}`}>
+                      <p className="dark:text-zinc-200 text-zinc-700 text-base md:text-xl leading-relaxed font-medium opacity-95">
                         {service.description}
                       </p>
                     </div>
 
-                    <div className={`movie_social h-[10%] pl-[15px] pb-[20px] z-10 md:absolute md:bottom-0 ${isOdd ? 'md:right-0 md:pr-[30px]' : 'md:left-0'}`}>
-                      <ul className={`list-none p-0 flex ${isOdd ? 'justify-end' : ''}`}>
-                        <li className="inline-block dark:text-white/50 text-black/40 transition-colors duration-300 mx-[10px] dark:hover:text-white hover:text-black cursor-pointer">
-                          <Share2 size={19} />
-                        </li>
-                        <li className="inline-block dark:text-white/50 text-black/40 transition-colors duration-300 mx-[10px] dark:hover:text-white hover:text-black cursor-pointer">
-                          <Heart size={19} />
-                        </li>
-                        <li className="inline-block dark:text-white/50 text-black/40 transition-colors duration-300 mx-[10px] dark:hover:text-white hover:text-black cursor-pointer">
-                          <MessageCircle size={19} />
-                        </li>
-                      </ul>
-                    </div>
                   </div>
-
-                  {/* Blur Background Image */}
-                  <div
-                    className={`blur_back absolute top-0 h-full w-full md:w-[80%] z-[1] bg-cover bg-no-repeat rounded-[11px] transition-all duration-500 ${isOdd ? 'left-0' : 'right-0'}`}
-                    style={{
-                      backgroundImage: `url('${service.image}')`,
-                      backgroundPosition: '50% 50%',
-                    }}
-                  >
-                  </div>
-
                 </div>
               );
             })}
