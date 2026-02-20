@@ -4,15 +4,22 @@ import React from 'react';
 import Image from 'next/image';
 
 const clients = [
-    { name: 'Samsung', logo: '/assets/samsung-removebg-preview.png' },
-    { name: 'Sony', logo: '/assets/sony-removebg-preview.png' },
-    { name: 'LG', logo: '/assets/LG-Logo.webp' },
-    { name: 'Yamaha', logo: '/assets/yamaha-removebg-preview.png' },
-    { name: 'Audio Technica', logo: '/assets/audio-technica.png' },
-    { name: 'Sennheiser', logo: '/assets/Sennheiser-logo-removebg-preview.png' },
-    { name: 'Viewsonic', logo: '/assets/viewsonic-removebg-preview.png' },
-    { name: 'Liberty AV', logo: '/assets/liberty_av_solution-removebg-preview.png' },
-    { name: 'Datapath', logo: '/assets/datapath-removebg-preview.png' },
+    { name: 'Accenture', logo: '/assets/rvts company logos/Accenture_logo-removebg-preview.png' },
+    { name: 'BNY Mellon', logo: '/assets/rvts company logos/bny_logo-removebg-preview.png' },
+    { name: 'Capgemini', logo: '/assets/rvts company logos/capgemini_logo-removebg-preview.png' },
+    { name: 'Dell', logo: '/assets/rvts company logos/dell_logo-removebg-preview.png' },
+    { name: 'Deloitte', logo: '/assets/rvts company logos/delloite_logo-removebg-preview.png' },
+    { name: 'HP', logo: '/assets/rvts company logos/hp_logo-removebg-preview.png' },
+    { name: 'HAL', logo: '/assets/rvts company logos/hal_logo-removebg-preview.png' },
+    { name: 'Hyundai', logo: '/assets/rvts company logos/hundai_logo-removebg-preview.png' },
+    { name: 'Kia', logo: '/assets/rvts company logos/kia-removebg-preview.png' },
+    { name: 'L&T', logo: '/assets/rvts company logos/L_T_logo-removebg-preview.png' },
+    { name: 'Limb Research', logo: '/assets/rvts company logos/limb_research_logo-removebg-preview.png' },
+    { name: 'Microsoft', logo: '/assets/rvts company logos/microsoft_logo-removebg-preview.png' },
+    { name: 'Royal Enfield', logo: '/assets/rvts company logos/royal_enfiled_logo-removebg-preview.png' },
+    { name: 'Siemens', logo: '/assets/rvts company logos/siemens-removebg-preview.png' },
+    { name: 'Target', logo: '/assets/rvts company logos/target_logo-removebg-preview.png' },
+    { name: 'Wells Fargo', logo: '/assets/rvts company logos/Wells fargo logo.png' },
 ];
 
 export default function ClientsCarousel() {
@@ -82,7 +89,7 @@ export default function ClientsCarousel() {
                     }
                 }
                 .animate-infinite-scroll {
-                    animation: infinite-scroll 60s linear infinite;
+                    animation: infinite-scroll 100s linear infinite;
                 }
             `}</style>
         </section>

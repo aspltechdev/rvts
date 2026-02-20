@@ -34,9 +34,9 @@ export default async function Home() {
     return (
         <main className="bg-black min-h-screen w-full overflow-x-hidden selection:bg-brand-red selection:text-white">
             <Hero />
+            <ClientsCarousel />
             {/* <Vision /> */}
             <About />
-            <ClientsCarousel />
             <ThreeDProduct />
             <ProductShowcase />
 

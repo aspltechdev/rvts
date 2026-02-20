@@ -26,7 +26,7 @@ const ProductDetailContent = ({ params }) => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [activeTab, setActiveTab] = useState('description');
+    const [activeTab, setActiveTab] = useState('specifications');
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const [viewMode, setViewMode] = useState('image'); // 'image' or '3d'
     const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -130,7 +130,7 @@ const ProductDetailContent = ({ params }) => {
 
     return (
         <main className="min-h-screen bg-white dark:bg-[#050505] text-zinc-900 dark:text-zinc-100 font-sans transition-colors duration-300 overflow-x-hidden w-full">
-            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-32 md:pt-28">
+            <div className="max-w-[1280px] mx-auto px-4 md:px-8 pb-8 md:pb-12 pt-24 md:pt-32 xl:pt-40">
 
                 {/* MOBILE BACK BUTTON & BREADCRUMB */}
                 <div className="flex flex-col gap-3 mb-6">
@@ -153,8 +153,8 @@ const ProductDetailContent = ({ params }) => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 items-start">
 
                     {/* LEFT COLUMN: IMAGES */}
-                    <div className="product-gallery flex flex-col gap-6 lg:col-span-6">
-                        <div className="relative aspect-square md:aspect-[4/3] w-full flex items-center justify-center p-0 group z-0 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50 transition-all duration-500 hover:border-red-600/30">
+                    <div className="product-gallery flex flex-col gap-4 md:gap-6 lg:col-span-6">
+                        <div className="relative aspect-square md:aspect-[4/3] lg:aspect-square xl:aspect-[4/3] w-full flex items-center justify-center p-0 group z-0 bg-white dark:bg-zinc-900 rounded-2xl overflow-hidden border border-zinc-100 dark:border-zinc-800 shadow-2xl shadow-zinc-200/50 dark:shadow-black/50 transition-all duration-500 hover:border-red-600/30">
                             {/* 3D View */}
                             {product.fusionUrl && (
                                 <iframe
@@ -187,7 +187,7 @@ const ProductDetailContent = ({ params }) => {
                         </div>
 
                         {/* Thumbnails */}
-                        <div className="grid grid-cols-5 gap-3 md:gap-4">
+                        <div className="grid grid-cols-4 sm:grid-cols-5 gap-3 md:gap-4">
                             {displayImages.map((img, idx) => (
                                 <button
                                     key={idx}
@@ -211,7 +211,7 @@ const ProductDetailContent = ({ params }) => {
                     </div>
 
                     {/* RIGHT COLUMN: INFO */}
-                    <div className="product-info flex flex-col lg:col-span-6 sticky top-24">
+                    <div className="product-info flex flex-col lg:col-span-6 lg:sticky lg:top-32 h-fit">
                         <div className="flex items-center justify-between mb-4">
                             <span className="inline-block px-3 py-1 bg-red-50/50 dark:bg-red-900/10 backdrop-blur-sm text-red-600 dark:text-red-400 text-[10px] font-black uppercase tracking-[0.2em] rounded-full border border-red-100 dark:border-red-900/20">
                                 {product.category || 'Product'}
@@ -249,36 +249,18 @@ const ProductDetailContent = ({ params }) => {
                                 </button>
                             </div>
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-black text-zinc-900 dark:text-white leading-[1.1] tracking-tight mb-4 uppercase">
+                        <h1 className="text-base md:text-xl font-black text-zinc-900 dark:text-white leading-[1.1] tracking-tight mb-4 uppercase">
                             {product.name}
                         </h1>
-                        <div className="relative mb-8">
+                        <div className="relative mb-6">
                             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#ff3333] rounded-full" />
-                            <p className="text-zinc-600 dark:text-zinc-400 text-base md:text-lg leading-relaxed pl-6 py-1 font-medium italic">
+                            <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed pl-6 py-1 font-medium italic">
                                 {product.description || "No data is been given."}
                             </p>
                         </div>
 
-                        <div className="mb-8">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {highlights.map((item, i) => (
-                                    <div key={i} className="flex items-start gap-4 p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl transition-all hover:border-[#ff3333]/30 group/item h-full">
-                                        <div className="w-10 h-10 rounded-lg bg-white dark:bg-zinc-800 flex flex-shrink-0 items-center justify-center shadow-sm group-hover/item:border-red-600/50 border border-transparent transition-all">
-                                            <item.icon size={20} className="text-zinc-400 group-hover/item:text-[#ff3333]" />
-                                        </div>
-                                        <div className="flex flex-col min-w-0">
-                                            <span className="text-[10px] text-zinc-400 uppercase font-extrabold tracking-widest mb-1">{item.label}</span>
-                                            <span className="text-sm font-bold text-zinc-900 dark:text-zinc-200 leading-snug break-words">
-                                                {item.value && item.value !== 'N/A' && item.value !== '' ? item.value : 'No data given'}
-                                            </span>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Downloads Actions */}
-                        <div className="flex gap-3 mb-6">
+                        {/* Download Actions */}
+                        <div className="flex flex-col sm:flex-row gap-3 mb-6">
                             {product.brochure && (
                                 <button onClick={() => initiateDownload('Brochure', product.brochure)} className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase shadow-lg shadow-red-600/20 transition-all flex items-center justify-center gap-2">
                                     <Download size={18} /> Brochure
@@ -295,8 +277,8 @@ const ProductDetailContent = ({ params }) => {
 
                 {/* BOTTOM TABS */}
                 <div className="mt-12">
-                    <div className="flex items-center gap-4 sm:gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8">
-                        {['Description', 'Key Features', 'Downloads'].map((tab) => {
+                    <div className="flex items-center gap-4 sm:gap-8 border-b border-zinc-200 dark:border-zinc-800 mb-8 overflow-x-auto scrollbar-hide">
+                        {['Specifications', 'Key Features', ...(product.brochure || product.installationManual ? ['Downloads'] : [])].map((tab) => {
                             const key = tab.toLowerCase().replace(' ', '');
                             return (
                                 <button
@@ -311,9 +293,17 @@ const ProductDetailContent = ({ params }) => {
                     </div>
 
                     <div className="min-h-[200px]">
-                        {activeTab === 'description' && (
-                            <div className="prose prose-zinc dark:prose-invert max-w-none">
-                                <p>{product.description || "No data is been given."}</p>
+                        {activeTab === 'specifications' && (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                                {highlights.map((item, i) => (
+                                    <div key={i} className="flex flex-col p-4 bg-zinc-50/50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-xl group/item">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <item.icon size={18} className="text-zinc-400 group-hover/item:text-red-600 transition-colors" />
+                                            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">{item.label}</span>
+                                        </div>
+                                        <span className="font-semibold text-zinc-900 dark:text-zinc-100">{item.value || 'N/A'}</span>
+                                    </div>
+                                ))}
                             </div>
                         )}
                         {activeTab === 'keyfeatures' && (

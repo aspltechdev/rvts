@@ -162,7 +162,7 @@ export default function AddProductPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Name Input */}
                         <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Product Display Name <span className="text-brand-red">*</span></label>
+                            <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Product Display Name <span className="text-brand-red">*</span></label>
                             <input
                                 {...register("name")}
                                 onChange={(e) => {
@@ -177,7 +177,7 @@ export default function AddProductPage() {
 
                         {/* Category Dropdown */}
                         <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Asset Category <span className="text-brand-red">*</span></label>
+                            <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Asset Category <span className="text-brand-red">*</span></label>
                             <div className="relative group/select">
                                 <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
                                     <option value="">Select Category</option>
@@ -198,7 +198,7 @@ export default function AddProductPage() {
 
                         {/* Slug Input */}
                         <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Slug (Permanent Link)</label>
+                            <label className="text-xs font-black text-gray-400 dark:text-zinc-500 uppercase tracking-widest">Slug (Permanent Link)</label>
                             <input
                                 {...register("slug")}
                                 className="w-full bg-gray-100 dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 p-4 rounded-2xl font-mono text-xs text-brand-red font-bold"
@@ -209,7 +209,7 @@ export default function AddProductPage() {
 
                     {/* Description Textarea */}
                     <div className="space-y-3">
-                        <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Product Narrative <span className="text-brand-red">*</span></label>
+                        <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Product Narrative <span className="text-brand-red">*</span></label>
                         <textarea
                             {...register("description")}
                             className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl h-40 focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all resize-none text-gray-900 dark:text-white italic"
@@ -234,7 +234,7 @@ export default function AddProductPage() {
                             { label: "Hardware Compatibility", field: "compatibility", placeholder: "e.g. Universal VESA Mount" }
                         ].map((spec, i) => (
                             <div key={i} className="space-y-3">
-                                <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">{spec.label}</label>
+                                <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">{spec.label}</label>
                                 <input {...register(spec.field)} className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-medium text-gray-900 dark:text-white" placeholder={spec.placeholder} />
                             </div>
                         ))}
@@ -242,7 +242,7 @@ export default function AddProductPage() {
 
                     {/* Features Array */}
                     <div className="pt-4">
-                        <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em] block mb-4">Core Feature Highlights</label>
+                        <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest block mb-4">Core Feature Highlights</label>
                         <div className="space-y-4">
                             {featureFields.map((field, index) => (
                                 <div key={field.id} className="flex gap-3 group">
@@ -268,7 +268,7 @@ export default function AddProductPage() {
                     </div>
 
                     <div className="space-y-4">
-                        <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Product Gallery (Max 10MB/Img)</label>
+                        <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Product Gallery (Max 10MB/Img)</label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {images.map((url, i) => (
                                 <div key={i} className="relative aspect-square border-2 border-gray-100 dark:border-zinc-800 rounded-2xl overflow-hidden group">
@@ -308,7 +308,7 @@ export default function AddProductPage() {
                             { label: 'Sales Brochure', field: 'brochure', state: uploadingBrochure, setState: setUploadingBrochure, type: 'pdf' }
                         ].map((item, idx) => (
                             <div key={idx} className="space-y-3">
-                                <label className="text-[10px] font-black text-gray-500 dark:text-zinc-500 uppercase tracking-widest">{item.label}</label>
+                                <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">{item.label}</label>
                                 {watch(item.field) ? (
                                     <div className="flex items-center justify-between p-4 bg-emerald-500/10 border border-emerald-500/30 rounded-2xl text-emerald-600 dark:text-emerald-400 group">
                                         <span className="text-xs font-black uppercase tracking-tighter">Ready</span>
@@ -326,7 +326,7 @@ export default function AddProductPage() {
 
                     {/* 3D URL Input */}
                     <div className="space-y-4 pt-6 border-t border-gray-100 dark:border-zinc-800">
-                        <label className="text-[10px] font-black text-gray-500 dark:text-zinc-400 uppercase tracking-[0.2em]">Fusion 3D Experience (Optional)</label>
+                        <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Fusion 3D Experience (Optional)</label>
                         <input
                             {...register("fusionUrl")}
                             className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none text-sm font-mono text-blue-600 dark:text-blue-400"
@@ -337,30 +337,23 @@ export default function AddProductPage() {
             </form>
 
             {/* ACTION FOOTER */}
-            <footer className="fixed bottom-0 left-0 right-0 z-[60] bg-white dark:bg-zinc-900 border-t border-gray-200 dark:border-zinc-800 px-6 py-4 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] transition-transform duration-500">
-                <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
-                    <div className="hidden sm:block">
-                        <p className="text-xs text-gray-400 font-medium">Add all necessary specifications before publishing.</p>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <button
-                            type="button"
-                            onClick={() => router.back()}
-                            className="flex-1 sm:flex-none px-8 py-4 rounded-2xl border-2 border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-white font-black uppercase text-[10px] tracking-widest hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all"
-                        >
-                            Discard
-                        </button>
-                        <button
-                            type="submit"
-                            form="add-product-form"
-                            className="flex-1 sm:flex-none px-10 py-4 rounded-2xl bg-brand-red text-white font-black uppercase text-[10px] tracking-widest shadow-2xl shadow-brand-red/30 hover:bg-red-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
-                        >
-                            <Save size={18} />
-                            Publish Item
-                        </button>
-                    </div>
-                </div>
-            </footer>
+            <div className="flex justify-end gap-3 max-w-4xl mx-auto px-4 mt-8 pb-32">
+                <button
+                    type="button"
+                    onClick={() => router.back()}
+                    className="px-8 py-4 rounded-2xl border-2 border-gray-200 dark:border-zinc-800 text-gray-600 dark:text-white font-black uppercase text-[10px] tracking-widest hover:bg-gray-50 dark:hover:bg-zinc-800 transition-all"
+                >
+                    Discard
+                </button>
+                <button
+                    type="submit"
+                    form="add-product-form"
+                    className="px-10 py-4 rounded-2xl bg-brand-red text-white font-black uppercase text-[10px] tracking-widest shadow-2xl shadow-brand-red/30 hover:bg-red-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                >
+                    <Save size={18} />
+                    Publish Item
+                </button>
+            </div>
         </div>
     );
 }

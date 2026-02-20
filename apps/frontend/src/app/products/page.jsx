@@ -36,7 +36,7 @@ const ProductsListContent = () => {
 
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 9;
+    const productsPerPage = 10;
 
     // Categories
     const categories = [
@@ -284,15 +284,18 @@ const ProductsListContent = () => {
                                                 href={`/products/${p.slug}`}
                                                 className="group block relative bg-white dark:bg-[#0a0a0a] rounded-[32px] overflow-hidden border border-zinc-100 dark:border-zinc-900 hover:border-brand-red/30 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-red/5"
                                             >
-                                                <div className="relative aspect-[4/5] overflow-hidden bg-white dark:bg-zinc-950 p-4">
+                                                <div className="relative aspect-[3/2] overflow-hidden bg-white dark:bg-zinc-950 flex items-center justify-center p-4">
                                                     {p.images && p.images[0] ? (
-                                                        <Image
-                                                            src={p.images[0].startsWith('http') ? p.images[0] : `${API_BASE_URL}${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
-                                                            alt={p.name}
-                                                            fill
-                                                            className="object-contain transition-transform duration-700 group-hover:scale-105"
-                                                            unoptimized
-                                                        />
+                                                        <div className="relative w-full h-full">
+                                                            <Image
+                                                                src={p.images[0].startsWith('http') ? p.images[0] : `${API_BASE_URL}${p.images[0].startsWith('/') ? '' : '/'}${p.images[0]}`}
+                                                                alt={p.name}
+                                                                fill
+                                                                className="object-contain"
+                                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                                                unoptimized
+                                                            />
+                                                        </div>
                                                     ) : (
                                                         <div className="w-full h-full flex items-center justify-center text-zinc-200 dark:text-zinc-800">
                                                             <Monitor size={64} strokeWidth={1} />

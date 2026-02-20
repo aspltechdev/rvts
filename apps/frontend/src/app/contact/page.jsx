@@ -97,7 +97,7 @@ function ContactContent() {
                                             ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                             : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                             }`}
-                                        placeholder="John"
+                                        placeholder=""
                                     />
                                     {fieldErrors.firstName && <p className="text-red-500 text-xs mt-1">{fieldErrors.firstName}</p>}
                                 </div>
@@ -110,7 +110,7 @@ function ContactContent() {
                                             ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                             : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                             }`}
-                                        placeholder="Doe"
+                                        placeholder=""
                                     />
                                     {fieldErrors.lastName && <p className="text-red-500 text-xs mt-1">{fieldErrors.lastName}</p>}
                                 </div>
@@ -125,7 +125,7 @@ function ContactContent() {
                                         ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                         : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                         }`}
-                                    placeholder="john@company.com"
+                                    placeholder=""
                                 />
                                 {fieldErrors.email && <p className="text-red-500 text-xs mt-1">{fieldErrors.email}</p>}
                             </div>
@@ -139,7 +139,7 @@ function ContactContent() {
                                         ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                         : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                         }`}
-                                    placeholder="+1 (555) 000-0000"
+                                    placeholder=""
                                 />
                                 {fieldErrors.phoneNumber && <p className="text-red-500 text-xs mt-1">{fieldErrors.phoneNumber}</p>}
                             </div>
@@ -154,7 +154,7 @@ function ContactContent() {
                                     <option value="General Inquiry">General Inquiry</option>
                                     <option value="Product Quote">Product Quote</option>
                                     <option value="Technical Support">Technical Support</option>
-                                    <option value="Partnership">Partnership</option>
+
                                 </select>
                             </div>
 
@@ -166,7 +166,7 @@ function ContactContent() {
                                         ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500'
                                         : 'border-gray-200 dark:border-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red'
                                         }`}
-                                    placeholder="Tell us about your project..."
+                                    placeholder=""
                                 />
                                 {fieldErrors.message && <p className="text-red-500 text-xs mt-1">{fieldErrors.message}</p>}
                             </div>
