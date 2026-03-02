@@ -283,10 +283,10 @@ export default function Navbar() {
     return (
         <>
             <nav className={cn(
-                "fixed left-0 right-0 mx-auto z-[7000] rounded-full border backdrop-blur-xl transition-all duration-500 flex items-center",
+                "fixed left-0 right-0 mx-auto z-[7000] rounded-full border backdrop-blur-md transition-all duration-500 flex items-center",
                 scrolled
-                    ? "top-3 w-[92%] md:w-[90%] bg-white/95 dark:bg-zinc-900/95 shadow-xl border-zinc-200 dark:border-zinc-800 h-[68px] md:h-[72px]"
-                    : "top-6 w-[94%] md:w-[95%] max-w-6xl bg-white/80 dark:bg-zinc-900/80 shadow-lg border-zinc-100 dark:border-zinc-800/50 h-[72px] md:h-[80px]"
+                    ? "top-3 w-[92%] md:w-[90%] bg-white/90 dark:bg-zinc-900/90 shadow-xl border-zinc-200 dark:border-zinc-800 h-[68px] md:h-[72px]"
+                    : "top-6 w-[94%] md:w-[95%] max-w-6xl bg-transparent shadow-none border-transparent dark:border-transparent h-[72px] md:h-[80px]"
             )}>
                 <div className="flex items-center justify-between w-full h-full px-6">
                     {isProductPage ? (
