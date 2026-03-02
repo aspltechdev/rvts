@@ -21,37 +21,6 @@ export default function Navbar() {
     const [activeCategory, setActiveCategory] = useState(null);
     const pathname = usePathname();
 
-    // Sample static data for demo/fallback purposes
-    const staticData = [
-        {
-            category: "PROJECTION SCREENS",
-            products: [
-                { name: "MANUAL INSTA LOCK SCREENS", slug: "manual-insta-lock" },
-                { name: "FIXED FRAME SCREENS", slug: "fixed-frame" },
-                { name: "Motorized Projector Screen", slug: "motorized-projector" },
-                { name: "FAST FOLD SCREEN", slug: "fast-fold" },
-                { name: "Premium Z Series Home Cinema Fixed Frame Screens", slug: "premium-z" }
-            ]
-        },
-        {
-            category: "TV MOUNTS",
-            products: [
-                { name: "FULL MOTION CANTILEVER SWIVEL TILT WALL MOUNT", slug: "full-motion-mount" },
-                { name: "HEAVY DUTY FIXED WALL MOUNT", slug: "fixed-mount" },
-                { name: "CEILING MOUNT FOR LED TV", slug: "ceiling-mount" }
-            ]
-        },
-        {
-            category: "MOTORIZED TV LIFT",
-            products: [
-                { name: "POP UP TV LIFT", slug: "pop-up-lift" },
-                { name: "SWIVEL TV LIFT SYSTEM", slug: "swivel-lift" }
-            ]
-        }
-    ];
-
-    const router = useRouter();
-
     // Fetch categories with products from backend
     useEffect(() => {
         const fetchCategories = async () => {
@@ -64,19 +33,17 @@ export default function Navbar() {
                 if (!res.ok) throw new Error('API request failed');
 
                 const data = await res.json();
-                if (data.categories && data.categories.length > 0) {
-                    setCategories(data.categories);
-                    if (!activeCategory) {
-                        setActiveCategory(data.categories[0].category);
-                    }
-                } else {
-                    setCategories(staticData);
-                    setActiveCategory(staticData[0].category);
+
+                // Ensure we handle both {categories: [...]} and सीधा array responses
+                const finalCategories = data.categories || (Array.isArray(data) ? data : []);
+
+                if (finalCategories.length > 0) {
+                    setCategories(finalCategories);
+                    setActiveCategory(finalCategories[0].category || finalCategories[0].name);
                 }
             } catch (error) {
-                console.error('Failed to fetch categories, using static data fallback:', error);
-                setCategories(staticData);
-                setActiveCategory(staticData[0].category);
+                console.error('Failed to fetch categories:', error);
+                setCategories([]);
             }
         };
         fetchCategories();
