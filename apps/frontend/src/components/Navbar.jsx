@@ -420,7 +420,7 @@ export default function Navbar() {
     return (
         <>
             <nav className={cn(
-                "fixed left-0 right-0 mx-auto z-[7000] rounded-full border bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[94%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-300",
+                "fixed left-0 right-0 mx-auto z-[7000] rounded-full border bg-white/95 backdrop-blur-xl shadow-2xl border-zinc-200 w-[94%] md:w-[95%] max-w-5xl h-[72px] md:h-[80px] flex items-center transition-all duration-300 relative",
                 scrolled ? "top-2" : "top-5"
             )}>
                 <div className="flex items-center justify-between w-full h-full px-6">
@@ -451,7 +451,7 @@ export default function Navbar() {
                                             src="/assets/productpagelogo-removebg-preview.png"
                                             alt="RVTS Logo"
                                             fill
-                                            className="object-contain scale-[2] md:scale-[2.5]"
+                                            className="object-contain scale-[1.1] md:scale-[1.2]"
                                             priority
                                         />
                                     </div>
