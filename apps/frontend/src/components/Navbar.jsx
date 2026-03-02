@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { Sun, Moon, ChevronDown } from 'lucide-react';
+import { Sun, Moon, ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -18,7 +18,37 @@ export default function Navbar() {
     const [isAboutHovered, setIsAboutHovered] = useState(false);
     const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [activeCategory, setActiveCategory] = useState(null);
     const pathname = usePathname();
+
+    // Sample static data for demo/fallback purposes
+    const staticData = [
+        {
+            category: "PROJECTION SCREENS",
+            products: [
+                { name: "MANUAL INSTA LOCK SCREENS", slug: "manual-insta-lock" },
+                { name: "FIXED FRAME SCREENS", slug: "fixed-frame" },
+                { name: "Motorized Projector Screen", slug: "motorized-projector" },
+                { name: "FAST FOLD SCREEN", slug: "fast-fold" },
+                { name: "Premium Z Series Home Cinema Fixed Frame Screens", slug: "premium-z" }
+            ]
+        },
+        {
+            category: "TV MOUNTS",
+            products: [
+                { name: "FULL MOTION CANTILEVER SWIVEL TILT WALL MOUNT", slug: "full-motion-mount" },
+                { name: "HEAVY DUTY FIXED WALL MOUNT", slug: "fixed-mount" },
+                { name: "CEILING MOUNT FOR LED TV", slug: "ceiling-mount" }
+            ]
+        },
+        {
+            category: "MOTORIZED TV LIFT",
+            products: [
+                { name: "POP UP TV LIFT", slug: "pop-up-lift" },
+                { name: "SWIVEL TV LIFT SYSTEM", slug: "swivel-lift" }
+            ]
+        }
+    ];
 
     const router = useRouter();
 
@@ -36,13 +66,17 @@ export default function Navbar() {
                 const data = await res.json();
                 if (data.categories && data.categories.length > 0) {
                     setCategories(data.categories);
+                    if (!activeCategory) {
+                        setActiveCategory(data.categories[0].category);
+                    }
                 } else {
-                    // If API returns empty, try static
-                    throw new Error('No categories found via API');
+                    setCategories(staticData);
+                    setActiveCategory(staticData[0].category);
                 }
             } catch (error) {
-                console.error('Failed to fetch categories:', error);
-                setCategories([]);
+                console.error('Failed to fetch categories, using static data fallback:', error);
+                setCategories(staticData);
+                setActiveCategory(staticData[0].category);
             }
         };
         fetchCategories();
@@ -159,6 +193,15 @@ export default function Navbar() {
     const leftNavLinks = navLinks.slice(0, 3); // Home, About, Products
     const rightNavLinks = navLinks.slice(3);   // Services, Blog, Contact
 
+    const truncateName = (name, maxWords = 5) => {
+        if (!name) return "";
+        const words = name.split(' ');
+        if (words.length > maxWords) {
+            return words.slice(0, maxWords).join(' ') + '...';
+        }
+        return name;
+    };
+
     // Check if we're on a product page or product detail page
     const isProductPage = pathname === '/products' || pathname?.startsWith('/products/');
 
@@ -193,59 +236,100 @@ export default function Navbar() {
                     <AnimatePresence>
                         {isProductsHovered && (
                             <div
-                                className="fixed left-0 right-0 top-[70px] md:top-[85px] pt-4 flex justify-center z-[8000] pointer-events-none"
+                                className="fixed left-0 right-0 top-[70px] md:top-[85px] pt-2 flex justify-center z-[8000] pointer-events-none"
                                 onMouseEnter={() => setIsProductsHovered(true)}
                                 onMouseLeave={() => setIsProductsHovered(false)}
                             >
                                 <motion.div
-                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
                                     transition={{ duration: 0.2 }}
-                                    className="w-[800px] h-fit max-h-[calc(100vh-120px)] bg-white rounded-2xl shadow-2xl border border-zinc-100 overflow-y-auto pointer-events-auto scrollbar-hide"
+                                    className="w-[750px] bg-white rounded-xl shadow-2xl border border-zinc-200 overflow-hidden pointer-events-auto"
                                 >
-                                    <div className="p-8">
-                                        <div className="grid grid-cols-3 gap-8">
-                                            {categories.map((catObj, index) => (
-                                                <div key={index} className="flex flex-col gap-4">
-                                                    <Link
-                                                        href={`/products?category=${encodeURIComponent(catObj.category)}`}
-                                                        className="text-zinc-900 font-bold text-sm hover:text-[#ff3333] transition-colors uppercase tracking-wider"
-                                                    >
-                                                        {catObj.category}
-                                                    </Link>
-                                                    <div className="flex flex-col gap-2.5">
-                                                        {catObj.products.map((product, pIndex) => (
-                                                            <Link
-                                                                key={pIndex}
-                                                                href={`/products/${product.slug}`}
-                                                                className="group flex items-center gap-3 text-sm text-zinc-500 hover:text-[#ff3333] transition-colors"
-                                                            >
-                                                                <span className="w-1 h-1 rounded-full bg-zinc-300 group-hover:bg-[#ff3333] transition-colors" />
-                                                                {product.name}
-                                                            </Link>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className="mt-8 pt-6 border-t border-zinc-100 flex justify-between items-center">
-                                            <p className="text-xs text-zinc-400 font-medium uppercase tracking-widest">
-                                                Explore our full range of professional solutions
-                                            </p>
-                                            <Link
-                                                href="/products"
-                                                className="group flex items-center gap-2 text-xs font-bold text-zinc-900 hover:text-[#ff3333] transition-all uppercase tracking-widest"
-                                            >
-                                                View All Collection
-                                                <motion.span
-                                                    animate={{ x: [0, 5, 0] }}
-                                                    transition={{ repeat: Infinity, duration: 1.5 }}
+                                    <div className="flex h-[380px]">
+                                        {/* Left Side: Categories */}
+                                        <div className="w-[300px] bg-zinc-50 border-r border-zinc-200 overflow-y-auto scrollbar-hide">
+                                            <div className="flex flex-col">
+                                                <Link
+                                                    href="/products"
+                                                    className="px-6 py-4 border-b border-zinc-200 font-bold text-sm text-zinc-900 hover:bg-white transition-colors"
+                                                    onClick={() => setIsProductsHovered(false)}
                                                 >
-                                                    →
-                                                </motion.span>
-                                            </Link>
+                                                    All Products
+                                                </Link>
+                                                {categories.map((catObj, index) => (
+                                                    <div
+                                                        key={index}
+                                                        onMouseEnter={() => setActiveCategory(catObj.category)}
+                                                        className={cn(
+                                                            "px-6 py-4 flex items-center justify-between cursor-pointer transition-all duration-200 group border-b border-zinc-100",
+                                                            activeCategory === catObj.category
+                                                                ? "bg-white text-[#ff3333] shadow-inner"
+                                                                : "text-zinc-600 hover:bg-white hover:text-[#ff3333]"
+                                                        )}
+                                                    >
+                                                        <span className="text-[13px] font-bold uppercase tracking-wider">
+                                                            {catObj.category}
+                                                        </span>
+                                                        <ChevronRight className={cn(
+                                                            "w-4 h-4 transition-transform duration-300",
+                                                            activeCategory === catObj.category ? "translate-x-1 opacity-100" : "opacity-0 group-hover:opacity-100"
+                                                        )} />
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
+
+                                        {/* Right Side: Products */}
+                                        <div className="flex-1 bg-white overflow-y-auto scrollbar-hide p-6">
+                                            <div className="flex flex-col gap-0">
+                                                {activeCategory && categories.find(c => c.category === activeCategory)?.products.map((product, pIndex) => (
+                                                    <Link
+                                                        key={pIndex}
+                                                        href={`/products/${product.slug}`}
+                                                        className="group flex items-center justify-between p-3 rounded-lg hover:bg-zinc-50 transition-all duration-200 border-b border-zinc-50 last:border-0"
+                                                        onClick={() => setIsProductsHovered(false)}
+                                                    >
+                                                        <div className="flex flex-col gap-1">
+                                                            <span className="text-[13px] font-bold text-zinc-900 group-hover:text-[#ff3333] transition-colors leading-tight uppercase">
+                                                                {truncateName(product.name)}
+                                                            </span>
+                                                        </div>
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-zinc-200 group-hover:bg-[#ff3333] transition-colors" />
+                                                    </Link>
+                                                ))}
+
+                                                {(!activeCategory || !categories.find(c => c.category === activeCategory)?.products.length) && (
+                                                    <div className="h-full flex flex-col items-center justify-center text-zinc-400 gap-4 mt-20">
+                                                        <div className="w-16 h-16 rounded-full bg-zinc-50 flex items-center justify-center">
+                                                            <div className="w-8 h-8 rounded-full border-2 border-zinc-200 border-t-zinc-400 animate-spin" />
+                                                        </div>
+                                                        <p className="text-sm font-medium uppercase tracking-widest">Loading solutions...</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Bottom Footer */}
+                                    <div className="px-8 py-4 bg-zinc-50 border-t border-zinc-200 flex justify-between items-center bg-gradient-to-r from-zinc-50 to-white">
+                                        <p className="text-[10px] text-zinc-400 font-bold uppercase tracking-[0.2em]">
+                                            Professional AV & IT Solutions Provider
+                                        </p>
+                                        <Link
+                                            href="/products"
+                                            className="group flex items-center gap-2 text-[10px] font-black text-zinc-900 hover:text-[#ff3333] transition-all uppercase tracking-[0.2em]"
+                                            onClick={() => setIsProductsHovered(false)}
+                                        >
+                                            View Full Catalog
+                                            <motion.span
+                                                animate={{ x: [0, 5, 0] }}
+                                                transition={{ repeat: Infinity, duration: 1.5 }}
+                                            >
+                                                →
+                                            </motion.span>
+                                        </Link>
                                     </div>
                                 </motion.div>
                             </div>
@@ -362,12 +446,12 @@ export default function Navbar() {
                             {/* Center Logo */}
                             <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center">
                                 <Link href="/" className="group flex items-center shrink-0 h-full">
-                                    <div className="relative w-[120px] h-[40px] md:w-[130px] md:h-[46px] flex items-center">
+                                    <div className="relative w-[220px] h-[60px] md:w-[280px] md:h-[75px] flex items-center justify-center">
                                         <Image
-                                            src="/assets/rvts-logo.png"
+                                            src="/assets/productpagelogo-removebg-preview.png"
                                             alt="RVTS Logo"
                                             fill
-                                            className="object-contain p-1"
+                                            className="object-contain scale-[2] md:scale-[2.5]"
                                             priority
                                         />
                                     </div>
