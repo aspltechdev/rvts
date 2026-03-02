@@ -451,7 +451,7 @@ export default function Navbar() {
                                             src="/assets/productpagelogo-removebg-preview.png"
                                             alt="RVTS Logo"
                                             fill
-                                            className="object-contain scale-[1.1] md:scale-[1.2]"
+                                            className="object-contain scale-[1.5] md:scale-[2.0]"
                                             priority
                                         />
                                     </div>
