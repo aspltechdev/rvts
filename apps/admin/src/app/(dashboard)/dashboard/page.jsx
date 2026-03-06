@@ -127,11 +127,11 @@ export default function Dashboard() {
                                 <th className="p-6">Product</th>
                                 <th className="p-6">
                                     <div className="flex items-center gap-3">
-                                        <span className="text-gray-400 dark:text-zinc-600 font-bold">Filter:</span>
+                                        <span className="text-gray-900 dark:text-white font-black text-xs uppercase tracking-widest">Category</span>
                                         <select
                                             value={selectedCategory}
                                             onChange={(e) => handleCategoryChange(e.target.value)}
-                                            className="bg-white dark:bg-zinc-800 border-2 border-gray-200 dark:border-zinc-700 text-sm font-bold focus:ring-2 focus:ring-brand-red cursor-pointer text-gray-900 dark:text-white px-4 py-2 rounded-xl transition-all hover:border-brand-red outline-none shadow-sm min-w-[180px]"
+                                            className="bg-white dark:bg-zinc-800 border-2 border-gray-200 dark:border-zinc-700 text-sm font-bold focus:ring-2 focus:ring-brand-red cursor-pointer text-brand-red px-4 py-2 rounded-xl transition-all hover:border-brand-red outline-none shadow-sm min-w-[180px]"
                                         >
                                             {categories.map(cat => (
                                                 <option key={cat} value={cat}>{cat}</option>
@@ -139,8 +139,8 @@ export default function Dashboard() {
                                         </select>
                                     </div>
                                 </th>
-                                <th className="p-6 text-sm font-black uppercase tracking-widest text-gray-400 dark:text-zinc-600">Status</th>
-                                <th className="p-6 text-right text-sm font-black uppercase tracking-widest text-gray-400 dark:text-zinc-600">Actions</th>
+                                <th className="p-6 text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white">Status</th>
+                                <th className="p-6 text-right text-sm font-black uppercase tracking-widest text-gray-900 dark:text-white">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
@@ -215,9 +215,8 @@ export default function Dashboard() {
                                                         return <Image src={src} width={48} height={48} className="w-full h-full object-cover" alt={p.name} unoptimized />;
                                                     })()}
                                                 </div>
-                                                <div>
-                                                    <div className="text-gray-900 dark:text-white font-bold text-sm group-hover:text-brand-red transition-colors max-w-[300px] truncate" title={p.name}>{p.name}</div>
-                                                    <div className="text-[10px] text-gray-500 dark:text-zinc-600 mt-0.5 tracking-tight italic">/{p.slug}</div>
+                                                <div className="text-gray-900 dark:text-white font-bold text-base group-hover:text-brand-red transition-colors max-w-[450px] truncate" title={p.name}>
+                                                    {p.name}
                                                 </div>
                                             </div>
                                         </td>
