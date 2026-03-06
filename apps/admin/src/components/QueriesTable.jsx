@@ -1,19 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Mail, Download, FileText, Search, Download as DownloadIcon, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 export default function QueriesTable({ queries }) {
-    const [searchTerm, setSearchTerm] = useState('');
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+    const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
     const [filterType, setFilterType] = useState('all'); // 'all', 'contact', 'download'
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
+    // Sync search term with URL parameter
+    useEffect(() => {
+        const q = searchParams.get('q');
+        if (q !== null) {
+            setSearchTerm(q);
+        }
+    }, [searchParams]);
+
+    const handleSearch = (val) => {
+        setSearchTerm(val);
+        const params = new URLSearchParams(searchParams);
+        if (val) params.set('q', val);
+        else params.delete('q');
+
+        // Debounce the URL update
+        if (window.searchTimeout) clearTimeout(window.searchTimeout);
+        window.searchTimeout = setTimeout(() => {
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        }, 300);
+    };
+
     // Reset to first page when filters change
-    React.useEffect(() => {
+    useEffect(() => {
         setCurrentPage(1);
     }, [searchTerm, filterType, startDate, endDate]);
 
@@ -103,7 +128,7 @@ export default function QueriesTable({ queries }) {
                             type="text"
                             placeholder="Search..."
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={(e) => handleSearch(e.target.value)}
                             className="w-full pl-9 pr-4 py-2 bg-gray-50 dark:bg-zinc-800 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-lg text-sm outline-none transition-all placeholder:text-gray-400 dark:placeholder:text-zinc-500 text-gray-900 dark:text-white"
                         />
                     </div>

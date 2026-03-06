@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import { Edit2, Trash2, Plus, Package, CheckCircle, FileText, Eye } from 'lucide-react';
 
 export default function Dashboard() {
+    const searchParams = useSearchParams();
+    const query = searchParams.get('q')?.toLowerCase() || '';
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedCategory, setSelectedCategory] = useState('All');
 
     const fetchProducts = () => {
         setLoading(true);
@@ -33,7 +37,19 @@ export default function Dashboard() {
         }
     };
 
-    // Calculate Stats
+    // Extract unique categories
+    const categories = ['All', ...new Set(products.map(p => p.category).filter(Boolean).sort())];
+
+    // Filter products based on search query AND category
+    const filteredProducts = products.filter(p => {
+        const matchesQuery = p.name?.toLowerCase().includes(query) ||
+            p.slug?.toLowerCase().includes(query) ||
+            p.category?.toLowerCase().includes(query);
+        const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+        return matchesQuery && matchesCategory;
+    });
+
+    // Calculate Stats (Based on ALL products, not filtered)
     const stats = {
         total: products.length,
         published: products.filter(p => p.published).length,
@@ -91,9 +107,23 @@ export default function Dashboard() {
             <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-gray-50 dark:bg-black/20 text-gray-500 dark:text-zinc-500 uppercase text-xs font-bold tracking-wider">
+                        <thead className="bg-gray-50 dark:bg-black/20 text-gray-500 dark:text-zinc-500 uppercase text-[10px] font-black tracking-widest border-b border-gray-100 dark:border-zinc-800">
                             <tr>
                                 <th className="p-6">Product</th>
+                                <th className="p-6">
+                                    <div className="flex items-center gap-2">
+                                        <span>Category</span>
+                                        <select
+                                            value={selectedCategory}
+                                            onChange={(e) => setSelectedCategory(e.target.value)}
+                                            className="bg-transparent border-none text-[10px] font-black focus:ring-0 cursor-pointer text-brand-red p-0"
+                                        >
+                                            {categories.map(cat => (
+                                                <option key={cat} value={cat}>{cat}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </th>
                                 <th className="p-6">Status</th>
                                 <th className="p-6">Created At</th>
                                 <th className="p-6 text-right">Actions</th>
@@ -101,21 +131,23 @@ export default function Dashboard() {
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
                             {loading ? (
-                                <tr><td colSpan={4} className="p-12 text-center text-gray-500 dark:text-zinc-500">Loading products...</td></tr>
-                            ) : products.length === 0 ? (
+                                <tr><td colSpan={5} className="p-12 text-center text-gray-500 dark:text-zinc-500">Loading products...</td></tr>
+                            ) : filteredProducts.length === 0 ? (
                                 <tr>
-                                    <td colSpan={4} className="p-16 text-center">
+                                    <td colSpan={5} className="p-16 text-center">
                                         <div className="flex flex-col items-center justify-center gap-3">
                                             <div className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-full flex items-center justify-center text-gray-400 dark:text-zinc-500 mb-2">
                                                 <Package size={24} />
                                             </div>
                                             <p className="text-gray-900 dark:text-white font-medium">No products found</p>
-                                            <p className="text-gray-500 dark:text-zinc-500 text-sm">Get started by creating your first product.</p>
+                                            <p className="text-gray-500 dark:text-zinc-500 text-sm">
+                                                {query ? `Try a different search term for "${query}"` : 'Get started by creating your first product.'}
+                                            </p>
                                         </div>
                                     </td>
                                 </tr>
                             ) : (
-                                products.map((p) => (
+                                filteredProducts.map((p) => (
                                     <tr key={p.id} className="group hover:bg-gray-50 dark:hover:bg-zinc-800/30 transition-colors">
                                         <td className="p-6">
                                             <div className="flex items-center gap-4">
@@ -127,19 +159,32 @@ export default function Dashboard() {
                                                                 <div className="w-4 h-4 bg-gray-300 dark:bg-zinc-700 rounded-full" />
                                                             </div>
                                                         );
+
                                                         // Ensure absolute URL for admin panel loads
-                                                        const src = img.startsWith('http') ? img : `http://researchvisions.com${img.startsWith('/') ? '' : '/'}${img}`;
+                                                        // Fallback to researchvisions.com if relative
+                                                        let src = img;
+                                                        if (!img.startsWith('http')) {
+                                                            const baseUrl = 'https://researchvisions.com';
+                                                            src = `${baseUrl}${img.startsWith('/') ? '' : '/'}${img}`;
+                                                        }
+
                                                         return <Image src={src} width={48} height={48} className="w-full h-full object-cover" alt={p.name} unoptimized />;
                                                     })()}
                                                 </div>
                                                 <div>
-                                                    <div className="text-gray-900 dark:text-white font-bold group-hover:text-brand-red transition-colors">{p.name}</div>
-                                                    <div className="text-gray-500 dark:text-zinc-600 text-xs mt-0.5">/{p.slug}</div>
+                                                    <div className="text-gray-900 dark:text-white font-bold text-sm group-hover:text-brand-red transition-colors max-w-[300px] truncate" title={p.name}>{p.name}</div>
+                                                    <div className="text-[10px] text-gray-500 dark:text-zinc-600 mt-0.5 tracking-tight italic">/{p.slug}</div>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className="p-6">
-                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border ${p.published
+                                            <div className="flex flex-col gap-0.5">
+                                                <span className="text-gray-900 dark:text-white font-black text-xs">{p.category || 'Uncategorized'}</span>
+                                                <span className="text-[9px] text-gray-400 dark:text-zinc-600 uppercase font-black tracking-widest">Type</span>
+                                            </div>
+                                        </td>
+                                        <td className="p-6">
+                                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${p.published
                                                 ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/50'
                                                 : 'bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-900/50'}`}>
                                                 <span className={`w-1.5 h-1.5 rounded-full ${p.published ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
@@ -153,7 +198,7 @@ export default function Dashboard() {
                                             <div className="flex items-center justify-end gap-2">
 
                                                 <a
-                                                    href={`http://researchvisions.com/products/${p.slug}`}
+                                                    href={`https://researchvisions.com/products/${p.slug}`}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="p-2 text-gray-400 dark:text-zinc-500 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 rounded-lg transition-all"

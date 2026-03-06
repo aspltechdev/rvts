@@ -1,6 +1,6 @@
 'use client';
 
-import { Send } from 'lucide-react';
+import { Send, ChevronDown } from 'lucide-react';
 import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { z } from 'zod';
@@ -146,16 +146,18 @@ function ContactContent() {
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold dark:text-zinc-400 text-zinc-500 uppercase tracking-wide">Subject</label>
-                                <select
-                                    name="subject"
-                                    defaultValue={defaultSubject}
-                                    className="w-full dark:bg-black/50 bg-gray-50 border border-gray-200 dark:border-zinc-700 p-3 rounded-xl dark:text-zinc-300 text-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all appearance-none cursor-pointer"
-                                >
-                                    <option value="General Inquiry">General Inquiry</option>
-                                    <option value="Product Quote">Product Quote</option>
-                                    <option value="Technical Support">Technical Support</option>
-
-                                </select>
+                                <div className="relative">
+                                    <select
+                                        name="subject"
+                                        defaultValue={defaultSubject}
+                                        className="w-full dark:bg-black/50 bg-gray-50 border border-gray-200 dark:border-zinc-700 p-3 rounded-xl dark:text-zinc-300 text-zinc-700 focus:border-brand-red focus:ring-1 focus:ring-brand-red focus:outline-none transition-all appearance-none cursor-pointer"
+                                    >
+                                        <option value="General Inquiry">General Inquiry</option>
+                                        <option value="Product Quote">Product Quote</option>
+                                        <option value="Technical Support">Technical Support</option>
+                                    </select>
+                                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none" />
+                                </div>
                             </div>
 
                             <div className="space-y-2">

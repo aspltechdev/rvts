@@ -63,7 +63,7 @@ export default function About() {
                         transition={{ duration: 0.8, delay: 0.2 }}
                         className="text-[#ff3333] text-sm font-bold uppercase tracking-[0.2em] mt-2"
                     >
-                        Innovation & Excellence Since 2004
+                        Innovation & Excellence Since 2025
                     </motion.p>
                 </div>
 

@@ -12,56 +12,64 @@ const products = [
         title: "Display Mounts",
         description: "Secure and flexible mounting solutions for all display types.",
         image: "images/category/display mount.jpeg",
-        slug: "display-mounts"
+        slug: "display-mounts",
+        category: "Mounting Solutions"
     },
     {
         id: 2,
         title: "Sound Bar Mounts",
         description: "Seamless integration for superior audio experiences.",
         image: "images/category/Professional sound bar mounts.png",
-        slug: "professional-sound-bar-mounts"
+        slug: "professional-sound-bar-mounts",
+        category: "PTX / SOUNDBARS / TROLLEYS"
     },
     {
         id: 3,
         title: "PTZ Camera Mounts",
         description: "Precision mounting for professional camera systems.",
         image: "images/category/PTZ-Camera-Mounts.png",
-        slug: "ptz-camera-mounts"
+        slug: "ptz-camera-mounts",
+        category: "PTX / SOUNDBARS / TROLLEYS"
     },
     {
         id: 4,
         title: "Motorized Mount Solutions",
         description: "Automated positioning for dynamic viewing environments.",
         image: "images/category/Motorized Mount Solutions.jpeg",
-        slug: "motorized-mount-solutions"
+        slug: "motorized-mount-solutions",
+        category: "Mounting Solutions"
     },
     {
         id: 5,
         title: "Mobile Trolley Solutions",
         description: "Portable display stands for versatile collaboration.",
         image: "images/category/Mobile Trolley Solutions.jpeg",
-        slug: "mobile-trolley-solutions"
+        slug: "mobile-trolley-solutions",
+        category: "PTX / SOUNDBARS / TROLLEYS"
     },
     {
         id: 6,
         title: "Digital Kiosk",
         description: "Interactive self-service and information stations.",
         image: "images/category/Digital Kiosk.png",
-        slug: "digital-kiosk"
+        slug: "digital-kiosk",
+        category: "Touch Screen Kiosks"
     },
     {
         id: 7,
         title: "Digital Podium",
         description: "Smart lecterns for modern presentations and lectures.",
         image: "images/category/Digital-Podium.png",
-        slug: "digital-podium"
+        slug: "digital-podium",
+        category: "Displays & Video Walls"
     },
     {
         id: 8,
         title: "Audio Visual Accessories",
         description: "Essential components for complete AV setups.",
         image: "images/category/Audio Visual Accessorie.png",
-        slug: "audio-visual-accessories"
+        slug: "audio-visual-accessories",
+        category: "Cables & Accessories"
     }
 ];
 
@@ -101,9 +109,9 @@ export default function ProductShowcase() {
         return diff === 0 || diff === 1 || diff === products.length - 1;
     };
 
-    const handleCardClick = (title) => {
-        // Redirect to products page with "All Categories" active as requested
-        router.push(`/products?category=All%20Categories`);
+    const handleCardClick = (category) => {
+        // Redirect to products page with the specific category filter
+        router.push(`/products?category=${encodeURIComponent(category || 'All Categories')}`);
     };
 
     return (
@@ -193,7 +201,7 @@ export default function ProductShowcase() {
                             return (
                                 <motion.div
                                     key={product.id}
-                                    onClick={() => handleCardClick(product.title)}
+                                    onClick={() => handleCardClick(product.category)}
                                     className={`absolute rounded-[24px] overflow-hidden dark:bg-zinc-900 bg-white cursor-pointer
                                         ${isCenter ? 'w-[280px] h-[380px] md:w-[320px] md:h-[400px]' : 'w-[220px] h-[280px] md:w-[260px] md:h-[320px]'} // Scaled down
                                     `}
@@ -245,12 +253,12 @@ export default function ProductShowcase() {
                                             {isCenter && (
                                                 <div className="flex flex-col items-center gap-3 mt-4 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 opacity-0 group-hover:opacity-100">
                                                     <a
-                                                        href={`/products?category=All%20Categories`}
+                                                        href={`/products?category=${encodeURIComponent(product.category)}`}
                                                         target="_self"
                                                         rel="noopener noreferrer"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
-                                                            handleCardClick(product.title);
+                                                            handleCardClick(product.category);
                                                         }}
                                                         className="inline-flex items-center gap-2 px-4 py-2 bg-[#ff3333] hover:bg-[#ff3333]/90 text-white text-xs font-bold uppercase tracking-wider rounded-full transition-colors"
                                                     >

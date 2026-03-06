@@ -33,22 +33,24 @@ const ProductsListContent = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+    const [dbCategories, setDbCategories] = useState([]);
 
     // Pagination State
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
 
-    // Categories
-    const categories = [
-        { name: "Displays & Video Walls", icon: <Monitor size={18} /> },
-        { name: "Touch Screen Kiosks", icon: <LayoutGrid size={18} /> },
-        { name: "PTZ / Soundbars / Trolleys", icon: <Speaker size={18} /> },
-        { name: "Video Systems", icon: <Cpu size={18} /> },
-        { name: "Control Systems", icon: <Sliders size={18} /> },
-        { name: "Mounting Solutions", icon: <Settings size={18} /> },
-        { name: "Cables & Accessories", icon: <Wifi size={18} /> },
-        { name: "Interactive Installation / Digital Experience Zone", icon: <LayoutGrid size={18} /> }
-    ];
+    // Default icon mapping
+    const getIcon = (name) => {
+        const normalized = name.toLowerCase();
+        if (normalized.includes('monitor') || normalized.includes('display')) return <Monitor size={18} />;
+        if (normalized.includes('kiosk') || normalized.includes('interactive')) return <LayoutGrid size={18} />;
+        if (normalized.includes('ptz') || normalized.includes('ptx') || normalized.includes('soundbar') || normalized.includes('speaker')) return <Speaker size={18} />;
+        if (normalized.includes('video')) return <Cpu size={18} />;
+        if (normalized.includes('control')) return <Sliders size={18} />;
+        if (normalized.includes('mount')) return <Settings size={18} />;
+        if (normalized.includes('cable') || normalized.includes('wifi')) return <Wifi size={18} />;
+        return <LayoutGrid size={18} />;
+    };
 
     // Sync state with URL params
     useEffect(() => {
@@ -58,29 +60,42 @@ const ProductsListContent = () => {
         }
     }, [searchParams]);
 
-    // Fetch Products
+    // Fetch Products and Categories
     useEffect(() => {
-        const fetchProducts = async () => {
+        const fetchData = async () => {
             try {
                 const apiUrl = API_BASE_URL;
-                const res = await fetch(`${apiUrl}/api/products`, {
+
+                // Fetch products
+                const prodRes = await fetch(`${apiUrl}/api/products`, {
                     cache: 'no-store',
                     next: { revalidate: 0 }
                 });
-                if (res.ok) {
-                    const apiProducts = await res.json();
+                if (prodRes.ok) {
+                    const apiProducts = await prodRes.json();
                     setProducts(apiProducts);
-                } else {
-                    setProducts([]);
+                }
+
+                // Fetch categories
+                const catRes = await fetch(`${apiUrl}/api/categories`, {
+                    cache: 'no-store',
+                    next: { revalidate: 0 }
+                });
+                if (catRes.ok) {
+                    const catData = await catRes.json();
+                    const finalCats = catData.categories || (Array.isArray(catData) ? catData : []);
+                    setDbCategories(finalCats.map(c => ({
+                        name: c.category || c.name,
+                        icon: getIcon(c.category || c.name)
+                    })));
                 }
             } catch (err) {
                 console.error("Fetch error:", err);
-                setProducts([]);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProducts();
+        fetchData();
     }, []);
 
     // Reset pagination when filters change
@@ -98,9 +113,17 @@ const ProductsListContent = () => {
         } else {
             const pCat = (p.category || "").toLowerCase().trim();
             const selCat = selectedCategory.toLowerCase().trim();
+
+            // Exact match or fuzzy match for categories with special chars
             matchesCategory = pCat === selCat ||
-                pCat.includes(selCat.split('&')[0].trim()) ||
-                selCat.includes(pCat.split('&')[0].trim());
+                pCat.includes(selCat) ||
+                selCat.includes(pCat);
+
+            // Handle common split cases like PTZ/SOUNDBARS
+            if (!matchesCategory && selCat.includes('/')) {
+                const parts = selCat.split('/').map(s => s.trim());
+                matchesCategory = parts.some(part => pCat.includes(part));
+            }
         }
 
         return nameMatch && matchesCategory;
@@ -208,7 +231,7 @@ const ProductsListContent = () => {
                                     {selectedCategory === 'All Categories' ? <ArrowRight size={16} /> : <span className="w-1 h-1 rounded-full bg-zinc-300" />}
                                 </button>
 
-                                {categories.map((cat, idx) => (
+                                {dbCategories.map((cat, idx) => (
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedCategory(cat.name)}
@@ -407,7 +430,7 @@ const ProductsListContent = () => {
                                         >
                                             All Collections
                                         </button>
-                                        {categories.map((cat, idx) => (
+                                        {dbCategories.map((cat, idx) => (
                                             <button
                                                 key={idx}
                                                 onClick={() => { setSelectedCategory(cat.name); setIsMobileMenuOpen(false); }}

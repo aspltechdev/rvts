@@ -310,7 +310,14 @@ export default function EditProductPage({ params }) {
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                             {images.map((url, i) => (
                                 <div key={i} className="relative aspect-square border-2 border-gray-100 dark:border-zinc-800 rounded-2xl overflow-hidden group">
-                                    <Image src={url} alt="Uploaded" fill className="object-cover" unoptimized />
+                                    {(() => {
+                                        let src = url;
+                                        if (url && !url.startsWith('http')) {
+                                            const baseUrl = 'https://researchvisions.com';
+                                            src = `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+                                        }
+                                        return <Image src={src} alt="Uploaded" fill className="object-cover" unoptimized />;
+                                    })()}
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                                         <button type="button" onClick={() => setImages(prev => prev.filter((_, idx) => idx !== i))} className="p-3 bg-white text-red-600 rounded-full hover:scale-110 transition-transform">
                                             <X size={20} />

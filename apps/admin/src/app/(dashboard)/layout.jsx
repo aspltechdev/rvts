@@ -1,6 +1,6 @@
 'use client';
 import { useSession, signOut } from "next-auth/react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,6 +20,41 @@ import {
 } from 'lucide-react';
 
 import { useTheme } from '@/components/ThemeContext';
+import { Suspense } from "react";
+
+function SearchBar() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
+    const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            const params = new URLSearchParams(searchParams);
+            if (searchQuery) {
+                params.set('q', searchQuery);
+            } else {
+                params.delete('q');
+            }
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+        }, 300);
+
+        return () => clearTimeout(timeout);
+    }, [searchQuery, pathname, router, searchParams]);
+
+    return (
+        <div className="relative w-full max-w-md hidden md:block group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-red transition-colors" size={20} />
+            <input
+                type="text"
+                placeholder="Search products, orders, or customers..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
+            />
+        </div>
+    );
+}
 
 export default function AdminLayout({ children }) {
     const { data: session, status } = useSession();
@@ -30,10 +65,10 @@ export default function AdminLayout({ children }) {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     useEffect(() => {
-        if (status === 'unauthenticated') {
+        if (status !== 'loading' && !session) {
             router.push('/login');
         }
-    }, [status, router]);
+    }, [session, status, router]);
 
     if (status === 'loading') return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-950 text-brand-red">
@@ -44,7 +79,11 @@ export default function AdminLayout({ children }) {
         </div>
     );
 
-    if (!session) return null;
+    if (!session) return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-zinc-950">
+            <div className="animate-pulse text-gray-500 font-bold uppercase tracking-widest text-xs">Redirecting to login...</div>
+        </div>
+    );
 
     const navItems = [
         { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -125,15 +164,11 @@ export default function AdminLayout({ children }) {
                             <Menu size={24} />
                         </button>
 
-                        <div className="relative w-full max-w-md hidden md:block group">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-red transition-colors" size={20} />
-                            <input
-                                type="text"
-                                placeholder="Search products, orders, or customers..."
-                                className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
-                            />
-                        </div>
+                        <Suspense fallback={<div className="w-full max-w-md h-10 bg-gray-100 dark:bg-zinc-800 animate-pulse rounded-xl hidden md:block" />}>
+                            <SearchBar />
+                        </Suspense>
                     </div>
+
 
                     {/* Right: Actions */}
                     <div className="flex items-center gap-3 sm:gap-6">
@@ -205,7 +240,9 @@ export default function AdminLayout({ children }) {
 
                 <main className="flex-1 p-4 md:p-8 overflow-y-auto w-screen md:w-auto">
                     <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {children}
+                        <Suspense fallback={<div className="p-8 text-center text-gray-500">Loading components...</div>}>
+                            {children}
+                        </Suspense>
                     </div>
                 </main>
             </div>
