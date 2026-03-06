@@ -107,16 +107,16 @@ export default function Dashboard() {
             <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-gray-50 dark:bg-black/20 text-gray-500 dark:text-zinc-500 uppercase text-[10px] font-black tracking-widest border-b border-gray-100 dark:border-zinc-800">
+                        <thead className="bg-gray-50/50 dark:bg-black/20 text-gray-800 dark:text-zinc-300 uppercase text-xs font-bold tracking-wider border-b border-gray-100 dark:border-zinc-800">
                             <tr>
                                 <th className="p-6">Product</th>
                                 <th className="p-6">
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-3">
                                         <span>Category</span>
                                         <select
                                             value={selectedCategory}
                                             onChange={(e) => setSelectedCategory(e.target.value)}
-                                            className="bg-transparent border-none text-[10px] font-black focus:ring-0 cursor-pointer text-brand-red p-0"
+                                            className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-[11px] font-bold focus:ring-1 focus:ring-brand-red cursor-pointer text-brand-red px-2 py-1 rounded-lg"
                                         >
                                             {categories.map(cat => (
                                                 <option key={cat} value={cat}>{cat}</option>
@@ -125,16 +125,15 @@ export default function Dashboard() {
                                     </div>
                                 </th>
                                 <th className="p-6">Status</th>
-                                <th className="p-6">Created At</th>
                                 <th className="p-6 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
                             {loading ? (
-                                <tr><td colSpan={5} className="p-12 text-center text-gray-500 dark:text-zinc-500">Loading products...</td></tr>
+                                <tr><td colSpan={4} className="p-12 text-center text-gray-500 dark:text-zinc-500">Loading products...</td></tr>
                             ) : filteredProducts.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="p-16 text-center">
+                                    <td colSpan={4} className="p-16 text-center">
                                         <div className="flex flex-col items-center justify-center gap-3">
                                             <div className="w-12 h-12 bg-gray-100 dark:bg-zinc-800 rounded-full flex items-center justify-center text-gray-400 dark:text-zinc-500 mb-2">
                                                 <Package size={24} />
@@ -190,9 +189,6 @@ export default function Dashboard() {
                                                 <span className={`w-1.5 h-1.5 rounded-full ${p.published ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
                                                 {p.published ? 'Published' : 'Draft'}
                                             </span>
-                                        </td>
-                                        <td className="p-6 text-gray-500 dark:text-zinc-400 text-sm font-medium">
-                                            {new Date(p.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                                         </td>
                                         <td className="p-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
