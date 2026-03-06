@@ -11,6 +11,8 @@ export default function Dashboard() {
     const router = useRouter();
     const pathname = usePathname();
     const query = searchParams.get('q')?.toLowerCase() || '';
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 10;
     const selectedCategory = searchParams.get('category') || 'All';
