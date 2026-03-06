@@ -13,7 +13,7 @@ const products = [
         description: "Secure and flexible mounting solutions for all display types.",
         image: "images/category/display mount.jpeg",
         slug: "display-mounts",
-        category: "Mounting Solutions"
+        category: "TV MOUNTS"
     },
     {
         id: 2,
@@ -21,7 +21,7 @@ const products = [
         description: "Seamless integration for superior audio experiences.",
         image: "images/category/Professional sound bar mounts.png",
         slug: "professional-sound-bar-mounts",
-        category: "PTX / SOUNDBARS / TROLLEYS"
+        category: "SPEAKER MOUNTS"
     },
     {
         id: 3,
@@ -29,7 +29,7 @@ const products = [
         description: "Precision mounting for professional camera systems.",
         image: "images/category/PTZ-Camera-Mounts.png",
         slug: "ptz-camera-mounts",
-        category: "PTX / SOUNDBARS / TROLLEYS"
+        category: "MOTORIZED PROJECTOR LIFT"
     },
     {
         id: 4,
@@ -37,7 +37,7 @@ const products = [
         description: "Automated positioning for dynamic viewing environments.",
         image: "images/category/Motorized Mount Solutions.jpeg",
         slug: "motorized-mount-solutions",
-        category: "Mounting Solutions"
+        category: "MOTORIZED TV LIFT"
     },
     {
         id: 5,
@@ -45,7 +45,7 @@ const products = [
         description: "Portable display stands for versatile collaboration.",
         image: "images/category/Mobile Trolley Solutions.jpeg",
         slug: "mobile-trolley-solutions",
-        category: "PTX / SOUNDBARS / TROLLEYS"
+        category: "TV FLOOR STAND"
     },
     {
         id: 6,
@@ -53,7 +53,7 @@ const products = [
         description: "Interactive self-service and information stations.",
         image: "images/category/Digital Kiosk.png",
         slug: "digital-kiosk",
-        category: "Touch Screen Kiosks"
+        category: "CONFERENCE TABLE BOX"
     },
     {
         id: 7,
@@ -61,7 +61,7 @@ const products = [
         description: "Smart lecterns for modern presentations and lectures.",
         image: "images/category/Digital-Podium.png",
         slug: "digital-podium",
-        category: "Displays & Video Walls"
+        category: "PROJECTION SCREENS"
     },
     {
         id: 8,
@@ -69,7 +69,7 @@ const products = [
         description: "Essential components for complete AV setups.",
         image: "images/category/Audio Visual Accessorie.png",
         slug: "audio-visual-accessories",
-        category: "Cables & Accessories"
+        category: "MONITOR MOUNTS"
     }
 ];
 

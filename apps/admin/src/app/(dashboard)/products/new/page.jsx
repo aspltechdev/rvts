@@ -181,14 +181,17 @@ export default function AddProductPage() {
                             <div className="relative group/select">
                                 <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
                                     <option value="">Select Category</option>
-                                    <option value="Displays & Video Walls">Displays & Video Walls</option>
-                                    <option value="Touch Screen Kiosks">Touch Screen Kiosks</option>
-                                    <option value="Video Systems">Video Systems</option>
-                                    <option value="Control Systems">Control Systems</option>
-                                    <option value="Mounting Solutions">Mounting Solutions</option>
-                                    <option value="PTX / Soundbars / Trolleys">PTX / Soundbars / Trolleys</option>
-                                    <option value="Cables & Accessories">Cables & Accessories</option>
-                                    <option value="Interactive Installation / Digital Experience Zone">Interactive Installation / Digital Experience Zone</option>
+                                    <option value="PROJECTION SCREENS">PROJECTION SCREENS</option>
+                                    <option value="MOTORIZED TV LIFT">MOTORIZED TV LIFT</option>
+                                    <option value="MOTORIZED PROJECTOR LIFT">MOTORIZED PROJECTOR LIFT</option>
+                                    <option value="MOTORIZED BAR LIFT">MOTORIZED BAR LIFT</option>
+                                    <option value="MONITOR LIFT">MONITOR LIFT</option>
+                                    <option value="TV MOUNTS">TV MOUNTS</option>
+                                    <option value="SPEAKER MOUNTS">SPEAKER MOUNTS</option>
+                                    <option value="MONITOR MOUNTS">MONITOR MOUNTS</option>
+                                    <option value="TV FLOOR STAND">TV FLOOR STAND</option>
+                                    <option value="CONFERENCE TABLE BOX">CONFERENCE TABLE BOX</option>
+                                    <option value="PROJECTOR MOUNTS">PROJECTOR MOUNTS</option>
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
                                     <ChevronDown size={20} />

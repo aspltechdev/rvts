@@ -42,13 +42,13 @@ const ProductsListContent = () => {
     // Default icon mapping
     const getIcon = (name) => {
         const normalized = name.toLowerCase();
-        if (normalized.includes('monitor') || normalized.includes('display')) return <Monitor size={18} />;
-        if (normalized.includes('kiosk') || normalized.includes('interactive')) return <LayoutGrid size={18} />;
-        if (normalized.includes('ptz') || normalized.includes('ptx') || normalized.includes('soundbar') || normalized.includes('speaker')) return <Speaker size={18} />;
-        if (normalized.includes('video')) return <Cpu size={18} />;
-        if (normalized.includes('control')) return <Sliders size={18} />;
+        if (normalized.includes('screen') || normalized.includes('projection')) return <Monitor size={18} />;
+        if (normalized.includes('lift')) return <ArrowRight size={18} />; // Generic for now, but distinct
         if (normalized.includes('mount')) return <Settings size={18} />;
-        if (normalized.includes('cable') || normalized.includes('wifi')) return <Wifi size={18} />;
+        if (normalized.includes('stand')) return <LayoutGrid size={18} />;
+        if (normalized.includes('table') || normalized.includes('box')) return <LayoutGrid size={18} />;
+        if (normalized.includes('monitor')) return <Monitor size={18} />;
+        if (normalized.includes('speaker')) return <Speaker size={18} />;
         return <LayoutGrid size={18} />;
     };
 
