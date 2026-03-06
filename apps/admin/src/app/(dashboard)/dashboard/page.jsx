@@ -108,7 +108,7 @@ export default function Dashboard() {
 
             {/* Product Table */}
             <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl overflow-hidden shadow-sm">
-                <div className="overflow-x-auto -mx-4 md:mx-0">
+                <div className="overflow-x-auto">
                     <div className="inline-block min-w-full align-middle">
                         <table className="min-w-full divide-y divide-gray-100 dark:divide-zinc-800 text-left">
                             <thead className="bg-gray-50/50 dark:bg-black/20 text-gray-800 dark:text-zinc-300 uppercase text-[10px] md:text-xs font-bold tracking-wider border-b border-gray-100 dark:border-zinc-800">

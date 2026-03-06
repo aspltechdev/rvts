@@ -183,9 +183,8 @@ export default function QueriesTable({ queries }) {
                 </div>
             </div>
 
-            {/* Table */}
             <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="overflow-x-auto -mx-4 md:mx-0">
+                <div className="overflow-x-auto">
                     <div className="inline-block min-w-full align-middle">
                         <table className="min-w-full divide-y divide-gray-100 dark:divide-zinc-800 text-left text-sm">
                             <thead className="bg-gray-50 dark:bg-zinc-950 border-b border-gray-200 dark:border-zinc-800">
