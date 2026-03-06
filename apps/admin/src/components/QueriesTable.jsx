@@ -185,99 +185,90 @@ export default function QueriesTable({ queries }) {
 
             {/* Table */}
             <div className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm">
-                        <thead className="bg-gray-50 dark:bg-zinc-950 border-b border-gray-200 dark:border-zinc-800">
-                            <tr>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Date</th>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Type</th>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Name</th>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Email</th>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Phone</th>
-                                <th className="px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-xs whitespace-nowrap">Details</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
-                            {paginatedQueries.length === 0 ? (
+                <div className="overflow-x-auto -mx-4 md:mx-0">
+                    <div className="inline-block min-w-full align-middle">
+                        <table className="min-w-full divide-y divide-gray-100 dark:divide-zinc-800 text-left text-sm">
+                            <thead className="bg-gray-50 dark:bg-zinc-950 border-b border-gray-200 dark:border-zinc-800">
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-12 text-center text-gray-500 dark:text-zinc-500 italic">
-                                        No queries found matching your filters.
-                                    </td>
+                                    <th className="px-4 md:px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] md:text-xs whitespace-nowrap">Date</th>
+                                    <th className="px-4 md:px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] md:text-xs whitespace-nowrap hidden sm:table-cell">Type</th>
+                                    <th className="px-4 md:px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] md:text-xs whitespace-nowrap">Source</th>
+                                    <th className="px-4 md:px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] md:text-xs whitespace-nowrap hidden md:table-cell">Email</th>
+                                    <th className="px-4 md:px-6 py-3 font-bold text-gray-500 dark:text-zinc-400 uppercase tracking-wider text-[10px] md:text-xs whitespace-nowrap">Inquiry</th>
                                 </tr>
-                            ) : (
-                                paginatedQueries.map((query) => {
-                                    const type = getQueryType(query.subject);
-                                    return (
-                                        <tr key={query.id} className="hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                                            <td className="px-6 py-2.5 text-gray-500 dark:text-zinc-400 whitespace-nowrap align-middle">
-                                                <div>
-                                                    {new Date(query.createdAt).toLocaleDateString()}
-                                                </div>
-                                                <div className="text-xs text-gray-400">
-                                                    {new Date(query.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-2.5 align-middle">
-                                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${type === 'download'
-                                                    ? 'bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
-                                                    : 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                                                    }`}>
-                                                    {type === 'download' ? <Download size={10} /> : <Mail size={10} />}
-                                                    {type === 'download' ? 'Download' : 'Contact'}
-                                                </span>
-                                            </td>
-                                            <td className="px-6 py-2.5 align-middle">
-                                                <div className="font-bold text-gray-900 dark:text-white text-sm truncate max-w-[150px]" title={`${query.firstName} ${query.lastName}`}>
-                                                    {query.firstName} {query.lastName}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-2.5 align-middle">
-                                                <a href={`mailto:${query.email}`} className="text-gray-600 dark:text-zinc-300 hover:text-brand-red transition-colors truncate max-w-[150px] text-sm block" title={query.email}>{query.email}</a>
-                                            </td>
-                                            <td className="px-6 py-2.5 align-middle">
-                                                {query.phoneNumber ? (
-                                                    <span className="text-gray-600 dark:text-zinc-300 whitespace-nowrap text-sm">{query.phoneNumber}</span>
-                                                ) : <span className="text-gray-400 italic text-xs">N/A</span>}
-                                            </td>
-                                            <td className="px-6 py-2.5 align-middle">
-                                                <div className="flex items-center justify-between gap-4">
-                                                    {type === 'download' ? (
-                                                        <div className="flex items-center gap-2 text-sm text-gray-900 dark:text-white flex-1" title={query.message}>
-                                                            <FileText size={14} className="text-blue-500 shrink-0" />
-                                                            <span className="truncate">{query.message}</span>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="flex flex-col gap-0.5 max-w-[200px] flex-1">
-                                                            <div className="font-bold text-gray-900 dark:text-white text-xs truncate uppercase tracking-wide" title={query.subject}>
+                            </thead>
+                            <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
+                                {paginatedQueries.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="5" className="px-6 py-12 text-center text-gray-500 dark:text-zinc-500 italic">
+                                            No queries found matching your filters.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    paginatedQueries.map((query) => {
+                                        const type = getQueryType(query.subject);
+                                        return (
+                                            <tr key={query.id} className="hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
+                                                <td className="px-4 md:px-6 py-3 text-gray-500 dark:text-zinc-400 whitespace-nowrap align-middle">
+                                                    <div className="text-[10px] md:text-xs font-bold uppercase tracking-tighter">
+                                                        {new Date(query.createdAt).toLocaleDateString()}
+                                                    </div>
+                                                    <div className="text-[9px] text-gray-400">
+                                                        {new Date(query.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 md:px-6 py-3 align-middle hidden sm:table-cell">
+                                                    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${type === 'download'
+                                                        ? 'bg-blue-50 dark:bg-blue-900/10 text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800'
+                                                        : 'bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+                                                        }`}>
+                                                        {type === 'download' ? 'Download' : 'Contact'}
+                                                    </span>
+                                                </td>
+                                                <td className="px-4 md:px-6 py-3 align-middle">
+                                                    <div className="font-bold text-gray-900 dark:text-white text-[11px] md:text-sm truncate max-w-[80px] md:max-w-[150px]" title={`${query.firstName} ${query.lastName}`}>
+                                                        {query.firstName} {query.lastName}
+                                                    </div>
+                                                    <div className="md:hidden text-[9px] text-gray-400 truncate max-w-[80px]">
+                                                        {query.email}
+                                                    </div>
+                                                </td>
+                                                <td className="px-4 md:px-6 py-3 align-middle hidden md:table-cell">
+                                                    <a href={`mailto:${query.email}`} className="text-gray-600 dark:text-zinc-300 hover:text-brand-red transition-colors truncate max-w-[150px] text-sm block" title={query.email}>{query.email}</a>
+                                                </td>
+                                                <td className="px-4 md:px-6 py-3 align-middle">
+                                                    <div className="flex items-center justify-between gap-2 md:gap-4">
+                                                        <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                                                            <div className="font-black text-gray-900 dark:text-white text-[9px] md:text-xs truncate uppercase tracking-tighter" title={query.subject}>
                                                                 {query.subject}
                                                             </div>
-                                                            <div className="text-gray-500 dark:text-zinc-400 text-xs truncate" title={query.message}>
+                                                            <div className="text-gray-500 dark:text-zinc-400 text-[10px] md:text-xs truncate max-w-[120px] md:max-w-xs" title={query.message}>
                                                                 {query.message}
                                                             </div>
                                                         </div>
-                                                    )}
 
-                                                    <button
-                                                        onClick={async () => {
-                                                            if (window.confirm('Are you sure you want to delete this inquiry?')) {
-                                                                const { deleteQuery } = await import('../app/actions/queries');
-                                                                const res = await deleteQuery(query.id);
-                                                                if (!res.success) alert(res.error);
-                                                            }
-                                                        }}
-                                                        className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-all"
-                                                        title="Delete Inquiry"
-                                                    >
-                                                        <X size={16} />
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })
-                            )}
-                        </tbody>
-                    </table>
+                                                        <button
+                                                            onClick={async () => {
+                                                                if (window.confirm('Are you sure you want to delete this inquiry?')) {
+                                                                    const { deleteQuery } = await import('../app/actions/queries');
+                                                                    const res = await deleteQuery(query.id);
+                                                                    if (!res.success) alert(res.error);
+                                                                }
+                                                            }}
+                                                            className="p-1.5 md:p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-all shrink-0"
+                                                            title="Delete"
+                                                        >
+                                                            <X size={14} className="md:w-4 md:h-4" />
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 {/* Pagination Controls */}

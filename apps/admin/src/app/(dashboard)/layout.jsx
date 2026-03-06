@@ -53,21 +53,21 @@ function SearchBar() {
     }, [searchQuery, pathname, router]);
 
     return (
-        <div className="relative w-full max-w-md hidden md:block group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-red transition-colors" size={20} />
+        <div className="relative w-full max-w-md group">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-brand-red transition-colors" size={18} />
             <input
                 type="text"
-                placeholder="Search products, orders, or customers..."
+                placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-10 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
+                className="w-full pl-9 pr-9 py-2 bg-gray-100 dark:bg-black/40 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
             />
             {searchQuery && (
                 <button
                     onClick={() => setSearchQuery('')}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-red p-1 transition-colors"
                 >
-                    <X size={16} />
+                    <X size={14} />
                 </button>
             )}
         </div>
@@ -182,7 +182,7 @@ export default function AdminLayout({ children }) {
                             <Menu size={24} />
                         </button>
 
-                        <Suspense fallback={<div className="w-full max-w-md h-10 bg-gray-100 dark:bg-zinc-800 animate-pulse rounded-xl hidden md:block" />}>
+                        <Suspense fallback={<div className="w-full max-w-md h-10 bg-gray-100 dark:bg-zinc-800 animate-pulse rounded-xl" />}>
                             <SearchBar />
                         </Suspense>
                     </div>
@@ -256,7 +256,7 @@ export default function AdminLayout({ children }) {
                     </div>
                 </header>
 
-                <main className="flex-1 p-4 md:p-8 overflow-y-auto w-screen md:w-auto">
+                <main className="flex-1 p-4 md:p-8 overflow-y-auto w-full">
                     <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <Suspense fallback={<div className="p-8 text-center text-gray-500">Loading components...</div>}>
                             {children}
