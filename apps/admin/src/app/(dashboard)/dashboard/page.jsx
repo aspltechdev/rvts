@@ -127,11 +127,11 @@ export default function Dashboard() {
                                 <th className="p-6">Product</th>
                                 <th className="p-6">
                                     <div className="flex items-center gap-3">
-                                        <span>Category</span>
+                                        <span className="text-gray-400 dark:text-zinc-600 font-bold">Filter:</span>
                                         <select
                                             value={selectedCategory}
                                             onChange={(e) => handleCategoryChange(e.target.value)}
-                                            className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-[11px] font-bold focus:ring-1 focus:ring-brand-red cursor-pointer text-brand-red px-2 py-1 rounded-lg"
+                                            className="bg-white dark:bg-zinc-800 border-2 border-gray-200 dark:border-zinc-700 text-sm font-bold focus:ring-2 focus:ring-brand-red cursor-pointer text-gray-900 dark:text-white px-4 py-2 rounded-xl transition-all hover:border-brand-red outline-none shadow-sm min-w-[180px]"
                                         >
                                             {categories.map(cat => (
                                                 <option key={cat} value={cat}>{cat}</option>
@@ -139,31 +139,36 @@ export default function Dashboard() {
                                         </select>
                                     </div>
                                 </th>
-                                <th className="p-6 text-sm font-bold uppercase tracking-wider">Status</th>
-                                <th className="p-6 text-right text-sm font-bold uppercase tracking-wider">Actions</th>
+                                <th className="p-6 text-sm font-black uppercase tracking-widest text-gray-400 dark:text-zinc-600">Status</th>
+                                <th className="p-6 text-right text-sm font-black uppercase tracking-widest text-gray-400 dark:text-zinc-600">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
                             {(query || selectedCategory !== 'All') && (
                                 <tr className="bg-brand-red/5 dark:bg-brand-red/10 border-b border-brand-red/10">
-                                    <td colSpan={4} className="px-6 py-2">
-                                        <div className="flex items-center justify-between text-[10px] font-bold text-brand-red uppercase tracking-widest">
-                                            <div className="flex items-center gap-2">
-                                                <span>Showing {filteredProducts.length} results</span>
-                                                {query && <span>for "{query}"</span>}
-                                                {selectedCategory !== 'All' && <span>in {selectedCategory}</span>}
+                                    <td colSpan={4} className="px-6 py-4">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3 text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                                                <span className="bg-brand-red text-white px-2 py-0.5 rounded text-[10px] font-black">Filtered</span>
+                                                <div className="flex items-center gap-1.5 flex-wrap">
+                                                    <span>Found {filteredProducts.length} items</span>
+                                                    {query && <span className="text-brand-red font-black">"{query}"</span>}
+                                                    {selectedCategory !== 'All' && (
+                                                        <>
+                                                            <span className="text-gray-400">in</span>
+                                                            <span className="text-brand-red font-black">{selectedCategory}</span>
+                                                        </>
+                                                    )}
+                                                </div>
                                             </div>
                                             <button
                                                 onClick={() => {
-                                                    const params = new URLSearchParams(searchParams);
-                                                    params.delete('q');
-                                                    params.delete('category');
                                                     router.push(pathname);
                                                 }}
-                                                className="hover:underline flex items-center gap-1"
+                                                className="bg-brand-red text-white px-4 py-1.5 rounded-lg text-xs font-black shadow-sm shadow-brand-red/20 hover:scale-105 transition-all flex items-center gap-2"
                                             >
-                                                <X size={10} strokeWidth={3} />
-                                                Clear All
+                                                <X size={14} strokeWidth={3} />
+                                                CLEAR ALL FILTERS
                                             </button>
                                         </div>
                                     </td>
