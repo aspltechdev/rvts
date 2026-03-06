@@ -3,15 +3,17 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { Edit2, Trash2, Plus, Package, CheckCircle, FileText, Eye } from 'lucide-react';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { Edit2, Trash2, Plus, Package, CheckCircle, FileText, Eye, X } from 'lucide-react';
 
 export default function Dashboard() {
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathname = usePathname();
     const query = searchParams.get('q')?.toLowerCase() || '';
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    const selectedCategory = searchParams.get('category') || 'All';
 
     const fetchProducts = () => {
         setLoading(true);
@@ -24,6 +26,16 @@ export default function Dashboard() {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    const handleCategoryChange = (cat) => {
+        const params = new URLSearchParams(searchParams);
+        if (cat === 'All') {
+            params.delete('category');
+        } else {
+            params.set('category', cat);
+        }
+        router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    };
 
     const deleteProduct = async (id) => {
         if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
@@ -42,10 +54,13 @@ export default function Dashboard() {
 
     // Filter products based on search query AND category
     const filteredProducts = products.filter(p => {
-        const matchesQuery = p.name?.toLowerCase().includes(query) ||
+        const matchesQuery = !query ||
+            p.name?.toLowerCase().includes(query) ||
             p.slug?.toLowerCase().includes(query) ||
             p.category?.toLowerCase().includes(query);
+
         const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+
         return matchesQuery && matchesCategory;
     });
 
@@ -115,7 +130,7 @@ export default function Dashboard() {
                                         <span>Category</span>
                                         <select
                                             value={selectedCategory}
-                                            onChange={(e) => setSelectedCategory(e.target.value)}
+                                            onChange={(e) => handleCategoryChange(e.target.value)}
                                             className="bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-[11px] font-bold focus:ring-1 focus:ring-brand-red cursor-pointer text-brand-red px-2 py-1 rounded-lg"
                                         >
                                             {categories.map(cat => (
@@ -124,11 +139,36 @@ export default function Dashboard() {
                                         </select>
                                     </div>
                                 </th>
-                                <th className="p-6">Status</th>
-                                <th className="p-6 text-right">Actions</th>
+                                <th className="p-6 text-sm font-bold uppercase tracking-wider">Status</th>
+                                <th className="p-6 text-right text-sm font-bold uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 dark:divide-zinc-800">
+                            {(query || selectedCategory !== 'All') && (
+                                <tr className="bg-brand-red/5 dark:bg-brand-red/10 border-b border-brand-red/10">
+                                    <td colSpan={4} className="px-6 py-2">
+                                        <div className="flex items-center justify-between text-[10px] font-bold text-brand-red uppercase tracking-widest">
+                                            <div className="flex items-center gap-2">
+                                                <span>Showing {filteredProducts.length} results</span>
+                                                {query && <span>for "{query}"</span>}
+                                                {selectedCategory !== 'All' && <span>in {selectedCategory}</span>}
+                                            </div>
+                                            <button
+                                                onClick={() => {
+                                                    const params = new URLSearchParams(searchParams);
+                                                    params.delete('q');
+                                                    params.delete('category');
+                                                    router.push(pathname);
+                                                }}
+                                                className="hover:underline flex items-center gap-1"
+                                            >
+                                                <X size={10} strokeWidth={3} />
+                                                Clear All
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            )}
                             {loading ? (
                                 <tr><td colSpan={4} className="p-12 text-center text-gray-500 dark:text-zinc-500">Loading products...</td></tr>
                             ) : filteredProducts.length === 0 ? (

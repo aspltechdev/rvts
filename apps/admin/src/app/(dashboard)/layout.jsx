@@ -16,7 +16,8 @@ import {
     Search,
     Bell,
     ChevronDown,
-    Menu
+    Menu,
+    X
 } from 'lucide-react';
 
 import { useTheme } from '@/components/ThemeContext';
@@ -28,8 +29,17 @@ function SearchBar() {
     const pathname = usePathname();
     const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
 
+    // Update local state if URL changes externally
+    useEffect(() => {
+        const q = searchParams.get('q') || '';
+        if (q !== searchQuery) setSearchQuery(q);
+    }, [searchParams]);
+
     useEffect(() => {
         const timeout = setTimeout(() => {
+            const currentQ = searchParams.get('q') || '';
+            if (searchQuery === currentQ) return;
+
             const params = new URLSearchParams(searchParams);
             if (searchQuery) {
                 params.set('q', searchQuery);
@@ -40,7 +50,7 @@ function SearchBar() {
         }, 300);
 
         return () => clearTimeout(timeout);
-    }, [searchQuery, pathname, router, searchParams]);
+    }, [searchQuery, pathname, router]);
 
     return (
         <div className="relative w-full max-w-md hidden md:block group">
@@ -50,8 +60,16 @@ function SearchBar() {
                 placeholder="Search products, orders, or customers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
+                className="w-full pl-10 pr-10 py-2.5 bg-gray-100 dark:bg-black/20 border-transparent focus:bg-white dark:focus:bg-zinc-900 border focus:border-brand-red rounded-xl text-sm outline-none transition-all duration-200 placeholder:text-gray-400 dark:placeholder:text-zinc-600 text-gray-900 dark:text-white"
             />
+            {searchQuery && (
+                <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-red p-1 transition-colors"
+                >
+                    <X size={16} />
+                </button>
+            )}
         </div>
     );
 }
