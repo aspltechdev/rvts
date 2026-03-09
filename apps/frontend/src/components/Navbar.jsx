@@ -451,7 +451,7 @@ export default function Navbar() {
                                 {/* Right Side: Products */}
                                 <div className="flex-1 bg-white overflow-y-auto scrollbar-hide p-6">
                                     <div className="flex flex-col gap-0">
-                                        {activeCategory && categories.find(c => c.category === activeCategory)?.products.map((product, pIndex) => (
+                                        {activeCategory && categories.find(c => c.category === activeCategory)?.products?.map((product, pIndex) => (
                                             <Link
                                                 key={pIndex}
                                                 href={`/products/${product.slug}`}
@@ -467,7 +467,7 @@ export default function Navbar() {
                                             </Link>
                                         ))}
 
-                                        {(!activeCategory || !categories.find(c => c.category === activeCategory)?.products.length) && (
+                                        {(!activeCategory || !categories.find(c => c.category === activeCategory)?.products?.length) && (
                                             <div className="h-full flex flex-col items-center justify-center text-zinc-400 gap-4 mt-20">
                                                 <div className="w-16 h-16 rounded-full bg-zinc-50 flex items-center justify-center">
                                                     <div className="w-8 h-8 rounded-full border-2 border-zinc-200 border-t-zinc-400 animate-spin" />
