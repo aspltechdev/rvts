@@ -6,160 +6,68 @@ import { ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 
-const products = [
-    {
-        id: 1,
-        title: "DISPLAY MOUNTS",
-        description: "Secure and flexible mounting solutions for all display types.",
-        image: "images/category/display mount.jpeg",
-        slug: "display-mounts",
-        category: "DISPLAY MOUNTS"
-    },
-    {
-        id: 2,
-        title: "TV MOUNTS",
-        description: "Professional grade mounts for televisions of all sizes.",
-        image: "images/category/display mount.jpeg",
-        slug: "tv-mounts",
-        category: "TV MOUNTS"
-    },
-    {
-        id: 3,
-        title: "SOUND BAR MOUNTS",
-        description: "Seamless integration for superior audio experiences.",
-        image: "images/category/Professional sound bar mounts.png",
-        slug: "sound-bar-mounts",
-        category: "SOUND BAR MOUNTS"
-    },
-    {
-        id: 4,
-        title: "SPEAKER MOUNTS",
-        description: "Versatile mounting options for various speaker systems.",
-        image: "images/category/Professional sound bar mounts.png",
-        slug: "speaker-mounts",
-        category: "SPEAKER MOUNTS"
-    },
-    {
-        id: 5,
-        title: "PTZ CAMERA MOUNTS",
-        description: "Precision mounting for professional camera systems.",
-        image: "images/category/PTZ-Camera-Mounts.png",
-        slug: "ptz-camera-mounts",
-        category: "PTZ CAMERA MOUNTS"
-    },
-    {
-        id: 6,
-        title: "MOTORIZED PROJECTOR LIFT",
-        description: "Automated lift systems for projector concealment.",
-        image: "images/category/PTZ-Camera-Mounts.png",
-        slug: "motorized-projector-lift",
-        category: "MOTORIZED PROJECTOR LIFT"
-    },
-    {
-        id: 7,
-        title: "MOTORIZED MOUNT SOLUTIONS",
-        description: "Automated positioning for dynamic viewing environments.",
-        image: "images/category/Motorized Mount Solutions.jpeg",
-        slug: "motorized-mount-solutions",
-        category: "MOTORIZED MOUNT SOLUTIONS"
-    },
-    {
-        id: 8,
-        title: "MOTORIZED TV LIFT",
-        description: "Elegant concealment solutions for flat-panel displays.",
-        image: "images/category/Motorized Mount Solutions.jpeg",
-        slug: "motorized-tv-lift",
-        category: "MOTORIZED TV LIFT"
-    },
-    {
-        id: 9,
-        title: "MOBILE TROLLEY SOLUTIONS",
-        description: "Portable display stands for versatile collaboration.",
-        image: "images/category/Mobile Trolley Solutions.jpeg",
-        slug: "mobile-trolley-solutions",
-        category: "MOBILE TROLLEY SOLUTIONS"
-    },
-    {
-        id: 10,
-        title: "TV FLOOR STAND",
-        description: "Sturdy and stylish floor standing solutions for TVs.",
-        image: "images/category/Mobile Trolley Solutions.jpeg",
-        slug: "tv-floor-stand",
-        category: "TV FLOOR STAND"
-    },
-    {
-        id: 11,
-        title: "DIGITAL KIOSK",
-        description: "Interactive self-service and information stations.",
-        image: "images/category/Digital Kiosk.png",
-        slug: "digital-kiosk",
-        category: "DIGITAL KIOSK"
-    },
-    {
-        id: 12,
-        title: "CONFERENCE TABLE BOX",
-        description: "Integrated connectivity solutions for meeting rooms.",
-        image: "images/category/Digital Kiosk.png",
-        slug: "conference-table-box",
-        category: "CONFERENCE TABLE BOX"
-    },
-    {
-        id: 13,
-        title: "DIGITAL PODIUM",
-        description: "Smart lecterns for modern presentations and lectures.",
-        image: "images/category/Digital-Podium.png",
-        slug: "digital-podium",
-        category: "DIGITAL PODIUM"
-    },
-    {
-        id: 14,
-        title: "PROJECTION SCREENS",
-        description: "High-quality surfaces for optimal image projection.",
-        image: "images/category/Digital-Podium.png",
-        slug: "projection-screens",
-        category: "PROJECTION SCREENS"
-    },
-    {
-        id: 15,
-        title: "AUDIO VISUAL ACCESSORIES",
-        description: "Essential components for complete AV setups.",
-        image: "images/category/Audio Visual Accessorie.png",
-        slug: "audio-visual-accessories",
-        category: "AUDIO VISUAL ACCESSORIES"
-    },
-    {
-        id: 16,
-        title: "MONITOR MOUNTS",
-        description: "Ergonomic solutions for single and multi-monitor setups.",
-        image: "images/category/Audio Visual Accessorie.png",
-        slug: "monitor-mounts",
-        category: "MONITOR MOUNTS"
-    },
-    {
-        id: 17,
-        title: "MOTORIZED BAR LIFT",
-        description: "Specialized lift systems for bar and cabinet integration.",
-        image: "images/category/Motorized Mount Solutions.jpeg",
-        slug: "motorized-bar-lift",
-        category: "MOTORIZED BAR LIFT"
-    },
-    {
-        id: 18,
-        title: "MONITOR LIFT",
-        description: "Retractable lift solutions for desktop monitors.",
-        image: "images/category/display mount.jpeg",
-        slug: "monitor-lift",
-        category: "MONITOR LIFT"
-    },
-    {
-        id: 19,
-        title: "PROJECTOR MOUNTS",
-        description: "Secure mounting systems for all types of projectors.",
-        image: "images/category/PTZ-Camera-Mounts.png",
-        slug: "projector-mounts",
-        category: "PROJECTOR MOUNTS"
-    }
-];
+const [categories, setCategories] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+    const fetchCategories = async () => {
+        try {
+            const res = await fetch(`${API_BASE_URL}/api/categories`);
+            if (!res.ok) throw new Error("Failed to fetch categories");
+            const data = await res.json();
+            const fetched = data.categories || data;
+
+            // Category Assets Map
+            const categoryAssets = {
+                "DISPLAY MOUNTS": { img: "images/category/display mount.jpeg", desc: "Secure and flexible mounting solutions." },
+                "TV MOUNTS": { img: "images/category/display mount.jpeg", desc: "Professional grade mounts for televisions." },
+                "SOUND BAR MOUNTS": { img: "images/category/Professional sound bar mounts.png", desc: "Seamless integration for superior audio." },
+                "SPEAKER MOUNTS": { img: "images/category/Professional sound bar mounts.png", desc: "Versatile speaker mounting options." },
+                "PTZ CAMERA MOUNTS": { img: "images/category/PTZ-Camera-Mounts.png", desc: "Precision mounting for pro camera systems." },
+                "MOTORIZED PROJECTOR LIFT": { img: "images/category/PTZ-Camera-Mounts.png", desc: "Automated lift systems for projectors." },
+                "MOTORIZED MOUNT SOLUTIONS": { img: "images/category/Motorized Mount Solutions.jpeg", desc: "Automated positioning for dynamic viewing." },
+                "MOTORIZED TV LIFT": { img: "images/category/Motorized Mount Solutions.jpeg", desc: "Elegant concealment for flat panels." },
+                "MOBILE TROLLEY SOLUTIONS": { img: "images/category/Mobile Trolley Solutions.jpeg", desc: "Portable stands for versatile collaboration." },
+                "TV FLOOR STAND": { img: "images/category/Mobile Trolley Solutions.jpeg", desc: "Sturdy and stylish floor standing solutions." },
+                "DIGITAL KIOSK": { img: "images/category/Digital Kiosk.png", desc: "Interactive information stations." },
+                "CONFERENCE TABLE BOX": { img: "images/category/Digital Kiosk.png", desc: "Meeting room connectivity solutions." },
+                "DIGITAL PODIUM": { img: "images/category/Digital-Podium.png", desc: "Smart lecterns for modern presentations." },
+                "PROJECTION SCREENS": { img: "images/category/Digital-Podium.png", desc: "High-quality projection surfaces." },
+                "AUDIO VISUAL ACCESSORIES": { img: "images/category/Audio Visual Accessorie.png", desc: "Essential components for complete AV." },
+                "MONITOR MOUNTS": { img: "images/category/Audio Visual Accessorie.png", desc: "Ergonomic monitor mounting solutions." },
+                "MOTORIZED BAR LIFT": { img: "images/category/Motorized Mount Solutions.jpeg", desc: "Specialized lift systems for bars." },
+                "MONITOR LIFT": { img: "images/category/display mount.jpeg", desc: "Retractable lift for desktop monitors." },
+                "PROJECTOR MOUNTS": { img: "images/category/PTZ-Camera-Mounts.png", desc: "Secure systems for all projectors." }
+            };
+
+            const transformed = fetched.map((cat, index) => {
+                const name = cat.category || cat.name;
+                const asset = categoryAssets[name] || {
+                    img: cat.products?.[0]?.images?.[0] || "images/category/display mount.jpeg",
+                    desc: "Professional AV solutions for your space."
+                };
+                return {
+                    id: index,
+                    title: name,
+                    description: asset.desc,
+                    image: asset.img,
+                    slug: name.toLowerCase().replace(/\s+/g, '-'),
+                    category: name
+                };
+            });
+
+            setCategories(transformed);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    fetchCategories();
+}, []);
+
+const products = categories;
+
 
 export default function ProductShowcase() {
     const [activeIndex, setActiveIndex] = useState(3);

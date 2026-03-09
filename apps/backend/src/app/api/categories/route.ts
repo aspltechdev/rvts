@@ -16,7 +16,8 @@ export async function GET() {
             select: {
                 name: true,
                 slug: true,
-                category: true
+                category: true,
+                images: true
             },
             orderBy: [
                 { category: 'asc' },
@@ -25,7 +26,7 @@ export async function GET() {
         });
 
         // Group products by category
-        const groupedByCategory: Record<string, { name: string; slug: string }[]> = {};
+        const groupedByCategory: Record<string, { name: string; slug: string; images: string[] }[]> = {};
 
         products.forEach(product => {
             if (product.category) {
@@ -34,7 +35,8 @@ export async function GET() {
                 }
                 groupedByCategory[product.category].push({
                     name: product.name,
-                    slug: product.slug
+                    slug: product.slug,
+                    images: product.images
                 });
             }
         });

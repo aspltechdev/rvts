@@ -1,12 +1,13 @@
 
 'use client';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Plus, X, Upload, ArrowLeft, Save, ChevronDown } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function AddProductPage() {
     const { register, control, handleSubmit, setValue, watch, reset } = useForm({
@@ -38,6 +39,10 @@ export default function AddProductPage() {
     const [uploadingManual, setUploadingManual] = useState(false);
     const [uploadingBrochure, setUploadingBrochure] = useState(false);
 
+    const [dbCategories, setDbCategories] = useState([]);
+    const [isNewCategory, setIsNewCategory] = useState(false);
+    const [newCategoryName, setNewCategoryName] = useState('');
+
     const router = useRouter();
 
     const slugify = (text) => {
@@ -49,6 +54,16 @@ export default function AddProductPage() {
             .replace(/[^\w-]+/g, '')
             .replace(/--+/g, '-');
     };
+
+    // Fetch existing categories
+    useEffect(() => {
+        api.get('/api/categories')
+            .then(res => {
+                const fetched = res.data.categories || (Array.isArray(res.data) ? res.data : []);
+                setDbCategories(fetched.map(c => c.category || c.name).filter(Boolean));
+            })
+            .catch(err => console.error("Failed to fetch categories", err));
+    }, []);
 
     const handleImageUpload = async (e) => {
         if (!e.target.files?.length) return;
@@ -115,8 +130,16 @@ export default function AddProductPage() {
     };
 
     const onSubmit = async (data) => {
+        const finalCategory = isNewCategory ? newCategoryName.trim().toUpperCase() : data.category;
+
+        if (!finalCategory) {
+            alert("Please select or enter a category");
+            return;
+        }
+
         const payload = {
             ...data,
+            category: finalCategory,
             title: data.title || data.name, // Use name as title if title is missing
             images,
             features: data.features.filter(f => f.value.trim() !== '').map((f) => f.value),
@@ -175,35 +198,49 @@ export default function AddProductPage() {
                             />
                         </div>
 
-                        {/* Category Dropdown */}
+                        {/* Category Selection */}
                         <div className="space-y-3">
                             <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Asset Category <span className="text-brand-red">*</span></label>
-                            <div className="relative group/select">
-                                <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
-                                    <option value="">Select Category</option>
-                                    <option value="PROJECTION SCREENS">PROJECTION SCREENS</option>
-                                    <option value="DIGITAL PODIUM">DIGITAL PODIUM</option>
-                                    <option value="MOTORIZED TV LIFT">MOTORIZED TV LIFT</option>
-                                    <option value="MOTORIZED MOUNT SOLUTIONS">MOTORIZED MOUNT SOLUTIONS</option>
-                                    <option value="MOTORIZED PROJECTOR LIFT">MOTORIZED PROJECTOR LIFT</option>
-                                    <option value="PTZ CAMERA MOUNTS">PTZ CAMERA MOUNTS</option>
-                                    <option value="MOTORIZED BAR LIFT">MOTORIZED BAR LIFT</option>
-                                    <option value="MONITOR LIFT">MONITOR LIFT</option>
-                                    <option value="TV MOUNTS">TV MOUNTS</option>
-                                    <option value="DISPLAY MOUNTS">DISPLAY MOUNTS</option>
-                                    <option value="SPEAKER MOUNTS">SPEAKER MOUNTS</option>
-                                    <option value="SOUND BAR MOUNTS">SOUND BAR MOUNTS</option>
-                                    <option value="MONITOR MOUNTS">MONITOR MOUNTS</option>
-                                    <option value="AUDIO VISUAL ACCESSORIES">AUDIO VISUAL ACCESSORIES</option>
-                                    <option value="TV FLOOR STAND">TV FLOOR STAND</option>
-                                    <option value="MOBILE TROLLEY SOLUTIONS">MOBILE TROLLEY SOLUTIONS</option>
-                                    <option value="CONFERENCE TABLE BOX">CONFERENCE TABLE BOX</option>
-                                    <option value="DIGITAL KIOSK">DIGITAL KIOSK</option>
-                                    <option value="PROJECTOR MOUNTS">PROJECTOR MOUNTS</option>
-                                </select>
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
-                                    <ChevronDown size={20} />
+                            <div className="space-y-4">
+                                <div className="relative group/select">
+                                    <select
+                                        {...register("category")}
+                                        onChange={(e) => setIsNewCategory(e.target.value === "ADD_NEW")}
+                                        className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Select Category</option>
+                                        <optgroup label="CREATE NEW">
+                                            <option value="ADD_NEW" className="text-brand-red font-black">+ ADD NEW CATEGORY...</option>
+                                        </optgroup>
+                                        <optgroup label="EXISTING CATEGORIES">
+                                            {dbCategories.map(cat => (
+                                                <option key={cat} value={cat}>{cat}</option>
+                                            ))}
+                                        </optgroup>
+                                    </select>
+                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
+                                        <ChevronDown size={20} />
+                                    </div>
                                 </div>
+
+                                {isNewCategory && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="relative"
+                                    >
+                                        <input
+                                            type="text"
+                                            value={newCategoryName}
+                                            onChange={(e) => setNewCategoryName(e.target.value)}
+                                            placeholder="ENTER NEW CATEGORY NAME..."
+                                            className="w-full bg-brand-red/5 border-2 border-brand-red/20 p-4 rounded-2xl focus:border-brand-red outline-none transition-all font-black text-brand-red placeholder:text-brand-red/40 uppercase tracking-widest"
+                                            autoFocus
+                                        />
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-red/40 font-black text-[10px]">NEW</div>
+                                    </motion.div>
+                                )}
                             </div>
                         </div>
 
@@ -354,7 +391,6 @@ export default function AddProductPage() {
                 </section>
             </form>
 
-            {/* ACTION FOOTER */}
             <div className="flex justify-end gap-3 max-w-4xl mx-auto px-4 mt-8 pb-32">
                 <button
                     type="button"
@@ -375,3 +411,4 @@ export default function AddProductPage() {
         </div>
     );
 }
+

@@ -85,19 +85,13 @@ const ProductsListContent = () => {
                     const catData = await catRes.json();
                     const fetchedCats = catData.categories || (Array.isArray(catData) ? catData : []);
 
-                    const masterCategoryList = [
-                        "DISPLAY MOUNTS", "TV MOUNTS", "SOUND BAR MOUNTS", "SPEAKER MOUNTS",
-                        "PTZ CAMERA MOUNTS", "MOTORIZED PROJECTOR LIFT", "MOTORIZED MOUNT SOLUTIONS",
-                        "MOTORIZED TV LIFT", "MOBILE TROLLEY SOLUTIONS", "TV FLOOR STAND",
-                        "DIGITAL KIOSK", "CONFERENCE TABLE BOX", "DIGITAL PODIUM",
-                        "PROJECTION SCREENS", "AUDIO VISUAL ACCESSORIES", "MONITOR MOUNTS",
-                        "MOTORIZED BAR LIFT", "MONITOR LIFT", "PROJECTOR MOUNTS"
-                    ];
-
-                    setDbCategories(masterCategoryList.map(name => ({
-                        name: name,
-                        icon: getIcon(name)
-                    })));
+                    setDbCategories(fetchedCats.map(c => {
+                        const name = c.category || c.name || "Default";
+                        return {
+                            name: name,
+                            icon: getIcon(name)
+                        };
+                    }));
                 }
             } catch (err) {
                 console.error("Fetch error:", err);

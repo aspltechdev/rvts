@@ -1,3 +1,4 @@
+
 'use client';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useState, useEffect } from 'react';
@@ -6,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Plus, X, Upload, Save, ArrowLeft, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export default function EditProductPage({ params }) {
     const { register, control, handleSubmit, setValue, reset, watch } = useForm({
@@ -38,6 +40,10 @@ export default function EditProductPage({ params }) {
     const [uploadingManual, setUploadingManual] = useState(false);
     const [uploadingBrochure, setUploadingBrochure] = useState(false);
 
+    const [dbCategories, setDbCategories] = useState([]);
+    const [isNewCategory, setIsNewCategory] = useState(false);
+    const [newCategoryName, setNewCategoryName] = useState('');
+
     const router = useRouter();
 
     const slugify = (text) => {
@@ -45,10 +51,20 @@ export default function EditProductPage({ params }) {
             .toString()
             .toLowerCase()
             .trim()
-            .replace(/\s+/g, '-')     // Replace spaces with -
-            .replace(/[^\w-]+/g, '')   // Remove all non-word chars
-            .replace(/--+/g, '-');    // Replace multiple - with single -
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '')
+            .replace(/--+/g, '-');
     };
+
+    // Fetch existing categories
+    useEffect(() => {
+        api.get('/api/categories')
+            .then(res => {
+                const fetched = res.data.categories || (Array.isArray(res.data) ? res.data : []);
+                setDbCategories(fetched.map(c => c.category || c.name).filter(Boolean));
+            })
+            .catch(err => console.error("Failed to fetch categories", err));
+    }, []);
 
     // Fetch existing data
     useEffect(() => {
@@ -140,9 +156,17 @@ export default function EditProductPage({ params }) {
     };
 
     const onSubmit = async (data) => {
+        const finalCategory = isNewCategory ? newCategoryName.trim().toUpperCase() : data.category;
+
+        if (!finalCategory) {
+            alert("Please select or enter a category");
+            return;
+        }
+
         const payload = {
             ...data,
-            title: data.title || data.name, // Use name as title if title is missing
+            category: finalCategory,
+            title: data.title || data.name,
             images,
             features: data.features.filter(f => f.value.trim() !== '').map((f) => f.value),
             published: true
@@ -181,7 +205,6 @@ export default function EditProductPage({ params }) {
                             <p className="text-[10px] md:text-xs text-gray-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">Catalog Management System</p>
                         </div>
                     </div>
-                    {/* Empty space or additional info */}
                     <div className="hidden md:block">
                         <span className="text-[10px] font-black bg-brand-red/10 text-brand-red px-3 py-1 rounded-full uppercase tracking-tighter italic">Live Editing Mode</span>
                     </div>
@@ -205,7 +228,7 @@ export default function EditProductPage({ params }) {
                                 {...register("name")}
                                 onChange={(e) => {
                                     setValue("name", e.target.value);
-                                    setValue("slug", slugify(e.target.value)); // Auto-generate slug
+                                    setValue("slug", slugify(e.target.value));
                                 }}
                                 className="w-full bg-gray-50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white"
                                 placeholder="e.g. Interactive Soundbar Max"
@@ -213,35 +236,49 @@ export default function EditProductPage({ params }) {
                             />
                         </div>
 
-                        {/* Category Dropdown */}
+                        {/* Category Selection */}
                         <div className="space-y-3">
                             <label className="text-sm font-black text-gray-900 dark:text-zinc-100 uppercase tracking-widest">Asset Category <span className="text-brand-red">*</span></label>
-                            <div className="relative group/select">
-                                <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
-                                    <option value="">Select Category</option>
-                                    <option value="PROJECTION SCREENS">PROJECTION SCREENS</option>
-                                    <option value="DIGITAL PODIUM">DIGITAL PODIUM</option>
-                                    <option value="MOTORIZED TV LIFT">MOTORIZED TV LIFT</option>
-                                    <option value="MOTORIZED MOUNT SOLUTIONS">MOTORIZED MOUNT SOLUTIONS</option>
-                                    <option value="MOTORIZED PROJECTOR LIFT">MOTORIZED PROJECTOR LIFT</option>
-                                    <option value="PTZ CAMERA MOUNTS">PTZ CAMERA MOUNTS</option>
-                                    <option value="MOTORIZED BAR LIFT">MOTORIZED BAR LIFT</option>
-                                    <option value="MONITOR LIFT">MONITOR LIFT</option>
-                                    <option value="TV MOUNTS">TV MOUNTS</option>
-                                    <option value="DISPLAY MOUNTS">DISPLAY MOUNTS</option>
-                                    <option value="SPEAKER MOUNTS">SPEAKER MOUNTS</option>
-                                    <option value="SOUND BAR MOUNTS">SOUND BAR MOUNTS</option>
-                                    <option value="MONITOR MOUNTS">MONITOR MOUNTS</option>
-                                    <option value="AUDIO VISUAL ACCESSORIES">AUDIO VISUAL ACCESSORIES</option>
-                                    <option value="TV FLOOR STAND">TV FLOOR STAND</option>
-                                    <option value="MOBILE TROLLEY SOLUTIONS">MOBILE TROLLEY SOLUTIONS</option>
-                                    <option value="CONFERENCE TABLE BOX">CONFERENCE TABLE BOX</option>
-                                    <option value="DIGITAL KIOSK">DIGITAL KIOSK</option>
-                                    <option value="PROJECTOR MOUNTS">PROJECTOR MOUNTS</option>
-                                </select>
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
-                                    <ChevronDown size={20} />
+                            <div className="space-y-4">
+                                <div className="relative group/select">
+                                    <select
+                                        {...register("category")}
+                                        onChange={(e) => setIsNewCategory(e.target.value === "ADD_NEW")}
+                                        className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Select Category</option>
+                                        <optgroup label="CREATE NEW">
+                                            <option value="ADD_NEW" className="text-brand-red font-black">+ ADD NEW CATEGORY...</option>
+                                        </optgroup>
+                                        <optgroup label="EXISTING CATEGORIES">
+                                            {dbCategories.map(cat => (
+                                                <option key={cat} value={cat}>{cat}</option>
+                                            ))}
+                                        </optgroup>
+                                    </select>
+                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">
+                                        <ChevronDown size={20} />
+                                    </div>
                                 </div>
+
+                                {isNewCategory && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="relative"
+                                    >
+                                        <input
+                                            type="text"
+                                            value={newCategoryName}
+                                            onChange={(e) => setNewCategoryName(e.target.value)}
+                                            placeholder="ENTER NEW CATEGORY NAME..."
+                                            className="w-full bg-brand-red/5 border-2 border-brand-red/20 p-4 rounded-2xl focus:border-brand-red outline-none transition-all font-black text-brand-red placeholder:text-brand-red/40 uppercase tracking-widest"
+                                            autoFocus
+                                        />
+                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-brand-red/40 font-black text-[10px]">NEW</div>
+                                    </motion.div>
+                                )}
                             </div>
                         </div>
 
@@ -401,3 +438,4 @@ export default function EditProductPage({ params }) {
         </div>
     );
 }
+
