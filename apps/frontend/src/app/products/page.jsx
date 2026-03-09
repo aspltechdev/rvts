@@ -83,10 +83,20 @@ const ProductsListContent = () => {
                 });
                 if (catRes.ok) {
                     const catData = await catRes.json();
-                    const finalCats = catData.categories || (Array.isArray(catData) ? catData : []);
-                    setDbCategories(finalCats.map(c => ({
-                        name: c.category || c.name,
-                        icon: getIcon(c.category || c.name)
+                    const fetchedCats = catData.categories || (Array.isArray(catData) ? catData : []);
+
+                    const masterCategoryList = [
+                        "DISPLAY MOUNTS", "TV MOUNTS", "SOUND BAR MOUNTS", "SPEAKER MOUNTS",
+                        "PTZ CAMERA MOUNTS", "MOTORIZED PROJECTOR LIFT", "MOTORIZED MOUNT SOLUTIONS",
+                        "MOTORIZED TV LIFT", "MOBILE TROLLEY SOLUTIONS", "TV FLOOR STAND",
+                        "DIGITAL KIOSK", "CONFERENCE TABLE BOX", "DIGITAL PODIUM",
+                        "PROJECTION SCREENS", "AUDIO VISUAL ACCESSORIES", "MONITOR MOUNTS",
+                        "MOTORIZED BAR LIFT", "MONITOR LIFT", "PROJECTOR MOUNTS"
+                    ];
+
+                    setDbCategories(masterCategoryList.map(name => ({
+                        name: name,
+                        icon: getIcon(name)
                     })));
                 }
             } catch (err) {

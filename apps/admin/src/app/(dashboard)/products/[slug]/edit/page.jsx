@@ -220,15 +220,23 @@ export default function EditProductPage({ params }) {
                                 <select {...register("category")} className="w-full bg-gray-100/50 dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 p-4 pr-12 rounded-2xl focus:ring-4 focus:ring-brand-red/10 focus:border-brand-red outline-none transition-all font-bold text-gray-900 dark:text-white appearance-none cursor-pointer" required>
                                     <option value="">Select Category</option>
                                     <option value="PROJECTION SCREENS">PROJECTION SCREENS</option>
+                                    <option value="DIGITAL PODIUM">DIGITAL PODIUM</option>
                                     <option value="MOTORIZED TV LIFT">MOTORIZED TV LIFT</option>
+                                    <option value="MOTORIZED MOUNT SOLUTIONS">MOTORIZED MOUNT SOLUTIONS</option>
                                     <option value="MOTORIZED PROJECTOR LIFT">MOTORIZED PROJECTOR LIFT</option>
+                                    <option value="PTZ CAMERA MOUNTS">PTZ CAMERA MOUNTS</option>
                                     <option value="MOTORIZED BAR LIFT">MOTORIZED BAR LIFT</option>
                                     <option value="MONITOR LIFT">MONITOR LIFT</option>
                                     <option value="TV MOUNTS">TV MOUNTS</option>
+                                    <option value="DISPLAY MOUNTS">DISPLAY MOUNTS</option>
                                     <option value="SPEAKER MOUNTS">SPEAKER MOUNTS</option>
+                                    <option value="SOUND BAR MOUNTS">SOUND BAR MOUNTS</option>
                                     <option value="MONITOR MOUNTS">MONITOR MOUNTS</option>
+                                    <option value="AUDIO VISUAL ACCESSORIES">AUDIO VISUAL ACCESSORIES</option>
                                     <option value="TV FLOOR STAND">TV FLOOR STAND</option>
+                                    <option value="MOBILE TROLLEY SOLUTIONS">MOBILE TROLLEY SOLUTIONS</option>
                                     <option value="CONFERENCE TABLE BOX">CONFERENCE TABLE BOX</option>
+                                    <option value="DIGITAL KIOSK">DIGITAL KIOSK</option>
                                     <option value="PROJECTOR MOUNTS">PROJECTOR MOUNTS</option>
                                 </select>
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-focus-within/select:text-brand-red transition-colors">

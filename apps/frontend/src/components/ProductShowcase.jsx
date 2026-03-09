@@ -9,67 +9,155 @@ import { useRouter } from 'next/navigation';
 const products = [
     {
         id: 1,
-        title: "Display Mounts",
+        title: "DISPLAY MOUNTS",
         description: "Secure and flexible mounting solutions for all display types.",
         image: "images/category/display mount.jpeg",
         slug: "display-mounts",
-        category: "TV MOUNTS"
+        category: "DISPLAY MOUNTS"
     },
     {
         id: 2,
-        title: "Sound Bar Mounts",
-        description: "Seamless integration for superior audio experiences.",
-        image: "images/category/Professional sound bar mounts.png",
-        slug: "professional-sound-bar-mounts",
-        category: "SPEAKER MOUNTS"
+        title: "TV MOUNTS",
+        description: "Professional grade mounts for televisions of all sizes.",
+        image: "images/category/display mount.jpeg",
+        slug: "tv-mounts",
+        category: "TV MOUNTS"
     },
     {
         id: 3,
-        title: "PTZ Camera Mounts",
-        description: "Precision mounting for professional camera systems.",
-        image: "images/category/PTZ-Camera-Mounts.png",
-        slug: "ptz-camera-mounts",
-        category: "MOTORIZED PROJECTOR LIFT"
+        title: "SOUND BAR MOUNTS",
+        description: "Seamless integration for superior audio experiences.",
+        image: "images/category/Professional sound bar mounts.png",
+        slug: "sound-bar-mounts",
+        category: "SOUND BAR MOUNTS"
     },
     {
         id: 4,
-        title: "Motorized Mount Solutions",
-        description: "Automated positioning for dynamic viewing environments.",
-        image: "images/category/Motorized Mount Solutions.jpeg",
-        slug: "motorized-mount-solutions",
-        category: "MOTORIZED TV LIFT"
+        title: "SPEAKER MOUNTS",
+        description: "Versatile mounting options for various speaker systems.",
+        image: "images/category/Professional sound bar mounts.png",
+        slug: "speaker-mounts",
+        category: "SPEAKER MOUNTS"
     },
     {
         id: 5,
-        title: "Mobile Trolley Solutions",
-        description: "Portable display stands for versatile collaboration.",
-        image: "images/category/Mobile Trolley Solutions.jpeg",
-        slug: "mobile-trolley-solutions",
-        category: "TV FLOOR STAND"
+        title: "PTZ CAMERA MOUNTS",
+        description: "Precision mounting for professional camera systems.",
+        image: "images/category/PTZ-Camera-Mounts.png",
+        slug: "ptz-camera-mounts",
+        category: "PTZ CAMERA MOUNTS"
     },
     {
         id: 6,
-        title: "Digital Kiosk",
-        description: "Interactive self-service and information stations.",
-        image: "images/category/Digital Kiosk.png",
-        slug: "digital-kiosk",
-        category: "CONFERENCE TABLE BOX"
+        title: "MOTORIZED PROJECTOR LIFT",
+        description: "Automated lift systems for projector concealment.",
+        image: "images/category/PTZ-Camera-Mounts.png",
+        slug: "motorized-projector-lift",
+        category: "MOTORIZED PROJECTOR LIFT"
     },
     {
         id: 7,
-        title: "Digital Podium",
-        description: "Smart lecterns for modern presentations and lectures.",
-        image: "images/category/Digital-Podium.png",
-        slug: "digital-podium",
-        category: "PROJECTION SCREENS"
+        title: "MOTORIZED MOUNT SOLUTIONS",
+        description: "Automated positioning for dynamic viewing environments.",
+        image: "images/category/Motorized Mount Solutions.jpeg",
+        slug: "motorized-mount-solutions",
+        category: "MOTORIZED MOUNT SOLUTIONS"
     },
     {
         id: 8,
-        title: "Audio Visual Accessories",
+        title: "MOTORIZED TV LIFT",
+        description: "Elegant concealment solutions for flat-panel displays.",
+        image: "images/category/Motorized Mount Solutions.jpeg",
+        slug: "motorized-tv-lift",
+        category: "MOTORIZED TV LIFT"
+    },
+    {
+        id: 9,
+        title: "MOBILE TROLLEY SOLUTIONS",
+        description: "Portable display stands for versatile collaboration.",
+        image: "images/category/Mobile Trolley Solutions.jpeg",
+        slug: "mobile-trolley-solutions",
+        category: "MOBILE TROLLEY SOLUTIONS"
+    },
+    {
+        id: 10,
+        title: "TV FLOOR STAND",
+        description: "Sturdy and stylish floor standing solutions for TVs.",
+        image: "images/category/Mobile Trolley Solutions.jpeg",
+        slug: "tv-floor-stand",
+        category: "TV FLOOR STAND"
+    },
+    {
+        id: 11,
+        title: "DIGITAL KIOSK",
+        description: "Interactive self-service and information stations.",
+        image: "images/category/Digital Kiosk.png",
+        slug: "digital-kiosk",
+        category: "DIGITAL KIOSK"
+    },
+    {
+        id: 12,
+        title: "CONFERENCE TABLE BOX",
+        description: "Integrated connectivity solutions for meeting rooms.",
+        image: "images/category/Digital Kiosk.png",
+        slug: "conference-table-box",
+        category: "CONFERENCE TABLE BOX"
+    },
+    {
+        id: 13,
+        title: "DIGITAL PODIUM",
+        description: "Smart lecterns for modern presentations and lectures.",
+        image: "images/category/Digital-Podium.png",
+        slug: "digital-podium",
+        category: "DIGITAL PODIUM"
+    },
+    {
+        id: 14,
+        title: "PROJECTION SCREENS",
+        description: "High-quality surfaces for optimal image projection.",
+        image: "images/category/Digital-Podium.png",
+        slug: "projection-screens",
+        category: "PROJECTION SCREENS"
+    },
+    {
+        id: 15,
+        title: "AUDIO VISUAL ACCESSORIES",
         description: "Essential components for complete AV setups.",
         image: "images/category/Audio Visual Accessorie.png",
         slug: "audio-visual-accessories",
+        category: "AUDIO VISUAL ACCESSORIES"
+    },
+    {
+        id: 16,
+        title: "MONITOR MOUNTS",
+        description: "Ergonomic solutions for single and multi-monitor setups.",
+        image: "images/category/Audio Visual Accessorie.png",
+        slug: "monitor-mounts",
         category: "MONITOR MOUNTS"
+    },
+    {
+        id: 17,
+        title: "MOTORIZED BAR LIFT",
+        description: "Specialized lift systems for bar and cabinet integration.",
+        image: "images/category/Motorized Mount Solutions.jpeg",
+        slug: "motorized-bar-lift",
+        category: "MOTORIZED BAR LIFT"
+    },
+    {
+        id: 18,
+        title: "MONITOR LIFT",
+        description: "Retractable lift solutions for desktop monitors.",
+        image: "images/category/display mount.jpeg",
+        slug: "monitor-lift",
+        category: "MONITOR LIFT"
+    },
+    {
+        id: 19,
+        title: "PROJECTOR MOUNTS",
+        description: "Secure mounting systems for all types of projectors.",
+        image: "images/category/PTZ-Camera-Mounts.png",
+        slug: "projector-mounts",
+        category: "PROJECTOR MOUNTS"
     }
 ];
 

@@ -33,13 +33,30 @@ export default function Navbar() {
                 if (!res.ok) throw new Error('API request failed');
 
                 const data = await res.json();
+                const fetchedCategories = data.categories || (Array.isArray(data) ? data : []);
 
-                // Ensure we handle both {categories: [...]} and सीधा array responses
-                const finalCategories = data.categories || (Array.isArray(data) ? data : []);
+                // Master list of all categories to ensure consistency everywhere
+                const masterCategoryList = [
+                    "DISPLAY MOUNTS", "TV MOUNTS", "SOUND BAR MOUNTS", "SPEAKER MOUNTS",
+                    "PTZ CAMERA MOUNTS", "MOTORIZED PROJECTOR LIFT", "MOTORIZED MOUNT SOLUTIONS",
+                    "MOTORIZED TV LIFT", "MOBILE TROLLEY SOLUTIONS", "TV FLOOR STAND",
+                    "DIGITAL KIOSK", "CONFERENCE TABLE BOX", "DIGITAL PODIUM",
+                    "PROJECTION SCREENS", "AUDIO VISUAL ACCESSORIES", "MONITOR MOUNTS",
+                    "MOTORIZED BAR LIFT", "MONITOR LIFT", "PROJECTOR MOUNTS"
+                ];
+
+                // Merge fetched categories with master list
+                const finalCategories = masterCategoryList.map(name => {
+                    const existing = fetchedCategories.find(c => (c.category || c.name) === name);
+                    return {
+                        category: name,
+                        products: existing ? existing.products : []
+                    };
+                });
 
                 if (finalCategories.length > 0) {
                     setCategories(finalCategories);
-                    setActiveCategory(finalCategories[0].category || finalCategories[0].name);
+                    setActiveCategory(finalCategories[0].category);
                 }
             } catch (error) {
                 console.error('Failed to fetch categories:', error);
